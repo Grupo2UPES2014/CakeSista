@@ -1,65 +1,43 @@
-<?php
-/**
- *
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * For full copyright and license information, please see the LICENSE.txt
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.View.Layouts
- * @since         CakePHP(tm) v 0.10.0.1076
- * @license       http://www.opensource.org/licenses/mit-license.php MIT License
- */
-
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
-$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
-?>
 <!DOCTYPE html>
+<!--
+Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
+[Iddo José Claros - José Carlos Escobar - Carlos Amaury Tejada]
+-->
 <html>
-<head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		SiSTA :
-		<?php echo $title_for_layout; ?>
-	</title>
-	<?php
-		echo $this->Html->meta('icon');
-
-		echo $this->Html->css('cake.generic');
-
-		echo $this->fetch('meta');
-		echo $this->fetch('css');
-		echo $this->fetch('script');
-	?>
-</head>
-<body>
-	<div id="container">
-		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
-		</div>
-		<div id="content">
-
-			<?php echo $this->Session->flash(); ?>
-
-			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-				);
-			?>
-			<p>
-				<?php echo $cakeVersion; ?>
-			</p>
-		</div>
-	</div>
-	<?php echo $this->element('sql_dump'); ?>
-</body>
+    <head>
+        <?php echo $this->Html->charset(); ?>
+        <title>
+            SiSTA : <?php echo $title_for_layout; ?>
+        </title>
+        <?php
+        echo $this->Html->meta('icon');
+        echo $this->Html->css('gui');
+        echo $this->fetch('meta');
+        echo $this->fetch('css');
+        echo $this->fetch('script');
+        ?>
+    </head>
+    <body>
+        <div id="sistacontainer">
+            <div id="sistamenu">
+                <div id="logo"></div>
+                <div id="m_elementos">
+                    <div class="m_elemento"><div class="ico icoTramite"></div><span>Trámites</span></div>
+                    <div class="m_elemento"><div class="ico icoInbox"></div><span>Buzón</span></div>
+                    <div class="m_elemento"><div class="ico icoCog"></div><span>Configuración</span></div>
+                    <div class="m_elemento"><div class="ico icoInfo"></div><span>Acerca de SiSTA</span></div>
+                </div>
+                <div id="usuario"><?php echo $this->Html->image('ajax-loader.gif',array('id'=>'loading','alt'=>'Cargando...')); ?><span>TT200601</span><div class="ico mini icoLogout"></div></div>
+            </div>
+            <div id="sistacontent">
+                <div id="sistaroute">SiSTA >> Trámites</div>
+                <div id="sistadesktop">
+                    <?php echo $this->fetch('content'); ?>
+                </div>
+                <div id="sistamensajes"><?php echo $this->Session->flash(); ?></div>
+            </div>
+        </div>
+        <?php echo $this->Html->script('jquery-1.11.1.min'); ?>
+        <?php echo $this->Html->script('gui'); ?>
+    </body>
 </html>

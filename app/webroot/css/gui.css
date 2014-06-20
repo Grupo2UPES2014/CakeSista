@@ -1,0 +1,221 @@
+@font-face
+{
+    font-family: Ubuntu;
+    font-style: normal;
+    font-weight: normal;
+    src:url(fonts/Ubuntu-Regular.ttf);
+}
+body,html
+{
+    margin: 0px;
+    height: 100%;
+    overflow: hidden;
+}
+#sistacontainer
+{
+    position: relative;
+    height: 100%;
+}
+#sistacontainer #sistamenu
+{
+    position: relative;
+    width: 200px;
+    height: calc( 100% - 10px);
+    height: -moz-calc( 100% - 10px);
+    background-color: #233E78;
+    border-right: 1px #091f4e solid;
+    float: left;
+    color: #ffffff;
+    padding-top: 10px;
+    font-family: Ubuntu;
+}
+#sistacontainer #sistamenu #logo
+{
+    width: 200px;
+    height: 113px;
+    background-image: url(../img/logo5.png);
+    position: relative;
+}
+#sistacontainer #sistamenu #m_elementos
+{
+  margin-top: 15px;
+  font-weight: bold;
+  position: relative;
+}
+#sistacontainer #sistamenu #m_elementos div.m_elemento
+{
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: 0.25s all ease-in;
+    -moz-transition: 0.25s all ease-in;
+    -webkit-transition: 0.25s all ease-in;
+    cursor: pointer;
+
+}
+#sistacontainer #sistamenu #m_elementos div.m_elemento:hover
+{
+    background-color: #2b72a6;
+}
+#sistacontainer #sistamenu #m_elementos div.m_elemento span
+{
+    display: inline-block;
+    vertical-align: middle;
+    width: 130px;
+    height: 50px;
+}
+#sistacontainer #sistamenu #usuario
+{
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: right;
+}
+#sistacontainer #sistamenu #usuario span
+{
+    vertical-align: middle;
+}
+#sistacontainer #sistamenu #usuario div
+{
+    margin-right: 10px;
+    cursor: pointer;
+}
+#sistacontainer #sistamenu #usuario div:hover
+{
+   background-color: #2b72a6; 
+}
+#sistacontainer #sistamenu #usuario img
+{
+    vertical-align: middle;
+    margin-right: 15px;
+    visibility: hidden;
+}
+#sistacontainer #sistacontent
+{
+    position: absolute;
+    left: 201px;
+    width: calc(100% - 201px);
+    width: -moz-calc(100% - 201px);
+    height: 100%;
+    background-color: #f6f6f6;
+}
+#sistacontainer #sistacontent #sistaroute
+{
+  padding-left: 15px;
+  font-family: Ubuntu;
+  height: 20px;
+}
+#sistacontainer #sistacontent #sistadesktop
+{
+    height: calc(100% - 63px);
+    height: -moz-calc(100% - 63px);
+    overflow-y: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+}
+#sistacontainer #sistacontent #sistamensajes
+{
+    height: 28px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-family: Ubuntu;
+    visibility: hidden;
+    transition: 0.5s all ease-in;
+    -moz-transition: 0.5s all ease-in;
+    -webkit-transition: 0.5s all;
+    opacity: 0;
+    text-align: center;
+}
+#sistacontainer #sistacontent #sistamensajes.mnsgInfo
+{
+    background: #BFEBFF;
+    border: 1px solid #006A9D;
+    color: #006A9D;
+    visibility: visible;
+    opacity: 100;
+}
+#sistacontainer #sistacontent #sistamensajes.mnsgOk
+{
+    background: #95FF95;
+    border: 1px solid #060;
+    color: #060;
+    visibility: visible;
+    opacity: 100;
+}
+#sistacontainer #sistacontent #sistamensajes.mnsgError
+{
+    background: #FF7575;
+    border: 1px solid #900;
+    color: #900;
+    visibility: visible;
+    opacity: 100;
+}
+#sistacontainer #sistacontent #sistamensajes.mnsgAlert
+{
+    background: #edebc3;
+    border: 1px solid #ce7607;
+    color: #ce7607;
+    visibility: visible;
+    opacity: 100;
+    
+}
+
+/*---------------------------------ICONOS---------------------------------------*/
+div.ico
+{
+    width: 50px;
+    height: 50px;
+    display:inline-block;
+    vertical-align:middle;
+}
+div.ico.mini
+{
+    width:30px;
+    height:30px;
+    display:inline-block;
+    vertical-align:middle;
+    transition:ease-in 0.25s;
+}
+div.icoAlert
+{
+    background: url(../img/icons/appbar.alert-orange.png) center;
+}
+div.icoCog
+{
+    background:url(../img/icons/appbar.cog.png) center;
+}
+div.icoInfo
+{
+    background:url(../img/icons/appbar.information.circle.png) center;
+}
+div.icoInfoBlue
+{
+    background:url(../img/icons/appbar.information-blue.png) center;
+}
+div.icoInbox
+{
+    background: url(../img/icons/appbar.inbox.png) center;
+}
+div.icoTramite
+{
+    background: url(../img/icons/appbar.book.list.png) center;
+}
+div.icoLogout
+{
+    background: url(../img/icons/appbar.power.png) center;
+}
+div.icoOK
+{
+    background: url(../img/icons/appbar.ok-green.png) center;
+}
+div.icoError
+{
+    background: url(../img/icons/appbar.error-red.png) center;
+}
+div.ico.mini
+{
+    background-size:40px 40px;
+}
