@@ -30,7 +30,7 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
                 <div id="usuario"><?php echo $this->Html->image('ajax-loader.gif', array('id' => 'loading', 'alt' => 'Cargando...')); ?><span>TT200601</span><div class="ico mini icoLogout"></div></div>
             </div>
             <div id="sistacontent">
-                <div id="sistaroute">SiSTA >> Trámites</div>
+                <div id="sistaroute">SiSTA >> <?php echo $this->name; ?> >> <?php echo $title_for_layout; ?></div>
                 <div id="sistadesktop">
                     <?php echo $this->fetch('content'); ?>
                 </div>
