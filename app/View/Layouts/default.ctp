@@ -25,7 +25,7 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
                     <div class="m_elemento"><div class="ico icoTramite"></div><span>Trámites</span></div>
                     <div class="m_elemento"><div class="ico icoInbox"></div><span>Buzón</span></div>
                     <div class="m_elemento"><div class="ico icoCog"></div><span>Configuración</span></div>
-                    <a href="about"><div class="m_elemento"><div class="ico icoInfo"></div><span>Acerca de SiSTA</span></div></a>
+                    <a href="<?php echo $this->webroot.'about'; ?>"><div class="m_elemento"><div class="ico icoInfo"></div><span>Acerca de SiSTA</span></div></a>
                 </div>
                 <div id="usuario"><?php echo $this->Html->image('ajax-loader.gif', array('id' => 'loading', 'alt' => 'Cargando...')); ?><span>TT200601</span><div class="ico mini icoLogout"></div></div>
             </div>
