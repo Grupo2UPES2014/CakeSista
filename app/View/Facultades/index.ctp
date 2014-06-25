@@ -1,6 +1,6 @@
 <h2>Facultades</h2>
 <?php
-echo $this->Html->link('Nuevo',array('controller'=>'facultades','action'=>'nuevo'));
+echo $this->Html->link('Nuevo', array('controller' => 'facultades', 'action' => 'nuevo'));
 ?>
 <table>
     <tr>

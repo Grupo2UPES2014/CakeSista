@@ -34,7 +34,7 @@ class FacultadesController extends AppController {
      *
      * @return void
      */
-    public function add() {
+    public function nuevo() {
         if ($this->request->is('post')) {
             $this->Facultade->create();
             if ($this->Facultade->save($this->request->data)) {
@@ -44,6 +44,7 @@ class FacultadesController extends AppController {
                 $this->Session->setFlash(__('The facultade could not be saved. Please, try again.'));
             }
         }
+        $this->set('title_for_layout', 'Nuevo'); 
     }
 
     /**
