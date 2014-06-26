@@ -29,56 +29,38 @@ class FacultadesController extends AppController {
         $this->set('title_for_layout', 'Índice');
     }
 
-    /**
-     * add method
-     *
-     * @return void
-     */
     public function nuevo() {
         if ($this->request->is('post')) {
             $this->Facultade->create();
             if ($this->Facultade->save($this->request->data)) {
-                $this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'),array('class'=>'OK'));
+                $this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
                 //
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'),array('class'=>'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
         $this->set('title_for_layout', 'Nuevo');
     }
 
-    /**
-     * edit method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
-    public function edit($id = null) {
+    public function editar($id = null) {
         if (!$this->Facultade->exists($id)) {
-            throw new NotFoundException(__('Invalid facultade'));
-        }
-        if ($this->request->is(array('post', 'put'))) {
-            if ($this->Facultade->save($this->request->data)) {
-                $this->Session->setFlash(__('The facultade has been saved.'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The facultade could not be saved. Please, try again.'));
-            }
+            $this->Session->setFlash(__('Código de Facultad Invalida.'), array('class' => 'ERROR'));
         } else {
-            $options = array('conditions' => array('Facultade.' . $this->Facultade->primaryKey => $id));
-            $this->request->data = $this->Facultade->find('first', $options);
+            if ($this->request->is(array('post', 'put'))) {
+                if ($this->Facultade->save($this->request->data)) {
+                    $this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                }
+            } else {
+                $options = array('conditions' => array('Facultade.' . $this->Facultade->primaryKey => $id));
+                $this->request->data = $this->Facultade->find('first', $options);
+            }
         }
     }
 
-    /**
-     * delete method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
     public function delete($id = null) {
         $this->Facultade->id = $id;
         if (!$this->Facultade->exists()) {
