@@ -61,7 +61,7 @@ class FacultadesController extends AppController {
         }
     }
 
-    public function delete($id = null) {
+    public function eliminar($id = null) {
         $this->Facultade->id = $id;
         if (!$this->Facultade->exists()) {
             throw new NotFoundException(__('Invalid facultade'));
