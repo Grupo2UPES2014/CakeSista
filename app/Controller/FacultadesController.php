@@ -45,7 +45,7 @@ class FacultadesController extends AppController {
 
     public function editar($id = null) {
         if (!$this->Facultade->exists($id)) {
-            $this->Session->setFlash(__('Código de Facultad Invalida.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Facultad Invalido.'), array('class' => 'ERROR'));
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 if ($this->Facultade->save($this->request->data)) {
@@ -59,20 +59,24 @@ class FacultadesController extends AppController {
                 $this->request->data = $this->Facultade->find('first', $options);
             }
         }
+        $this->set('title_for_layout', 'Editar');
     }
 
     public function eliminar($id = null) {
         $this->Facultade->id = $id;
         if (!$this->Facultade->exists()) {
-            throw new NotFoundException(__('Invalid facultade'));
+            $this->Session->setFlash(__('Código de Facultad Invalido.'), array('class' => 'ERROR'));
         }
-        $this->request->allowMethod('post', 'delete');
-        if ($this->Facultade->delete()) {
-            $this->Session->setFlash(__('The facultade has been deleted.'));
-        } else {
-            $this->Session->setFlash(__('The facultade could not be deleted. Please, try again.'));
+        //$this->request->allowMethod('post', 'delete');
+        if ($this->request->is(array('post', 'delete'))) {
+            if ($this->Facultade->delete()) {
+                $this->Session->setFlash(__('Se ha eliminado la facultad con exito'), array('class' => 'OK'));
+            } else {
+                $this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+            }
+            return $this->redirect(array('action' => 'index'));
         }
-        return $this->redirect(array('action' => 'index'));
+        $this->set('title_for_layout', 'Eliminar');
     }
 
 }

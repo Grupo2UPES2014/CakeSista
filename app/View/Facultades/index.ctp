@@ -14,7 +14,10 @@ echo $this->Html->link('Nuevo', array('controller' => 'facultades', 'action' => 
         <tr>
             <td><?php echo $facultad['Facultade']['id']; ?></td>
             <td><?php echo $facultad['Facultade']['nombre']; ?></td>
-            <td><?php echo $this->Html->link('Editar',array('controller'=>'facultades','action'=>'editar',$facultad['Facultade']['id'])); ?></td>
+            <td>
+                <?php echo $this->Html->link('Editar',array('controller'=>'facultades','action'=>'editar',$facultad['Facultade']['id'])); ?>
+                <?php echo $this->Html->link('Eliminar',array('controller'=>'facultades','action'=>'eliminar',$facultad['Facultade']['id'])); ?>
+            </td>
         </tr>
     <?php endforeach; ?>
 </table>
