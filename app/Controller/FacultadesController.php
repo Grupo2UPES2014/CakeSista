@@ -16,7 +16,7 @@ class FacultadesController extends AppController {
      *
      * @var array
      */
-    public  $helpers = array('Html','Form','Paginator');
+    public $helpers = array('Html', 'Form', 'Paginator', 'Js');
     public $components = array('Paginator', 'Session');
 
     /**
@@ -26,7 +26,7 @@ class FacultadesController extends AppController {
      */
     public function index() {
         $this->set('facultades', $this->Paginator->paginate());
-        $this->set('title_for_layout', 'Índice'); 
+        $this->set('title_for_layout', 'Índice');
     }
 
     /**
@@ -38,13 +38,14 @@ class FacultadesController extends AppController {
         if ($this->request->is('post')) {
             $this->Facultade->create();
             if ($this->Facultade->save($this->request->data)) {
-                $this->Session->setFlash(__('The facultade has been saved.'));
+                $this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'),array('class'=>'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The facultade could not be saved. Please, try again.'));
+                //
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'),array('class'=>'ERROR'));
             }
         }
-        $this->set('title_for_layout', 'Nuevo'); 
+        $this->set('title_for_layout', 'Nuevo');
     }
 
     /**
