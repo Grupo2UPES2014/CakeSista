@@ -43,7 +43,7 @@ class CarrerasController extends AppController {
                 $this->Session->setFlash(__('¡Se ha guardado la Carrera con éxito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'OK'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
         $facultades = $this->Carrera->Facultade->find('list');
@@ -75,6 +75,7 @@ class CarrerasController extends AppController {
         }
         $facultades = $this->Carrera->Facultade->find('list');
         $this->set(compact('facultades'));
+        $this->set('title_for_layout', 'Editar');
     }
 
     public function eliminar($id = null) {

@@ -25,8 +25,8 @@ class Carrera extends AppModel {
      */
     public $validate = array(
         'codigo' => array(
-            'naturalNumber' => array(
-                'rule' => array('naturalNumber'),
+            'formato' => array(
+                'rule' => '/^[0-9]{4}$/',
             //'message' => 'Your custom message here',
             //'allowEmpty' => false,
             //'required' => false,
@@ -41,6 +41,9 @@ class Carrera extends AppModel {
             //'last' => false, // Stop validation after this rule
             //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
+            'Unico' => array(
+                'rule' => array('isUnique'),
+            )
         ),
         'nombre' => array(
             'notEmpty' => array(
