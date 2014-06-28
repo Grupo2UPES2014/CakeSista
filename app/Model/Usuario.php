@@ -1,5 +1,5 @@
 <?php
-// prueba 123 TEST
+// Hola mundo
 App::uses('AppModel', 'Model');
 
 class Usuario extends AppModel {
