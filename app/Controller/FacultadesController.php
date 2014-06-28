@@ -16,7 +16,7 @@ class FacultadesController extends AppController {
      *
      * @var array
      */
-    public $helpers = array('Html', 'Form', 'Paginator', 'Js');
+    public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
 
     /**

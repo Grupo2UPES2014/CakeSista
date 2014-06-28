@@ -7,4 +7,7 @@ echo $this->Html->link('Usuarios', array('controller' => 'usuarios', 'action' =>
 ?><br>
 <?php
 echo $this->Html->link('Carreras', array('controller' => 'carreras', 'action' => 'index'));
+?><br>
+<?php
+echo $this->Html->link('Roles', array('controller' => 'roles', 'action' => 'index'));
 ?>
