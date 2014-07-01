@@ -21,14 +21,13 @@ class UsuariosController extends AppController {
                     if ($this->Usuario->save($this->request->data)) {
                         $this->Session->setFlash(__('OK'), array('class' => 'OK'));
                     } else {
-                        $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                        $this->Session->setFlash(__('¡Ha ocurrido un error al registrar el usuario! , por favor intente de nuevo.'), array('class' => 'ERROR'));
                     }
                 } else {
                     $this->Session->setFlash(__('El carnet ingresado no existe.'), array('class' => 'ALERT'));
                 }
-            } else {
+            } else
                 $this->Session->setFlash(__('Las claves no coinciden.'), array('class' => 'ALERT'));
-            }
         }
     }
 
