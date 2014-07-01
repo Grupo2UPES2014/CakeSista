@@ -94,7 +94,7 @@ button
 {
     margin-left: 10px;
     margin-bottom: 5px;
-    width: 200px;
+    width: 206px;
     height: 40px;
     background: #233E78;
     border: 1px solid #091f4e;
@@ -171,6 +171,12 @@ h2
 div.error-message
 {
     font-size: 12px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    background: #FF7575;
+    border: 1px solid #900;
+    color: #900;
+    width: 204px;
 }
 
 /*---------------------------------ICONOS---------------------------------------*/
