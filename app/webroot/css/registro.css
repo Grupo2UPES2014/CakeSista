@@ -176,7 +176,8 @@ div.error-message
     background: #FF7575;
     border: 1px solid #900;
     color: #900;
-    width: 204px;
+    width: 202px;
+    padding-left: 2px;
 }
 
 /*---------------------------------ICONOS---------------------------------------*/
