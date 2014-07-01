@@ -7,6 +7,14 @@ class Usuario extends AppModel {
     public $displayField = 'alias';
     public $validate = array(
         'alias' => array(
+            'formato' => array(
+                'rule' => '/^[a-zA-Z]{2}[0-9]{6}$/',
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
             //'message' => 'Your custom message here',
@@ -15,6 +23,14 @@ class Usuario extends AppModel {
             //'last' => false, // Stop validation after this rule
             //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
+            'Unico' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Este carnet ya está en uso',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
         ),
         'contrasena' => array(
             'notEmpty' => array(
@@ -43,6 +59,14 @@ class Usuario extends AppModel {
             //'last' => false, // Stop validation after this rule
             //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
+            'Unico' => array(
+                'rule' => array('isUnique'),
+                'message' => 'Este correo ya está en uso.',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            )
         ),
         'estado' => array(
             'boolean' => array(
@@ -116,6 +140,14 @@ class Usuario extends AppModel {
             'counterQuery' => ''
         )
     );
+
+    public function existeAlumno($carnet) {
+        $options = array('conditions' => array('Estudiante.carnet' => $carnet));
+        if ($this->Estudiante->find('first', $options)) {
+            return true;
+        }
+        return false;
+    }
 
     public function beforeSave($options = array()) {
         parent::beforeSave($options);

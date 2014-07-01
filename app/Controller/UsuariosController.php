@@ -1,16 +1,35 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class UsuariosController extends AppController {
 
     public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
 
-    public function registro()
-    {
+    public function registro() {
         $this->set('title_for_layout', 'Registro de Usuario');
-         $this->layout = 'registro';
+        $this->layout = 'registro';
+        if ($this->request->is('post')) {
+            if ($this->request->data['Usuario']['contrasena'] == $this->request->data['Usuario']['rcontrasena']) {
+                if ($this->Usuario->existeAlumno($this->request->data['Usuario']['alias'])) {
+                    $this->Usuario->create();
+                    $this->request->data['Usuario']['alias'] = strtoupper($this->request->data['Usuario']['alias']);
+                    $this->request->data['Usuario']['role_id'] = 3;
+                    $this->request->data['Usuario']['estado'] = 0;
+                    if ($this->Usuario->save($this->request->data)) {
+                        $this->Session->setFlash(__('OK'), array('class' => 'OK'));
+                    } else {
+                        $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                    }
+                } else {
+                    $this->Session->setFlash(__('El carnet ingresado no existe.'), array('class' => 'ALERT'));
+                }
+            } else {
+                $this->Session->setFlash(__('Las claves no coinciden.'), array('class' => 'ALERT'));
+            }
+        }
     }
 
     public function index() {

@@ -24,7 +24,10 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
                 </div>
             </div>
         </div>
+        <div id="sistamensajes"><?php echo $this->Session->flash(); ?></div>
         <?php echo $this->Html->script('jquery-1.11.1.min'); ?>
         <?php echo $this->Html->script('login'); ?>
+        <?php echo $this->Html->script('gui'); ?>
+        <div id="controller" style="display: none">Registro</div>
     </body>
 </html>

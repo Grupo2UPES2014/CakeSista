@@ -184,6 +184,7 @@ div.ico.mini
     display:inline-block;
     vertical-align:middle;
     transition:ease-in 0.25s;
+    background-size:40px 40px;
 }
 div.icoAlert
 {
@@ -220,10 +221,6 @@ div.icoOK
 div.icoError
 {
     background: url(../img/icons/appbar.error-red.png) center;
-}
-div.ico.mini
-{
-    background-size:40px 40px;
 }
 
 /*---------------------------------ANIMACIONES---------------------------------------*/

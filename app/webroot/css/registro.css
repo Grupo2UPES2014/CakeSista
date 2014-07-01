@@ -28,7 +28,7 @@ html,body
 div#login
 {
     width: 500px;
-    height: 250px;
+    height: 300px;
     background: #2b72a6;
     margin-left: auto;
     margin-right: auto;
@@ -70,7 +70,7 @@ div#icon div
 {
     position: absolute;
     width: 1px;
-    height: 200px;
+    height: 250px;
     background: #233E78;
     left: 248px;
     top: 25px;
@@ -113,9 +113,93 @@ button:hover
 }
 span
 {
-margin-left: 10px;    
+    margin-left: 10px;    
 }
 h2
 {
     margin: 10px;
+}
+
+#sistamensajes
+{
+    margin-top: 15px;
+    height: 28px;
+    width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: Ubuntu;
+    visibility: hidden;
+    transition: 0.5s all ease-in;
+    -moz-transition: 0.5s all ease-in;
+    -webkit-transition: 0.5s all;
+    opacity: 0;
+    text-align: center;
+}
+#sistamensajes.mnsgInfo
+{
+    background: #BFEBFF;
+    border: 1px solid #006A9D;
+    color: #006A9D;
+    visibility: visible;
+    opacity: 100;
+}
+#sistamensajes.mnsgOk
+{
+    background: #95FF95;
+    border: 1px solid #060;
+    color: #060;
+    visibility: visible;
+    opacity: 100;
+}
+#sistamensajes.mnsgError
+{
+    background: #FF7575;
+    border: 1px solid #900;
+    color: #900;
+    visibility: visible;
+    opacity: 100;
+}
+#sistamensajes.mnsgAlert
+{
+    background: #edebc3;
+    border: 1px solid #ce7607;
+    color: #ce7607;
+    visibility: visible;
+    opacity: 100;
+
+}
+div.error-message
+{
+    font-size: 12px;
+}
+
+/*---------------------------------ICONOS---------------------------------------*/
+div.ico
+{
+    width: 50px;
+    height: 50px;
+    display:inline-block;
+    vertical-align:middle;
+}
+div.ico.mini
+{
+    width:30px;
+    height:30px;
+    display:inline-block;
+    vertical-align:middle;
+    transition:ease-in 0.25s;
+    background-size:40px 40px;
+}
+div.icoAlert
+{
+    background: url(../img/icons/appbar.alert-orange.png) center;
+}
+
+div.icoOK
+{
+    background: url(../img/icons/appbar.ok-green.png) center;
+}
+div.icoError
+{
+    background: url(../img/icons/appbar.error-red.png) center;
 }
