@@ -22,9 +22,14 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
             <div id="sistamenu">
                 <div id="logo"></div>
                 <div id="m_elementos">
-                    <div class="m_elemento"><div class="ico icoTramite"></div><span>Trámites</span></div>
-                    <div class="m_elemento"><div class="ico icoInbox"></div><span>Buzón</span></div>
-                    <div class="m_elemento"><div class="ico icoCog"></div><span>Configuración</span></div>
+                    <?php
+                    $menus = $this->Session->read('menu');
+                    foreach ($menus as $menu):
+                        ?>
+                        <a href="<?php echo $this->webroot . $menu['ruta']; ?>"><div class="m_elemento"><div class="ico <?php echo $menu['icono']; ?>"></div><span><?php echo $menu['titulo']; ?></span></div></a>
+                        <?php
+                    endforeach;
+                    ?>
                     <a href="<?php echo $this->webroot . 'about'; ?>"><div class="m_elemento"><div class="ico icoInfo"></div><span>Acerca de SiSTA</span></div></a>
                 </div>
                 <div id="usuario"><?php echo $this->Html->image('ajax-loader.gif', array('id' => 'loading', 'alt' => 'Cargando...')); ?><span>TT200601</span><a href="<?php echo $this->webroot . 'usuarios/logout'; ?>"><div class="ico mini icoLogout"></div></a></div>

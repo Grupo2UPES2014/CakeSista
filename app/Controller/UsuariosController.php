@@ -35,10 +35,18 @@ class UsuariosController extends AppController {
         $this->set('title_for_layout', 'Iniciar Sesión');
         $this->layout = 'login';
         if ($this->request->is('post')) {
-
             if ($this->Auth->login()) {
-                $this->Session->setFlash(__('User OK!'));
-                $this->redirect('/');
+                if ($this->Auth->user('estado') == 1) {
+                    $this->loadModel('Menu');
+                    $this->Session->write('menu', $this->Menu->getMenu($this->Auth->user('role_id')));
+                    $this->redirect('/');
+                } else if ($this->Auth->user('estado') == 2) {
+                    $this->Auth->logout();
+                    $this->Session->setFlash(__('Debido a comportamiento inadecuado tu usuario ha sido suspendido.'), array('class' => 'ALERT'));
+                } else {
+                    $this->Auth->logout();
+                    $this->Session->setFlash(__('Tu usuario no está activo, verifica tu cuenta de correo.'), array('class' => 'ALERT'));
+                }
             } else {
                 $this->Session->setFlash(__('Las credenciales ingresadas no son validas'), array('class' => 'ALERT'));
             }
@@ -48,6 +56,7 @@ class UsuariosController extends AppController {
     public function logout() {
         $this->autoRender = false;
         $this->Auth->logout();
+        $this->Session->delete('menu');
         $this->redirect('/');
     }
 

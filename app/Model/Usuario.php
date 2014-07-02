@@ -69,8 +69,8 @@ class Usuario extends AppModel {
             )
         ),
         'estado' => array(
-            'boolean' => array(
-                'rule' => array('boolean'),
+               'numeric' => array(
+                'rule' => array('numeric'),
             //'message' => 'Your custom message here',
             //'allowEmpty' => false,
             //'required' => false,
