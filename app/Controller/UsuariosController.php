@@ -31,6 +31,26 @@ class UsuariosController extends AppController {
         }
     }
 
+    public function login() {
+        $this->set('title_for_layout', 'Iniciar Sesión');
+        $this->layout = 'login';
+        if ($this->request->is('post')) {
+
+            if ($this->Auth->login()) {
+                $this->Session->setFlash(__('User OK!'));
+                $this->redirect('/');
+            } else {
+                $this->Session->setFlash(__('Las credenciales ingresadas no son validas'), array('class' => 'ALERT'));
+            }
+        }
+    }
+
+    public function logout() {
+        $this->autoRender = false;
+        $this->Auth->logout();
+        $this->redirect('/');
+    }
+
     public function index() {
         $this->Usuario->recursive = 0;
         $this->set('usuarios', $this->Paginator->paginate());

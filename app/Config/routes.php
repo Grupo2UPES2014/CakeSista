@@ -30,6 +30,8 @@
  */
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
         Router::connect('/about', array('controller' => 'pages', 'action' => 'display','about'));
+        Router::connect('/login', array('controller' => 'usuarios', 'action' => 'login'));
+        Router::connect('/registro', array('controller' => 'usuarios', 'action' => 'registro'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
