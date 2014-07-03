@@ -18,7 +18,8 @@
 ?>
 <?php
 $content = explode("\n", $content);
-
+echo $zg.'<br>';
+echo $vartest;
 foreach ($content as $line):
 	echo '<p> ' . $line . "</p>\n";
 endforeach;

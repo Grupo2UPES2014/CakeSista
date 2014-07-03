@@ -58,6 +58,6 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('registro');
+        $this->Auth->allow('registro','activar');
     }
 }

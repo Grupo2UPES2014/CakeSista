@@ -2,6 +2,7 @@
 
 App::uses('AppController', 'Controller');
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+APP::uses('CakeEmail', 'Network/Email');
 
 class UsuariosController extends AppController {
 
@@ -19,7 +20,9 @@ class UsuariosController extends AppController {
                     $this->request->data['Usuario']['role_id'] = 3;
                     $this->request->data['Usuario']['estado'] = 0;
                     if ($this->Usuario->save($this->request->data)) {
-                        $this->Session->setFlash(__('OK'), array('class' => 'OK'));
+                        $llave = substr(md5('SISTA' .$this->request->data['Usuario']['alias']), 0, 10);
+                        $this->__enviar($this->request->data['Usuario']['correo'], $this->request->data['Usuario']['alias'], $llave);
+                        $this->Session->setFlash(__('Se ha enviado una verificación a tu correo, para continuar revisar el mismo.'), array('class' => 'OK'));
                     } else {
                         $this->Session->setFlash(__('¡Ha ocurrido un error al registrar el usuario! , por favor intente de nuevo.'), array('class' => 'ERROR'));
                     }
@@ -58,6 +61,35 @@ class UsuariosController extends AppController {
         $this->Auth->logout();
         $this->Session->delete('menu');
         $this->redirect('/');
+    }
+
+    private function __enviar($correo, $carnet, $llave) {
+        $email = new CakeEmail('smtp');
+        $email->to($correo);
+        $email->subject('Registro de cuenta SiSTA – Verificación de correo.');
+        $email->viewVars(array(
+            'carnet' => $carnet,
+            'llave' => $llave
+        ));
+        $email->helpers('Html');
+        $email->template('activacion');
+        $email->addAttachments(array(
+            'logo5.png' => array(
+                'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                'mimetype' => 'image/png',
+                'contentId' => 'logo'
+            )
+        ));
+        $email->send();
+    }
+
+    public function activar($carnet = null, $llave = NULL) {
+        if ($carnet != NULL && $llave != NULL) {
+            $this->set('title_for_layout', 'Activar Cuenta');
+            $this->layout = 'login';
+        } else {
+            $this->redirect('/');
+        }
     }
 
     public function index() {
