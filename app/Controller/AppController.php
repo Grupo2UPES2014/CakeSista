@@ -35,6 +35,7 @@ class AppController extends Controller {
     public $components = array(
         'DebugKit.Toolbar',
         'Session',
+        'Acl',
         'Auth' => array(
             'authenticate' => array(
                 'Form' => array(
@@ -43,21 +44,29 @@ class AppController extends Controller {
                         'username' => 'alias',
                         'password' => 'contrasena'
                     ),
-                    'passwordHasher'=>array(
-                        'className'=>'Simple',
-                        'hashType'=>'md5'
+                    'passwordHasher' => array(
+                        'className' => 'Simple',
+                        'hashType' => 'md5'
                     )
                 )
             ),
-            'loginAction'=>array(
-                'controller'=>'usuarios',
-                'action'=>'login'
+            'loginAction' => array(
+                'controller' => 'usuarios',
+                'action' => 'login'
+            ),
+            'authorize' => array(
+                'Actions' => array('actionPath' => 'controllers', 'userModel' => 'Usuario')
             )
         )
     );
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('registro','activar');
+        $this->Auth->allow('registro', 'activar', 'logout');
+        if($this->Auth->user())
+        {
+            $this->Auth->allow('display');
+        }
     }
+
 }

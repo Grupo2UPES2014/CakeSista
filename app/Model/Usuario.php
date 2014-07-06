@@ -5,6 +5,7 @@ App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 
 class Usuario extends AppModel {
 
+    public $actsAs = array('Acl' => array('type' => 'requester'));
     public $displayField = 'alias';
     public $validate = array(
         'alias' => array(
@@ -70,7 +71,7 @@ class Usuario extends AppModel {
             )
         ),
         'estado' => array(
-               'numeric' => array(
+            'numeric' => array(
                 'rule' => array('numeric'),
             //'message' => 'Your custom message here',
             //'allowEmpty' => false,
@@ -154,6 +155,26 @@ class Usuario extends AppModel {
         parent::beforeSave($options);
         $passwordHasher = new SimplePasswordHasher(array('hashType' => 'md5'));
         $this->data['Usuario']['contrasena'] = $passwordHasher->hash($this->data['Usuario']['contrasena']);
+    }
+
+    public function parentNode() {
+        if (!$this->id && empty($this->data)) {
+            return null;
+        }
+        if (isset($this->data['Usuario']['role_id'])) {
+            $groupId = $this->data['Usuario']['role_id'];
+        } else {
+            $groupId = $this->field('role_id');
+        }
+        if (!$groupId) {
+            return null;
+        } else {
+            return array('Role' => array('id' => $groupId));
+        }
+    }
+
+    public function bindNode($user) {
+        return array('model' => 'Role', 'foreign_key' => $user['Usuario']['role_id']);
     }
 
 }
