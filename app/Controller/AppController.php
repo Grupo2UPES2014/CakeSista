@@ -54,18 +54,20 @@ class AppController extends Controller {
                 'controller' => 'usuarios',
                 'action' => 'login'
             ),
-            'authorize' => array(
-                'Actions' => array('actionPath' => 'controllers', 'userModel' => 'Usuario')
-            )
+//            'authorize' => array(
+//                'Actions' => array('actionPath' => 'controllers', 'userModel' => 'Usuario')
+//            )
         )
     );
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('registro', 'activar', 'logout');
+        $this->Auth->allow('registro', 'activar', 'logout','acl');
         if($this->Auth->user())
         {
-            $this->Auth->allow('display');
+            //$this->Auth->allow('display');
+            //echo $this->name . '/' . $this->action.'/'.$this->params['pass'][0];
+            //var_dump($this->Acl->check(array('Usuario' => $this->Auth->user()), $this->name . '/' . $this->action.'/'.$this->params['pass'][0]));
         }
     }
 

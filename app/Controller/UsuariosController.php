@@ -110,6 +110,15 @@ class UsuariosController extends AppController {
             $this->redirect('/');
         }
     }
+    public function acl()
+    {
+        $this->autoRender = false;
+        $role = $this->Usuario->Role;
+        $role->id = 3;
+        //$this->Acl->allow($role, 'controllers/Pages/display');
+        $this->Acl->deny($role, 'controllers/Pages/display/inicio');
+        echo 'ok?';
+    }
 
     public function index() {
         $this->Usuario->recursive = 0;
