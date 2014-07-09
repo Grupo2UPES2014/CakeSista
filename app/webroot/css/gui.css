@@ -65,7 +65,7 @@ body,html
     display: inline-block;
     vertical-align: middle;
     width: 130px;
-    height: 50px;
+
 }
 #sistacontainer #sistamenu #usuario
 {
@@ -120,7 +120,9 @@ body,html
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 10px;
+    font-family: Ubuntu;
 }
+/*----------------------------ALERTAS------------------------------------------------*/
 #sistacontainer #sistacontent #sistamensajes
 {
     height: 28px;
@@ -221,6 +223,10 @@ div.icoOK
 div.icoError
 {
     background: url(../img/icons/appbar.error-red.png) center;
+}
+div.icoCat
+{
+    background: url(../img/icons/appbar.cabinet.files.png) center;
 }
 
 /*---------------------------------ANIMACIONES---------------------------------------*/

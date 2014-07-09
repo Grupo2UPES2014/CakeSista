@@ -12,13 +12,13 @@ class Menu extends AppModel {
     public $menu = array(
         1 => array(
             array(
-                'titulo' => 'HomeX',
-                'icono' => 'icoCog',
-                'ruta' => 'carreras/'
+                'titulo' => 'Catágolos',
+                'icono' => 'icoCat',
+                'ruta' => 'pages/catalogos'
             ),
             array(
-                'titulo' => 'HomeX2',
-                'icono' => 'icoInbox',
+                'titulo' => 'Configuración',
+                'icono' => 'icoCog',
                 'ruta' => ''
             )
         ),

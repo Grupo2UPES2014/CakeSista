@@ -110,14 +110,41 @@ class UsuariosController extends AppController {
             $this->redirect('/');
         }
     }
-    public function acl()
-    {
+
+    public function acl() {
         $this->autoRender = false;
         $role = $this->Usuario->Role;
-        $role->id = 3;
-        //$this->Acl->allow($role, 'controllers/Pages/display');
-        $this->Acl->deny($role, 'controllers/Pages/display/inicio');
+        $role->id = 1;
+        $this->Acl->allow($role, 'controllers/Pages/display');
+        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
+        $this->Acl->allow($role, 'controllers/Pages/display/catalogos');
+        $this->Acl->allow($role, 'controllers/Facultades');
+        $this->Acl->allow($role, 'controllers/Carreras');
+        $this->Acl->allow($role, 'controllers/Usuarios/logout');
         echo 'ok?';
+    }
+
+    public function admin() {
+        $this->autoRender = false;
+        $data = array(
+            'Usuario' => array(
+                'alias' => 'admin',
+                'contrasena' => 'sista',
+                'correo' => 'firecat666@hotmail.com',
+                'estado' => 1,
+                'role_id' => 1
+            )
+        );
+        $validador = $this->Usuario->validator();
+        $this->Usuario->create();
+        var_dump($validador['alias']['formato']=array(
+            'rule'=>'alphaNumeric',
+            
+        ));
+        if($this->Usuario->save($data))
+        {
+            echo 1;
+        }else echo 0;
     }
 
     public function index() {
