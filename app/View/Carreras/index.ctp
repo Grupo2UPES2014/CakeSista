@@ -1,5 +1,5 @@
 <h2>Carreras</h2>
-<?php echo $this->Html->link('Nuevo', array('controller' => 'carreras', 'action' => 'nuevo')); ?>
+<a href="<?php echo Router::url(array('controller' => 'carreras', 'action' => 'nuevo')); ?>"><div class="btnNuevo"></div></a>
 <table>
     <tr>
         <th>Código</th>

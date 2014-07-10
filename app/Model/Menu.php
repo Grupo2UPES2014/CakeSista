@@ -17,6 +17,11 @@ class Menu extends AppModel {
                 'ruta' => 'pages/catalogos'
             ),
             array(
+                'titulo' => 'Usuarios',
+                'icono' => 'icoUser',
+                'ruta' => ''
+            ),
+            array(
                 'titulo' => 'Configuración',
                 'icono' => 'icoCog',
                 'ruta' => ''

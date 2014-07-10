@@ -122,6 +122,87 @@ body,html
     padding-top: 10px;
     font-family: Ubuntu;
 }
+#sistacontainer #sistacontent #sistadesktop h1,h2
+{
+    color: #233E78;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+/*-------------------------BOTONES Y FORMULARIOS------------------------------*/
+input,textarea,select
+{
+    font-family:ubuntu;
+    font-size:15px;
+}
+#sistacontainer #sistacontent #sistadesktop .opciones
+{
+    display:table;
+    margin-left:auto;
+    margin-right:auto;
+    border-spacing:10px;
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div
+{
+    display: table-row;
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion
+{
+    display:table-cell;
+    background:#233E78;
+    background-repeat:no-repeat;
+    background-position:center;
+    color:#FFF;
+    font-weight:bold;
+    border:1px solid #091f4e;
+    padding:2px;
+    width:86px;
+    height:86px;
+    text-align:center;
+    cursor:pointer;
+    transition:ease-in 0.2s;
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion:hover
+{
+    background:#2b72a6;
+    background-repeat:no-repeat;
+    background-position:center;
+    box-shadow:0px 0px 0px 3px #091f4e;
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.carrera{
+    background-image:url(../img/icons/appbar.grade.c.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.facultad{
+    background-image:url(../img/icons/appbar.grade.f.png);
+}
+
+/*----------------------------TABLAS------------------------------------------*/
+#sistacontainer #sistacontent #sistadesktop table
+{
+    width: 100%;
+}
+#sistacontainer #sistacontent #sistadesktop table tr th
+{
+    color: #FFF;
+    background: #006A9D;
+}
+#sistacontainer #sistacontent #sistadesktop table tr td
+{
+    border: 1px #006A9D solid;
+}
+
+/*---------------------------------------BOTONES------------------------------*/
+#sistacontainer #sistacontent #sistadesktop div.btnNuevo
+{
+    width: 50px;
+    height: 50px;
+    background: url(../img/icons/appbar.section.expand.png) #233E78 no-repeat center;
+    border: 1px solid #091f4e;
+}
+#sistacontainer #sistacontent #sistadesktop div.btnNuevo:hover
+{
+    background-color: #2b72a6;
+}
+
 /*----------------------------ALERTAS------------------------------------------------*/
 #sistacontainer #sistacontent #sistamensajes
 {
@@ -227,6 +308,10 @@ div.icoError
 div.icoCat
 {
     background: url(../img/icons/appbar.cabinet.files.png) center;
+}
+div.icoUser
+{
+    background: url(../img/icons/appbar.user.png) center;
 }
 
 /*---------------------------------ANIMACIONES---------------------------------------*/
