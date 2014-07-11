@@ -133,6 +133,38 @@ input,textarea,select
 {
     font-family:ubuntu;
     font-size:15px;
+    margin-bottom: 5px;
+    width: 350px;
+}
+select
+{width: 356px;}
+button
+{
+    background-color: #233E78;
+    color:#FFF;
+    font-weight:bold;
+    border: 1px solid #091f4e;
+    height:50px;
+    width:356px;
+    transition:ease-in 0.2s;
+    text-align: center;
+    text-shadow: 2px 2px 2px #091F4E;
+}
+button:hover
+{
+    background-color: #2b72a6;
+}
+button.save
+{
+    background-image: url(../img/icons/appbar.save.png);
+    background-repeat: no-repeat;
+    background-position: left;
+}
+button.update
+{
+    background-image: url(../img/icons/appbar.refresh.png);
+    background-repeat: no-repeat;
+    background-position: left;
 }
 #sistacontainer #sistacontent #sistadesktop .opciones
 {
@@ -190,7 +222,7 @@ input,textarea,select
     border: 1px #006A9D solid;
 }
 
-/*---------------------------------------BOTONES------------------------------*/
+/*---------------------------------------BOTONES/DIV------------------------------*/
 #sistacontainer #sistacontent #sistadesktop div.btnNuevo
 {
     width: 50px;
