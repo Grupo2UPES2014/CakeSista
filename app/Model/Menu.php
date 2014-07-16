@@ -19,7 +19,7 @@ class Menu extends AppModel {
             array(
                 'titulo' => 'Usuarios',
                 'icono' => 'icoUser',
-                'ruta' => ''
+                'ruta' => 'usuarios'
             ),
             array(
                 'titulo' => 'Configuración',

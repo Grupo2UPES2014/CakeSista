@@ -8,6 +8,14 @@ class UsuariosController extends AppController {
 
     public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
+    public $paginate = array(
+        'limit' => 10,
+        'order' => array(
+            'alias' => 'asc'
+        ),
+        'fields' => array('id', 'alias'),
+        'conditions' => array('role_id' => array(1, 2))
+    );
 
     public function registro() {
         $this->set('title_for_layout', 'Registro de Usuario');
@@ -121,6 +129,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Facultades');
         $this->Acl->allow($role, 'controllers/Carreras');
         $this->Acl->allow($role, 'controllers/Usuarios/logout');
+        $this->Acl->allow($role, 'controllers/Usuarios/index');
         echo 'ok?';
     }
 
@@ -137,30 +146,23 @@ class UsuariosController extends AppController {
         );
         $validador = $this->Usuario->validator();
         $this->Usuario->create();
-        var_dump($validador['alias']['formato']=array(
-            'rule'=>'alphaNumeric',
-            
+        var_dump($validador['alias']['formato'] = array(
+            'rule' => 'alphaNumeric',
         ));
-        if($this->Usuario->save($data))
-        {
+        if ($this->Usuario->save($data)) {
             echo 1;
-        }else echo 0;
+        } else
+            echo 0;
     }
 
     public function index() {
         $this->Usuario->recursive = 0;
+        $this->Paginator->settings = $this->paginate;
         $this->set('usuarios', $this->Paginator->paginate());
+        $this->set('title_for_layout', 'Índice');
     }
 
-    public function view($id = null) {
-        if (!$this->Usuario->exists($id)) {
-            throw new NotFoundException(__('Invalid usuario'));
-        }
-        $options = array('conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id));
-        $this->set('usuario', $this->Usuario->find('first', $options));
-    }
-
-    public function add() {
+    public function nuevo() {
         if ($this->request->is('post')) {
             $this->Usuario->create();
             if ($this->Usuario->save($this->request->data)) {

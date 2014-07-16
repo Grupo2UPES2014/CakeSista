@@ -212,6 +212,10 @@ button.update
 {
     width: 100%;
 }
+#sistacontainer #sistacontent #sistadesktop table tr
+{
+    transition: ease 0.2s;
+}
 #sistacontainer #sistacontent #sistadesktop table tr th
 {
     color: #FFF;
@@ -220,8 +224,12 @@ button.update
 #sistacontainer #sistacontent #sistadesktop table tr td
 {
     border: 1px #006A9D solid;
+    padding: 3px;
 }
-
+#sistacontainer #sistacontent #sistadesktop table tr:hover
+{
+    background-color: #BFEBFF;
+}
 /*---------------------------------------BOTONES/DIV------------------------------*/
 #sistacontainer #sistacontent #sistadesktop div.btnNuevo
 {

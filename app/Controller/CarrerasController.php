@@ -16,14 +16,15 @@ class CarrerasController extends AppController {
      *
      * @var array
      */
-    public $helpers = array('Html', 'Form');
-
-    /**
-     * Components
-     *
-     * @var array
-     */
+    public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
+    public $paginate = array(
+        'limit' => 12,
+        'order' => array(
+            'codigo' => 'asc'
+        ),
+        'fields' => array('id', 'codigo','nombre')
+    );
 
     /**
      * index method
@@ -32,6 +33,7 @@ class CarrerasController extends AppController {
      */
     public function index() {
         $this->Carrera->recursive = 0;
+        $this->Paginator->settings = $this->paginate;
         $this->set('carreras', $this->Paginator->paginate());
         $this->set('title_for_layout', 'Índice');
     }
