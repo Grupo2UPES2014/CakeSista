@@ -27,7 +27,13 @@ class Menu extends AppModel {
                 'ruta' => ''
             )
         ),
-        2 => 'y',
+        2 => array(
+            array(
+                'titulo' => 'Configuración',
+                'icono' => 'icoCog',
+                'ruta' => ''
+            )
+        ),
         3 => array(
             array(
                 'titulo' => 'Trámites',

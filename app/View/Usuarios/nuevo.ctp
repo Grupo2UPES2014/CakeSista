@@ -11,8 +11,9 @@ echo $this->Form->input('contrasena', array(
     'label' => false
 ));
 echo $this->Form->input('correo', array(
-    'placeholder'=>'Correo Electrónico',
+    'placeholder' => 'Correo Electrónico',
     'label' => false
 ));
-echo $this->Form->end('Registrase');
+echo $this->Form->button('Registrase', array('class' => 'save'));
+echo $this->Form->end();
 ?>

@@ -13,7 +13,7 @@ class UsuariosController extends AppController {
         'order' => array(
             'alias' => 'asc'
         ),
-        'fields' => array('id', 'alias'),
+        'fields' => array('id', 'alias', 'estado', 'role_id'),
         'conditions' => array('role_id' => array(1, 2))
     );
 
@@ -122,6 +122,8 @@ class UsuariosController extends AppController {
     public function acl() {
         $this->autoRender = false;
         $role = $this->Usuario->Role;
+        //---------------------------ESTUDIANTES------------------------
+        //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
         $this->Acl->allow($role, 'controllers/Pages/display/inicio');
@@ -130,29 +132,15 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Carreras');
         $this->Acl->allow($role, 'controllers/Usuarios/logout');
         $this->Acl->allow($role, 'controllers/Usuarios/index');
-        echo 'ok?';
-    }
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
+        //-------------------------OPERADORES--------------------
+        $role->id = 2;
+        $this->Acl->allow($role, 'controllers/Pages/display');
+        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
+        $this->Acl->allow($role, 'controllers/Usuarios/logout');
+        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
 
-    public function admin() {
-        $this->autoRender = false;
-        $data = array(
-            'Usuario' => array(
-                'alias' => 'admin',
-                'contrasena' => 'sista',
-                'correo' => 'firecat666@hotmail.com',
-                'estado' => 1,
-                'role_id' => 1
-            )
-        );
-        $validador = $this->Usuario->validator();
-        $this->Usuario->create();
-        var_dump($validador['alias']['formato'] = array(
-            'rule' => 'alphaNumeric',
-        ));
-        if ($this->Usuario->save($data)) {
-            echo 1;
-        } else
-            echo 0;
+        echo 'ok?';
     }
 
     public function index() {
@@ -165,15 +153,19 @@ class UsuariosController extends AppController {
     public function nuevo() {
         if ($this->request->is('post')) {
             $this->Usuario->create();
+            $validador = $this->Usuario->validator();
+            $validador['alias']['formato'] = array(
+                'rule' => 'alphaNumeric',
+            );
+            $this->request->data['Usuario']['role_id'] = 2;
+            $this->request->data['Usuario']['estado'] = 1;
             if ($this->Usuario->save($this->request->data)) {
-                $this->Session->setFlash(__('The usuario has been saved.'));
+                $this->Session->setFlash(__('¡El usuario se ha guardado con exito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The usuario could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
-        $roles = $this->Usuario->Role->find('list');
-        $this->set(compact('roles'));
     }
 
     public function edit($id = null) {
