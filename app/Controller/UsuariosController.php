@@ -133,6 +133,8 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/logout');
         $this->Acl->allow($role, 'controllers/Usuarios/index');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
         //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -168,37 +170,51 @@ class UsuariosController extends AppController {
         }
     }
 
-    public function edit($id = null) {
+    public function md_contrasena($id = null) {
         if (!$this->Usuario->exists($id)) {
-            throw new NotFoundException(__('Invalid usuario'));
-        }
-        if ($this->request->is(array('post', 'put'))) {
-            if ($this->Usuario->save($this->request->data)) {
-                $this->Session->setFlash(__('The usuario has been saved.'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('The usuario could not be saved. Please, try again.'));
-            }
+            $this->Session->setFlash(__('Código de Usuario Invalido.'), array('class' => 'ERROR'));
         } else {
-            $options = array('conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id));
-            $this->request->data = $this->Usuario->find('first', $options);
+            if ($this->request->is(array('post', 'put'))) {
+                $this->request->data['Usuario']['contrasena'] = $this->request->data['Usuario']['n_contrasena'];
+                if ($this->Usuario->save($this->request->data)) {
+                    $this->Session->setFlash(__('Se ha guardado la nueva contraseña con exito'), array('class' => 'OK'));
+                    return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
+                }
+            } else {
+                $this->Usuario->recursive = 0;
+                $options = array(
+                    'conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id),
+                    'fields' => array('id', 'alias')
+                );
+                $this->request->data = $this->Usuario->find('first', $options);
+            }
         }
-        $roles = $this->Usuario->Role->find('list');
-        $this->set(compact('roles'));
+        $this->set('title_for_layout', 'Nueva Contraseña');
     }
 
-    public function delete($id = null) {
-        $this->Usuario->id = $id;
-        if (!$this->Usuario->exists()) {
-            throw new NotFoundException(__('Invalid usuario'));
-        }
-        $this->request->allowMethod('post', 'delete');
-        if ($this->Usuario->delete()) {
-            $this->Session->setFlash(__('The usuario has been deleted.'));
+    public function md_estado($id = NULL) {
+        if (!$this->Usuario->exists($id)) {
+            $this->Session->setFlash(__('Código de Usuario Invalido.'), array('class' => 'ERROR'));
+        } else
+        if ($this->request->is(array('post', 'put'))) {
+            $this->Usuario->id = $this->request->data['Usuario']['id'];
+            if ($this->Usuario->saveField('estado', $this->request->data['Usuario']['estado'])) {
+                $this->Session->setFlash(__('El cambio de estado se ha realizado con exito'), array('class' => 'OK'));
+                return $this->redirect(array('action' => 'index'));
+            } else {
+                $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
+            }
         } else {
-            $this->Session->setFlash(__('The usuario could not be deleted. Please, try again.'));
+            $this->Usuario->recursive = 0;
+            $options = array(
+                'conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id),
+                'fields' => array('id', 'alias', 'estado')
+            );
+            $this->request->data = $this->Usuario->find('first', $options);
         }
-        return $this->redirect(array('action' => 'index'));
+        $this->set('title_for_layout', 'Cambiar estado');
     }
 
 }

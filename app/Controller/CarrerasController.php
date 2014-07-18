@@ -23,7 +23,7 @@ class CarrerasController extends AppController {
         'order' => array(
             'codigo' => 'asc'
         ),
-        'fields' => array('id', 'codigo','nombre')
+        'fields' => array('id', 'codigo', 'nombre')
     );
 
     /**
@@ -63,7 +63,7 @@ class CarrerasController extends AppController {
     public function editar($id = null) {
         if (!$this->Carrera->exists($id)) {
             $this->Session->setFlash(__('Código de Carrera Invalido.'), array('class' => 'ERROR'));
-        }
+        } else
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Carrera->save($this->request->data)) {
                 $this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
