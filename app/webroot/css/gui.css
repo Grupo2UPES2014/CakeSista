@@ -321,6 +321,13 @@ div.ico.mini
     transition:ease-in 0.25s;
     background-size:40px 40px;
 }
+div.ico.medium
+{
+    width:40px;
+    height:40px;
+    vertical-align:middle;
+    background-size:50px 50px;   
+}
 div.icoAlert
 {
     background: url(../img/icons/appbar.alert-orange.png) center;
@@ -364,6 +371,22 @@ div.icoCat
 div.icoUser
 {
     background: url(../img/icons/appbar.user.png) center;
+}
+div.icoUserStat
+{
+    background: url(../img/icons/appbar.people.checkbox.blue.png) center;
+}
+div.icoUserPass
+{
+    background: url(../img/icons/appbar.image.night.person.blue.png) center;
+}
+div.icoUpdate
+{
+    background: url(../img/icons/appbar.refresh.blue.png) center;
+}
+div.icoDel
+{
+    background: url(../img/icons/appbar.delete.blue.png) center;
 }
 
 /*---------------------------------ANIMACIONES---------------------------------------*/

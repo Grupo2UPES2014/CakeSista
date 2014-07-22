@@ -13,8 +13,8 @@
             <td><?php echo $facultad['Facultade']['id']; ?></td>
             <td><?php echo $facultad['Facultade']['nombre']; ?></td>
             <td>
-                <?php echo $this->Html->link('Editar',array('controller'=>'facultades','action'=>'editar',$facultad['Facultade']['id'])); ?>
-                <?php echo $this->Html->link('Eliminar',array('controller'=>'facultades','action'=>'eliminar',$facultad['Facultade']['id'])); ?>
+                <a href="<?php echo Router::url(array('controller' => 'facultades', 'action' => 'editar', $facultad['Facultade']['id'])); ?>"><div class="ico medium icoUpdate"></div></a>
+                <a href="<?php echo Router::url(array('controller' => 'facultades', 'action' => 'eliminar', $facultad['Facultade']['id'])); ?>"><div class="ico medium icoDel"></div></a>
             </td>
         </tr>
     <?php endforeach; ?>
