@@ -28,10 +28,14 @@ class UsuariosController extends AppController {
                     $this->request->data['Usuario']['role_id'] = 3;
                     $this->request->data['Usuario']['estado'] = 0;
                     if ($this->Usuario->save($this->request->data)) {
-                        $llave = substr(md5('SISTA' . $this->request->data['Usuario']['alias']), 0, 10);
-                        $this->__enviar($this->request->data['Usuario']['correo'], $this->request->data['Usuario']['alias'], $llave);
-                        $this->Session->setFlash(__('Se ha enviado una verificación a tu correo, para continuar revisar el mismo.'), array('class' => 'OK'));
-                        return $this->redirect('/');
+                        if ($this->Usuario->actualizarEstudiante($this->request->data['Usuario']['alias'], $this->Usuario->id)) {
+                            $llave = substr(md5('SISTA' . $this->request->data['Usuario']['alias']), 0, 10);
+                            $this->__enviar($this->request->data['Usuario']['correo'], $this->request->data['Usuario']['alias'], $llave);
+                            $this->Session->setFlash(__('Se ha enviado una verificación a tu correo, para continuar revisar el mismo.'), array('class' => 'OK'));
+                            return $this->redirect('/');
+                        } else {
+                            $this->Session->setFlash(__('¡Ha ocurrido un error al registrar el usuario! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                        }
                     } else {
                         $this->Session->setFlash(__('¡Ha ocurrido un error al registrar el usuario! , por favor intente de nuevo.'), array('class' => 'ERROR'));
                     }

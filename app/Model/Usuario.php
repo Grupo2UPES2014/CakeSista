@@ -11,7 +11,7 @@ class Usuario extends AppModel {
         'alias' => array(
             'formato' => array(
                 'rule' => '/^[a-zA-Z]{2}[0-9]{6}$/',
-            'message' => 'Formato invalido',
+                'message' => 'Formato invalido',
             //'allowEmpty' => false,
             //'required' => false,
             //'last' => false, // Stop validation after this rule
@@ -149,6 +149,18 @@ class Usuario extends AppModel {
             return true;
         }
         return false;
+    }
+
+    public function actualizarEstudiante($carnet, $id) {
+        $options = array('conditions' => array('Estudiante.carnet' => $carnet), 'fields' => array('id'));
+        $estudiante = $this->Estudiante->find('first', $options);
+        $this->Estudiante->read(null, $estudiante['Estudiante']['id']);
+        $this->Estudiante->set('usuario_id', $id);
+        if ($this->Estudiante->save()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public function beforeSave($options = array()) {

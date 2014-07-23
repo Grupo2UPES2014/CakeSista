@@ -166,6 +166,12 @@ button.update
     background-repeat: no-repeat;
     background-position: left;
 }
+button.del
+{
+    background-image: url(../img/icons/appbar.delete.png);
+    background-repeat: no-repeat;
+    background-position: left;  
+}
 #sistacontainer #sistacontent #sistadesktop .opciones
 {
     display:table;
@@ -237,12 +243,12 @@ button.update
     height: 50px;
     background: url(../img/icons/appbar.section.expand.png) #233E78 no-repeat center;
     border: 1px solid #091f4e;
+    display: inline-block;
 }
 #sistacontainer #sistacontent #sistadesktop div.btnNuevo:hover
 {
     background-color: #2b72a6;
 }
-
 /*----------------------------ALERTAS------------------------------------------------*/
 #sistacontainer #sistacontent #sistamensajes
 {
@@ -323,8 +329,8 @@ div.ico.mini
 }
 div.ico.medium
 {
-    width:40px;
-    height:40px;
+    width:30px;
+    height:30px;
     vertical-align:middle;
     background-size:50px 50px;   
 }

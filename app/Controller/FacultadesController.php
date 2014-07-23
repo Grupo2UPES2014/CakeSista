@@ -76,6 +76,8 @@ class FacultadesController extends AppController {
             }
             return $this->redirect(array('action' => 'index'));
         }
+        $options = array('conditions' => array('Facultade.' . $this->Facultade->primaryKey => $id), 'fields' => array('nombre'));
+        $this->set('facultad', $this->Facultade->find('first', $options));
         $this->set('title_for_layout', 'Eliminar');
     }
 
