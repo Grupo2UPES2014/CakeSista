@@ -1,0 +1,19 @@
+<h2>Nuevo trámite</h2>
+<?php
+echo $this->Form->create('Cattramite');
+echo $this->Form->input('nombre', array('label' => false, 'placeholder' => 'Nombre'));
+echo $this->Form->input('arancel', array('label' => false, 'placeholder' => 'Arancel', 'step' => '0.5'));
+echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholder' => 'Porcentaje de racargo', 'step' => '0.5'));
+?>
+<fieldset><legend>Tareas:</legend>
+    <?php
+    echo $this->Form->hidden('Cattarea.0.correlativo', array('value' => '1'));
+    echo $this->Form->input('Cattarea.0.nombre', array('label' => false, 'placeholder' => 'Nombre'));
+    echo $this->Form->input('Cattarea.0.descripcion', array('label' => false, 'placeholder' => 'Descripción'));
+    echo $this->Form->input('Cattarea.0.catcargo_id', array('empty' => 'Seleccione el cargo', 'label' => false));
+    ?>
+</fieldset>
+<?php
+echo $this->Form->button('Guardar ', array('class' => 'save'));
+echo $this->Form->end();
+?>

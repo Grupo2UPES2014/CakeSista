@@ -127,6 +127,8 @@ class UsuariosController extends AppController {
         $this->autoRender = false;
         $role = $this->Usuario->Role;
         //---------------------------ESTUDIANTES------------------------
+        $role->id = 3;
+        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
         //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -139,6 +141,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
         $this->Acl->allow($role, 'controllers/Usuarios/md_contrasena');
         $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
+        $this->Acl->allow($role, 'controllers/Cattramites');
         //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');

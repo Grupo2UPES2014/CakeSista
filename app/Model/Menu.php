@@ -4,13 +4,18 @@ App::uses('AppModel', 'Model');
 
 /**
  * CakePHP Menu
- * @author Amaury
+ * @author BeardMan
  */
 class Menu extends AppModel {
 
     public $useTable = false;
     public $menu = array(
         1 => array(
+            array(
+                'titulo' => 'Trámites',
+                'icono' => 'icoTramite',
+                'ruta' => 'cattramites'
+            ),
             array(
                 'titulo' => 'Catágolos',
                 'icono' => 'icoCat',
@@ -25,7 +30,7 @@ class Menu extends AppModel {
                 'titulo' => 'Configuración',
                 'icono' => 'icoCog',
                 'ruta' => ''
-            )
+            ),
         ),
         2 => array(
             array(
