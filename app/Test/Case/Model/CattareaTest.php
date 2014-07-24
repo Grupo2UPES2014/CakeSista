@@ -23,8 +23,13 @@ class CattareaTest extends CakeTestCase {
 		'app.facultade',
 		'app.asignatura',
 		'app.tramite',
+		'app.cattramite',
+		'app.calendario',
+		'app.mandamiento',
+		'app.cuenta',
 		'app.tarea',
-		'app.cattramite'
+		'app.formulario',
+		'app.catformulario'
 	);
 
 /**

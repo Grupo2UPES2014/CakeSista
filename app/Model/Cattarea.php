@@ -25,8 +25,8 @@ class Cattarea extends AppModel {
      */
     public $validate = array(
         'correlativo' => array(
-            'numeric' => array(
-                'rule' => array('numeric'),
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
             //'message' => 'Your custom message here',
             //'allowEmpty' => false,
             //'required' => false,
@@ -45,6 +45,16 @@ class Cattarea extends AppModel {
             ),
         ),
         'descripcion' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'tipo' => array(
             'notEmpty' => array(
                 'rule' => array('notEmpty'),
             //'message' => 'Your custom message here',
