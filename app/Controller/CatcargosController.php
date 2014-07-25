@@ -14,6 +14,7 @@ class CatcargosController extends AppController {
  *
  * @var array
  */
+        public $helpers = array('Html', 'Form', 'Paginator');
 	public $components = array('Paginator', 'Session');
 
 /**
@@ -46,14 +47,14 @@ class CatcargosController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function nuevo() {
 		if ($this->request->is('post')) {
-			$this->Catcargo->create();
-			if ($this->Catcargo->save($this->request->data)) {
-				$this->Session->setFlash(__('The catcargo has been saved.'));
+			$this->Catcargo->create(); //Limpia modelo
+			if ($this->Catcargo->save($this->request->data)) {  //variable request con datos
+				$this->Session->setFlash(__('¡Se ha guardado el Cargo con éxito!'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The catcargo could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		}
 	}
