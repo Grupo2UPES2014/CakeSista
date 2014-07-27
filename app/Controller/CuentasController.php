@@ -58,6 +58,7 @@ class CuentasController extends AppController {
 				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		}
+                $this->set('title_for_layout', 'Nuevo');
 	}
 
 /**
@@ -67,10 +68,11 @@ class CuentasController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function editar($id = null) {
 		if (!$this->Cuenta->exists($id)) {
-			throw new NotFoundException(__('Invalid cuenta'));
-		}
+			//throw new NotFoundException(__('Invalid cuenta'));
+                    $this->Session->setFlash(__('Código de Cuenta Invalido.'), array('class' => 'ERROR'));
+		} 
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Cuenta->save($this->request->data)) {
 				$this->Session->setFlash(__('The cuenta has been saved.'));
