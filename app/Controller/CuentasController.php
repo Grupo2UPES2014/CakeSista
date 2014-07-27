@@ -14,7 +14,9 @@ class CuentasController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Session');
+        public $helpers = array('Html', 'Form', 'Paginator');
+        public $components = array('Paginator', 'Session');
+
 
 /**
  * index method
@@ -46,11 +48,11 @@ class CuentasController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function nuevo() {
 		if ($this->request->is('post')) {
 			$this->Cuenta->create();
 			if ($this->Cuenta->save($this->request->data)) {
-				$this->Session->setFlash(__('The cuenta has been saved.'));
+				$this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The cuenta could not be saved. Please, try again.'));
