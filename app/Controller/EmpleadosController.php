@@ -14,7 +14,8 @@ class EmpleadosController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Session');
+    public $helpers = array('Html', 'Form', 'Paginator');
+    public $components = array('Paginator', 'Session');
 
 /**
  * index method
@@ -46,19 +47,18 @@ class EmpleadosController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function nuevo() {
 		if ($this->request->is('post')) {
 			$this->Empleado->create();
 			if ($this->Empleado->save($this->request->data)) {
-				$this->Session->setFlash(__('The empleado has been saved.'));
+				$this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The empleado could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
+                        
 		}
-		$usuarios = $this->Empleado->Usuario->find('list');
-		$catcargos = $this->Empleado->Catcargo->find('list');
-		$this->set(compact('usuarios', 'catcargos'));
+            $this->set('title_for_layout', 'Nuevo');
 	}
 
 /**
@@ -68,24 +68,23 @@ class EmpleadosController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function editar($id = null) {
 		if (!$this->Empleado->exists($id)) {
-			throw new NotFoundException(__('Invalid empleado'));
-		}
+			$this->Session->setFlash(__('Código de Empleado Invalido.'), array('class' => 'ERROR'));
+		} else {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Empleado->save($this->request->data)) {
-				$this->Session->setFlash(__('The empleado has been saved.'));
+				$this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The empleado could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		} else {
 			$options = array('conditions' => array('Empleado.' . $this->Empleado->primaryKey => $id));
 			$this->request->data = $this->Empleado->find('first', $options);
 		}
-		$usuarios = $this->Empleado->Usuario->find('list');
-		$catcargos = $this->Empleado->Catcargo->find('list');
-		$this->set(compact('usuarios', 'catcargos'));
+                }
+                $this->set('title_for_layout', 'Editar');
 	}
 
 /**
@@ -95,17 +94,23 @@ class EmpleadosController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
+	public function eliminar($id = null) {
 		$this->Empleado->id = $id;
 		if (!$this->Empleado->exists()) {
-			throw new NotFoundException(__('Invalid empleado'));
+			throw new NotFoundException(__('Código de Facultad Invalido.'), array('class' => 'ERROR'));
 		}
-		$this->request->allowMethod('post', 'delete');
+		
+                $this->request->allowMethod('post', 'delete');
+                if ($this->request->is(array('post', 'delete'))) {
 		if ($this->Empleado->delete()) {
-			$this->Session->setFlash(__('The empleado has been deleted.'));
+			$this->Session->setFlash(__('Se ha eliminado la facultad con exito'), array('class' => 'OK'));
 		} else {
-			$this->Session->setFlash(__('The empleado could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+        $options = array('conditions' => array('Empleado.' . $this->Empleado->primaryKey => $id), 'fields' => array('nombre'));
+        $this->set('empleado', $this->Empleado->find('first', $options));
+        $this->set('title_for_layout', 'Eliminar');
+}
 }
