@@ -52,10 +52,10 @@ class CuentasController extends AppController {
 		if ($this->request->is('post')) {
 			$this->Cuenta->create();
 			if ($this->Cuenta->save($this->request->data)) {
-				$this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'), array('class' => 'OK'));
+				$this->Session->setFlash(__('¡Se ha guardado la cuenta con éxito!'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The cuenta could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		}
 	}
