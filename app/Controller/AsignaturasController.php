@@ -14,7 +14,8 @@ class AsignaturasController extends AppController {
  *
  * @var array
  */
-	public $components = array('Paginator', 'Session');
+    public $helpers = array('Html', 'Form', 'Paginator');
+    public $components = array('Paginator', 'Session');
 
 /**
  * index method
@@ -46,18 +47,23 @@ class AsignaturasController extends AppController {
  *
  * @return void
  */
-	public function add() {
+	public function nuevo() {
 		if ($this->request->is('post')) {
 			$this->Asignatura->create();
 			if ($this->Asignatura->save($this->request->data)) {
-				$this->Session->setFlash(__('The asignatura has been saved.'));
+				$this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The asignatura could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		}
-		$carreras = $this->Asignatura->Carrera->find('list');
-		$this->set(compact('carreras'));
+                
+		$this->set('title_for_layout', 'Nuevo');
+                
+                /*$carreras = $this->Asignatura->Carrera->find('list');
+        	$this->set(compact('carreras'));
+                 * 
+                 */
 	}
 
 /**
@@ -67,24 +73,29 @@ class AsignaturasController extends AppController {
  * @param string $id
  * @return void
  */
-	public function edit($id = null) {
+	public function editar($id = null) {
 		if (!$this->Asignatura->exists($id)) {
-			throw new NotFoundException(__('Invalid asignatura'));
-		}
+			// throw new NotFoundException(__('Invalid asignatura'));
+                    $this->Session->setFlash(__('Código de Asignatura Inválido.'), array('class' => 'ERROR'));
+		} else {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Asignatura->save($this->request->data)) {
-				$this->Session->setFlash(__('The asignatura has been saved.'));
+				$this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The asignatura could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		} else {
 			$options = array('conditions' => array('Asignatura.' . $this->Asignatura->primaryKey => $id));
 			$this->request->data = $this->Asignatura->find('first', $options);
 		}
-		$carreras = $this->Asignatura->Carrera->find('list');
+		/*$carreras = $this->Asignatura->Carrera->find('list');
 		$this->set(compact('carreras'));
+                 * 
+                 */
 	}
+        $this->set('title_for_layout', 'Editar');
+        }
 
 /**
  * delete method
@@ -93,17 +104,24 @@ class AsignaturasController extends AppController {
  * @param string $id
  * @return void
  */
-	public function delete($id = null) {
+	public function eliminar($id = null) {
 		$this->Asignatura->id = $id;
 		if (!$this->Asignatura->exists()) {
-			throw new NotFoundException(__('Invalid asignatura'));
+			// throw new NotFoundException(__('Invalid asignatura'));
+                    $this->Session->setFlash(__('Código de Asignatura Inválido.'), array('class' => 'ERROR'));
 		}
-		$this->request->allowMethod('post', 'delete');
+		
+                //$this->request->allowMethod('post', 'delete');
+                if ($this->request->is(array('post', 'delete'))) {
 		if ($this->Asignatura->delete()) {
-			$this->Session->setFlash(__('The asignatura has been deleted.'));
+			$this->Session->setFlash(__('Se ha eliminado la facultad con exito'), array('class' => 'OK'));
 		} else {
-			$this->Session->setFlash(__('The asignatura could not be deleted. Please, try again.'));
+			$this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! , por favor intente de nuevo.'), array('class' => 'ERROR'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+        $options = array('conditions' => array('Asignatura.' . $this->Asignatura->primaryKey => $id), 'fields' => array('codigo'));
+        $this->set('asignatura', $this->Asignatura->find('first', $options));
+        $this->set('title_for_layout', 'Eliminar');
+        }
 }
