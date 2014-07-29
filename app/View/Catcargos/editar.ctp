@@ -1,4 +1,4 @@
-<h2>Actualizar Cargos</h2>
+<h2>Actualizar Cargo</h2>
 <?php
 echo $this->Form->create('Cargo');
 echo $this->Form->input('id');

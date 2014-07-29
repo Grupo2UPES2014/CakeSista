@@ -45,7 +45,7 @@ class FacultadesController extends AppController {
 
     public function editar($id = null) {
         if (!$this->Facultade->exists($id)) {
-            $this->Session->setFlash(__('Código de Facultad Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Facultad Inválido.'), array('class' => 'ERROR'));
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 if ($this->Facultade->save($this->request->data)) {
@@ -65,7 +65,7 @@ class FacultadesController extends AppController {
     public function eliminar($id = null) {
         $this->Facultade->id = $id;
         if (!$this->Facultade->exists()) {
-            $this->Session->setFlash(__('Código de Facultad Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Facultad Inválido.'), array('class' => 'ERROR'));
         }
         //$this->request->allowMethod('post', 'delete');
         if ($this->request->is(array('post', 'delete'))) {
