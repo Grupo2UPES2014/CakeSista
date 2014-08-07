@@ -143,6 +143,8 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
         $this->Acl->allow($role, 'controllers/Cattramites');
         $this->Acl->allow($role, 'controllers/Catcargos');
+        $this->Acl->allow($role, 'controllers/Asignaturas');
+        $this->Acl->allow($role, 'controllers/Empleados');  
         //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
