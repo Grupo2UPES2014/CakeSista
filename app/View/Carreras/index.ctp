@@ -14,7 +14,7 @@
             <td><?php echo $carrera['Carrera']['codigo']; ?></td>
             <td><?php echo $carrera['Carrera']['nombre']; ?></td>
             <td>
-                <a href="<?php echo Router::url(array('controller' => 'carreras', 'action' => 'editar', $carrera['Carrera']['id'])); ?>"><div class="ico medium icoUpdate"></div></a>            
+                <a href="<?php echo Router::url(array('controller' => 'carreras', 'action' => 'editar', $carrera['Carrera']['id'])); ?>"><div class="ico medium icoUpdate"></div></a>
             </td>
         </tr>
         <?php

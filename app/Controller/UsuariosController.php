@@ -129,6 +129,7 @@ class UsuariosController extends AppController {
         //---------------------------ESTUDIANTES------------------------
         $role->id = 3;
         $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
+        $this->Acl->allow($role, 'controllers/Pages/display/config');
         //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -144,13 +145,16 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Cattramites');
         $this->Acl->allow($role, 'controllers/Catcargos');
         $this->Acl->allow($role, 'controllers/Asignaturas');
-        $this->Acl->allow($role, 'controllers/Empleados');  
+        $this->Acl->allow($role, 'controllers/Empleados');
+        $this->Acl->allow($role, 'controllers/Cuentas');
+        $this->Acl->allow($role, 'controllers/Pages/display/config');
         //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
         $this->Acl->allow($role, 'controllers/Pages/display/inicio');
         $this->Acl->allow($role, 'controllers/Usuarios/logout');
         $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
+        $this->Acl->allow($role, 'controllers/Pages/display/config');
 
         echo 'ok?';
     }
@@ -171,13 +175,15 @@ class UsuariosController extends AppController {
             );
             $this->request->data['Usuario']['role_id'] = 2;
             $this->request->data['Usuario']['estado'] = 1;
-            if ($this->Usuario->save($this->request->data)) {
+            if ($this->Usuario->saveAssociated($this->request->data)) {
                 $this->Session->setFlash(__('¡El usuario se ha guardado con exito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
+        $catcargos = $this->Usuario->Empleado->Catcargo->find('list');
+        $this->set(compact('catcargos'));
     }
 
     public function md_contrasena($id = null) {

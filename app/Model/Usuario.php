@@ -157,9 +157,9 @@ class Usuario extends AppModel {
         $this->Estudiante->read(null, $estudiante['Estudiante']['id']);
         $this->Estudiante->set('usuario_id', $id);
         if ($this->Estudiante->save()) {
-            return 1;
+            return true;
         } else {
-            return 0;
+            return false;
         }
     }
 

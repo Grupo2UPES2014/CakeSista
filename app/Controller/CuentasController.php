@@ -26,6 +26,7 @@ class CuentasController extends AppController {
 	public function index() {
 		$this->Cuenta->recursive = 0;
 		$this->set('cuentas', $this->Paginator->paginate());
+                $this->set('title_for_layout', 'Índice');
 	}
 
 /**

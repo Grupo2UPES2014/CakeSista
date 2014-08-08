@@ -25,22 +25,9 @@ class CatcargosController extends AppController {
 	public function index() {
 		$this->Catcargo->recursive = 0;
 		$this->set('catcargos', $this->Paginator->paginate());
+                $this->set('title_for_layout', 'Índice');
 	}
 
-/**
- * view method
- *
- * @throws NotFoundException
- * @param string $id
- * @return void
- */
-	public function view($id = null) {
-		if (!$this->Catcargo->exists($id)) {
-			throw new NotFoundException(__('Invalid catcargo'));
-		}
-		$options = array('conditions' => array('Catcargo.' . $this->Catcargo->primaryKey => $id));
-		$this->set('catcargo', $this->Catcargo->find('first', $options));
-	}
 
 /**
  * add method

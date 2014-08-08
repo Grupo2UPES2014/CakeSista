@@ -29,14 +29,14 @@ class Menu extends AppModel {
             array(
                 'titulo' => 'Configuración',
                 'icono' => 'icoCog',
-                'ruta' => ''
+                'ruta' => 'pages/config'
             ),
         ),
         2 => array(
             array(
                 'titulo' => 'Configuración',
                 'icono' => 'icoCog',
-                'ruta' => ''
+                'ruta' => 'pages/config'
             )
         ),
         3 => array(
@@ -54,7 +54,7 @@ class Menu extends AppModel {
             array(
                 'titulo' => 'Configuración',
                 'icono' => 'icoCog',
-                'ruta' => ''
+                'ruta' => 'pages/config'
             )
         )
     );

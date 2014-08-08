@@ -44,5 +44,6 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
         </div>
         <?php echo $this->Html->script('jquery-1.11.1.min'); ?>
         <?php echo $this->Html->script('gui'); ?>
+        <?php echo $this->fetch('sistajs'); ?> 
     </body>
 </html>
