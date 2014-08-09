@@ -30,6 +30,12 @@ class CattramitesController extends AppController {
         $this->set('cattramites', $this->Paginator->paginate());
     }
 
+    public function tramites() {
+        $this->set('title_for_layout', 'Trámites Academicos');
+        $this->Cattramite->recursive = 0;
+        $this->set('cattramites', $this->Paginator->paginate());
+    }
+
     /**
      * add method
      *

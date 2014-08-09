@@ -154,6 +154,10 @@ button:hover
 {
     background-color: #2b72a6;
 }
+button.plus
+{
+    width: 100%;
+}
 button.save
 {
     background-image: url(../img/icons/appbar.save.png);

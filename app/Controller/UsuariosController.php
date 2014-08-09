@@ -130,6 +130,8 @@ class UsuariosController extends AppController {
         $role->id = 3;
         $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
         $this->Acl->allow($role, 'controllers/Pages/display/config');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Cattramites/tramites');
         //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -141,6 +143,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/index');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
         $this->Acl->allow($role, 'controllers/Usuarios/md_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/amd_contrasena');
         $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
         $this->Acl->allow($role, 'controllers/Cattramites');
         $this->Acl->allow($role, 'controllers/Catcargos');
@@ -148,6 +151,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Empleados');
         $this->Acl->allow($role, 'controllers/Cuentas');
         $this->Acl->allow($role, 'controllers/Pages/display/config');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
         //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -155,6 +159,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/logout');
         $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
         $this->Acl->allow($role, 'controllers/Pages/display/config');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
 
         echo 'ok?';
     }
@@ -186,7 +191,12 @@ class UsuariosController extends AppController {
         $this->set(compact('catcargos'));
     }
 
-    public function md_contrasena($id = null) {
+    public function amd_contrasena($id = null)
+    {
+        $this->_md_contrasena($id);
+    }
+
+    private function _md_contrasena($id = null) {
         if (!$this->Usuario->exists($id)) {
             $this->Session->setFlash(__('Código de Usuario Invalido.'), array('class' => 'ERROR'));
         } else {

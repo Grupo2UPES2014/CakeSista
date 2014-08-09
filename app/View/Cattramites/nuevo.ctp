@@ -19,7 +19,10 @@ echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholde
     echo $this->Form->select('Cattarea.0.tipo', $tipos, array('empty' => 'Seleccione el Tipo'));
     echo $this->Form->input('Cattarea.0.catcargo_id', array('empty' => 'Seleccione el cargo', 'label' => false));
     ?>
-    <button id="mas">+</button>
+    <div id="tareas">
+        
+    </div>
+    <button class="plus" id="mas">+</button>
 </fieldset>
 <?php
 echo $this->Form->button('Guardar', array('class' => 'save'));
