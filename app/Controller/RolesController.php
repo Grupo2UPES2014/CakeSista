@@ -29,7 +29,7 @@ class RolesController extends AppController {
     public function editar($id = null) {
         $this->set('title_for_layout', 'Editar');
         if (!$this->Role->exists($id)) {
-            $this->Session->setFlash(__('Código de Rol Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Rol Inválido.'), array('class' => 'ERROR'));
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 if ($this->Role->save($this->request->data)) {

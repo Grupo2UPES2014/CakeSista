@@ -56,7 +56,7 @@ class EmpleadosController extends AppController {
      */
     public function editar($id = null) {
         if (!$this->Empleado->exists($id)) {
-            $this->Session->setFlash(__('Código de Empleado Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Empleado Inválido.'), array('class' => 'ERROR'));
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 if ($this->Empleado->save($this->request->data)) {
@@ -85,7 +85,7 @@ class EmpleadosController extends AppController {
     public function eliminar($id = null) {
         $this->Empleado->id = $id;
         if (!$this->Empleado->exists()) {
-            throw new NotFoundException(__('Código de Facultad Invalido.'), array('class' => 'ERROR'));
+            throw new NotFoundException(__('Código de Facultad Inválido.'), array('class' => 'ERROR'));
         }
 
         $this->request->allowMethod('post', 'delete');

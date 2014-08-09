@@ -55,7 +55,7 @@ class CatcargosController extends AppController {
  */
 	public function editar ($id = null) {
 		if (!$this->Catcargo->exists($id)) {
-			$this->Session->setFlash(__('Código de Cargo Invalido.'), array('class' => 'ERROR'));
+			$this->Session->setFlash(__('Código de Cargo Inválido.'), array('class' => 'ERROR'));
 		} else {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Catcargo->save($this->request->data)) {

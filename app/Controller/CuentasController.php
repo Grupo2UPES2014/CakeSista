@@ -72,7 +72,7 @@ class CuentasController extends AppController {
 	public function editar($id = null) {
 		if (!$this->Cuenta->exists($id)) {
 			//throw new NotFoundException(__('Invalid cuenta'));
-                    $this->Session->setFlash(__('Código de Cuenta Invalido.'), array('class' => 'ERROR'));
+                    $this->Session->setFlash(__('Código de Cuenta Inválido.'), array('class' => 'ERROR'));
 		} else {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Cuenta->save($this->request->data)) {

@@ -62,7 +62,7 @@ class CarrerasController extends AppController {
      */
     public function editar($id = null) {
         if (!$this->Carrera->exists($id)) {
-            $this->Session->setFlash(__('Código de Carrera Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Carrera Inválido.'), array('class' => 'ERROR'));
         } else
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Carrera->save($this->request->data)) {
