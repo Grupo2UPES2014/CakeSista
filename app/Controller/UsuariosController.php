@@ -227,7 +227,7 @@ class UsuariosController extends AppController {
         if ($this->request->is(array('post', 'put'))) {
             $this->Usuario->id = $this->request->data['Usuario']['id'];
             if ($this->Usuario->saveField('estado', $this->request->data['Usuario']['estado'])) {
-                $this->Session->setFlash(__('El cambio de estado se ha realizado con exito'), array('class' => 'OK'));
+                $this->Session->setFlash(__('El cambio de estado se ha realizado con éxito'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
@@ -242,5 +242,30 @@ class UsuariosController extends AppController {
         }
         $this->set('title_for_layout', 'Cambiar estado');
     }
+    
+        public function md_correo($id = NULL) {
+        if (!$this->Usuario->exists($id)) {
+            $this->Session->setFlash(__('Correo Inválido.'), array('class' => 'ERROR'));
+        } else
+        if ($this->request->is(array('post', 'put'))) {
+            $this->Usuario->id = $this->request->data['Usuario']['id'];
+            if ($this->Usuario->saveField('correo', $this->request->data['Usuario']['n_correo'])) {
+                $this->Session->setFlash(__('El cambio de correo se ha realizado con éxito'), array('class' => 'OK'));
+                return $this->redirect(array('controller' => 'pages','action' => 'display','config'));
+            } else {
+                $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
+            }
+        } else {
+            $this->Usuario->recursive = 0;
+            $options = array(
+                'conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id),
+                'fields' => array('id', 'alias', 'correo')
+            );
+            $this->request->data = $this->Usuario->find('first', $options);
+        }
+        $this->set('title_for_layout', 'Cambiar correo');
+    }
+    
+    
 
 }
