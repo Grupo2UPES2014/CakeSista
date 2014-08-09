@@ -67,10 +67,15 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
+	/*	'host' => 'localhost',
 		'login' => 'user',
 		'password' => 'password',
 		'database' => 'database_name',
+         */   
+          	'host' => '192.168.1.5',
+		'login' => 'root',
+		'password' => 'root',
+		'database' => 'sista',
 		'prefix' => '',
 		//'encoding' => 'utf8',
 	);
@@ -78,11 +83,16 @@ class DATABASE_CONFIG {
 	public $test = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
+	/*	'host' => 'localhost',
 		'login' => 'user',
 		'password' => 'password',
 		'database' => 'test_database_name',
-		'prefix' => '',
+        */    
+            	'host' => '192.168.1.5',
+		'login' => 'root',
+		'password' => 'root',
+		'database' => 'sista',
+                'prefix' => '',
 		//'encoding' => 'utf8',
 	);
 }
