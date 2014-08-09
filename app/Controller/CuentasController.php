@@ -56,7 +56,7 @@ class CuentasController extends AppController {
 				$this->Session->setFlash(__('¡Se ha guardado la cuenta con éxito!'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		}
                 $this->set('title_for_layout', 'Nuevo');
@@ -76,10 +76,10 @@ class CuentasController extends AppController {
 		} else {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Cuenta->save($this->request->data)) {
-				$this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
+				$this->Session->setFlash(__('Se han guardado los cambios con éxito.'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		} else {
 			$options = array('conditions' => array('Cuenta.' . $this->Cuenta->primaryKey => $id));
@@ -100,14 +100,14 @@ class CuentasController extends AppController {
 		$this->Cuenta->id = $id;
 		if (!$this->Cuenta->exists()) {
 			//throw new NotFoundException(__('Invalid cuenta'));
-                    $this->Session->setFlash(__('Código de Cuenta Invalido.'), array('class' => 'ERROR'));
+                    $this->Session->setFlash(__('Código de Cuenta Inválido.'), array('class' => 'ERROR'));
 		}
 		//$this->request->allowMethod('post', 'delete');
 		if ($this->request->is(array('post', 'delete'))) {
                     if ($this->Cuenta->delete()) {
-			$this->Session->setFlash(__('Se ha eliminado la facultad con exito'), array('class' => 'OK'));
+			$this->Session->setFlash(__('Se ha eliminado la facultad con éxito'), array('class' => 'OK'));
                     } else {
-			$this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+			$this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! por favor intente de nuevo.'), array('class' => 'ERROR'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}

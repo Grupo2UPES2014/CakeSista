@@ -45,7 +45,7 @@ class CarrerasController extends AppController {
                 $this->Session->setFlash(__('¡Se ha guardado la Carrera con éxito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
         $facultades = $this->Carrera->Facultade->find('list');
@@ -66,10 +66,10 @@ class CarrerasController extends AppController {
         } else
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Carrera->save($this->request->data)) {
-                $this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
+                $this->Session->setFlash(__('Se han guardado los cambios con éxito.'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         } else {
             $options = array('conditions' => array('Carrera.' . $this->Carrera->primaryKey => $id));

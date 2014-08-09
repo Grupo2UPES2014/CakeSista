@@ -37,7 +37,7 @@ class FacultadesController extends AppController {
                 return $this->redirect(array('action' => 'index'));
             } else {
                 //
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
         $this->set('title_for_layout', 'Nuevo');
@@ -49,10 +49,10 @@ class FacultadesController extends AppController {
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 if ($this->Facultade->save($this->request->data)) {
-                    $this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
+                    $this->Session->setFlash(__('Se han guardado los cambios con éxito.'), array('class' => 'OK'));
                     return $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
                 }
             } else {
                 $options = array('conditions' => array('Facultade.' . $this->Facultade->primaryKey => $id));
@@ -70,9 +70,9 @@ class FacultadesController extends AppController {
         //$this->request->allowMethod('post', 'delete');
         if ($this->request->is(array('post', 'delete'))) {
             if ($this->Facultade->delete()) {
-                $this->Session->setFlash(__('Se ha eliminado la facultad con exito'), array('class' => 'OK'));
+                $this->Session->setFlash(__('Se ha eliminado la facultad con éxito'), array('class' => 'OK'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
             return $this->redirect(array('action' => 'index'));
         }

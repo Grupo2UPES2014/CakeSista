@@ -21,7 +21,7 @@ class RolesController extends AppController {
                 $this->Session->setFlash(__('¡Se ha guardado el rol con éxito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
     }
@@ -33,10 +33,10 @@ class RolesController extends AppController {
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 if ($this->Role->save($this->request->data)) {
-                    $this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
+                    $this->Session->setFlash(__('Se han guardado los cambios con éxito.'), array('class' => 'OK'));
                     return $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
                 }
             } else {
                 $options = array('conditions' => array('Role.' . $this->Role->primaryKey => $id));
