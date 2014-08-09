@@ -26,7 +26,7 @@
             ?>
 
             <td>
-                <a href="<?php echo Router::url(array('controller' => 'usuarios', 'action' => 'md_contrasena', $usuario['Usuario']['id'])); ?>"><div class="ico medium icoUserPass"></div></a> 
+                <a href="<?php echo Router::url(array('controller' => 'usuarios', 'action' => 'amd_contrasena', $usuario['Usuario']['id'])); ?>"><div class="ico medium icoUserPass"></div></a> 
                 <a href="<?php echo Router::url(array('controller' => 'usuarios', 'action' => 'md_estado', $usuario['Usuario']['id'])); ?>"><div class="ico medium icoUserStat"></div></a>
             </td>
         </tr>
