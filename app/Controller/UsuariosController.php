@@ -235,13 +235,13 @@ class UsuariosController extends AppController {
     
         public function md_correo($id = NULL) {
         if (!$this->Usuario->exists($id)) {
-            $this->Session->setFlash(__('Correo Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Correo Inválido.'), array('class' => 'ERROR'));
         } else
         if ($this->request->is(array('post', 'put'))) {
             $this->Usuario->id = $this->request->data['Usuario']['id'];
-            if ($this->Usuario->saveField('correo', $this->request->data['Usuario']['correo'])) {
+            if ($this->Usuario->saveField('correo', $this->request->data['Usuario']['n_correo'])) {
                 $this->Session->setFlash(__('El cambio de correo se ha realizado con éxito'), array('class' => 'OK'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('controller' => 'pages','action' => 'display','config'));
             } else {
                 $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
             }
