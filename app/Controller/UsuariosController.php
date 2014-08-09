@@ -192,8 +192,9 @@ class UsuariosController extends AppController {
     }
 
     public function amd_contrasena($id = null) {
-        $this->_md_contrasena($id);
-        return $this->redirect(array('action' => 'index'));
+        if ($this->_md_contrasena($id)) {
+            return $this->redirect(array('action' => 'index'));
+        }
     }
 
     private function _md_contrasena($id = null) {
@@ -204,6 +205,7 @@ class UsuariosController extends AppController {
                 $this->request->data['Usuario']['contrasena'] = $this->request->data['Usuario']['n_contrasena'];
                 if ($this->Usuario->save($this->request->data)) {
                     $this->Session->setFlash(__('Se ha guardado la nueva contraseña con exito'), array('class' => 'OK'));
+                    return true;
                 } else {
                     $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
                 }
