@@ -191,9 +191,9 @@ class UsuariosController extends AppController {
         $this->set(compact('catcargos'));
     }
 
-    public function amd_contrasena($id = null)
-    {
+    public function amd_contrasena($id = null) {
         $this->_md_contrasena($id);
+        return $this->redirect(array('action' => 'index'));
     }
 
     private function _md_contrasena($id = null) {
@@ -204,7 +204,6 @@ class UsuariosController extends AppController {
                 $this->request->data['Usuario']['contrasena'] = $this->request->data['Usuario']['n_contrasena'];
                 if ($this->Usuario->save($this->request->data)) {
                     $this->Session->setFlash(__('Se ha guardado la nueva contraseña con exito'), array('class' => 'OK'));
-                    return $this->redirect(array('action' => 'index'));
                 } else {
                     $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
                 }
@@ -242,8 +241,8 @@ class UsuariosController extends AppController {
         }
         $this->set('title_for_layout', 'Cambiar estado');
     }
-    
-        public function md_correo($id = NULL) {
+
+    public function md_correo($id = NULL) {
         if (!$this->Usuario->exists($id)) {
             $this->Session->setFlash(__('Correo Inválido.'), array('class' => 'ERROR'));
         } else
@@ -251,7 +250,7 @@ class UsuariosController extends AppController {
             $this->Usuario->id = $this->request->data['Usuario']['id'];
             if ($this->Usuario->saveField('correo', $this->request->data['Usuario']['n_correo'])) {
                 $this->Session->setFlash(__('El cambio de correo se ha realizado con éxito'), array('class' => 'OK'));
-                return $this->redirect(array('controller' => 'pages','action' => 'display','config'));
+                return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'config'));
             } else {
                 $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
             }
@@ -265,7 +264,5 @@ class UsuariosController extends AppController {
         }
         $this->set('title_for_layout', 'Cambiar correo');
     }
-    
-    
 
 }
