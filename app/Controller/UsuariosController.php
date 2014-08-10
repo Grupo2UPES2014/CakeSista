@@ -31,7 +31,7 @@ class UsuariosController extends AppController {
                         if ($this->Usuario->actualizarEstudiante($this->request->data['Usuario']['alias'], $this->Usuario->id)) {
                             $llave = substr(md5('SISTA' . $this->request->data['Usuario']['alias']), 0, 10);
                             $this->__enviar($this->request->data['Usuario']['correo'], $this->request->data['Usuario']['alias'], $llave);
-                            $this->Session->setFlash(__('Se ha enviado una verificación a tu correo, para continuar revisar el mismo.'), array('class' => 'OK'));
+                            $this->Session->setFlash(__('Se ha enviado una verificación a su correo, para continuar revisar el mismo.'), array('class' => 'OK'));
                             return $this->redirect('/');
                         } else {
                             $this->Session->setFlash(__('¡Ha ocurrido un error al registrar el usuario! , por favor intente de nuevo.'), array('class' => 'ERROR'));
@@ -58,13 +58,13 @@ class UsuariosController extends AppController {
                     $this->redirect('/');
                 } else if ($this->Auth->user('estado') == 2) {
                     $this->Auth->logout();
-                    $this->Session->setFlash(__('Debido a comportamiento inadecuado tu usuario ha sido suspendido.'), array('class' => 'ALERT'));
+                    $this->Session->setFlash(__('Tu usuario ha sido suspendido.'), array('class' => 'ALERT'));
                 } else {
                     $this->Auth->logout();
                     $this->Session->setFlash(__('Tu usuario no está activo, verifica tu cuenta de correo.'), array('class' => 'ALERT'));
                 }
             } else {
-                $this->Session->setFlash(__('Las credenciales ingresadas no son validas'), array('class' => 'ALERT'));
+                $this->Session->setFlash(__('Las credenciales ingresadas no son válidas'), array('class' => 'ALERT'));
             }
         }
     }
@@ -186,10 +186,10 @@ class UsuariosController extends AppController {
             $this->request->data['Usuario']['role_id'] = 2;
             $this->request->data['Usuario']['estado'] = 1;
             if ($this->Usuario->saveAssociated($this->request->data)) {
-                $this->Session->setFlash(__('¡El usuario se ha guardado con exito!'), array('class' => 'OK'));
+                $this->Session->setFlash(__('¡El usuario se ha guardado con éxito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
         $catcargos = $this->Usuario->Empleado->Catcargo->find('list');
@@ -201,18 +201,24 @@ class UsuariosController extends AppController {
             return $this->redirect(array('action' => 'index'));
         }
     }
+    
+       public function umd_contrasena($id = null) {
+        if ($this->_md_contrasena($id)) {
+            return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'config'));
+        }
+    } 
 
     private function _md_contrasena($id = null) {
         if (!$this->Usuario->exists($id)) {
-            $this->Session->setFlash(__('Código de Usuario Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Usuario Inválido.'), array('class' => 'ERROR'));
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 $this->request->data['Usuario']['contrasena'] = $this->request->data['Usuario']['n_contrasena'];
                 if ($this->Usuario->save($this->request->data)) {
-                    $this->Session->setFlash(__('Se ha guardado la nueva contraseña con exito'), array('class' => 'OK'));
+                    $this->Session->setFlash(__('Se ha guardado la nueva contraseña con éxito'), array('class' => 'OK'));
                     return true;
                 } else {
-                    $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
+                    $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'));
                 }
             } else {
                 $this->Usuario->recursive = 0;
@@ -228,7 +234,7 @@ class UsuariosController extends AppController {
 
     public function md_estado($id = NULL) {
         if (!$this->Usuario->exists($id)) {
-            $this->Session->setFlash(__('Código de Usuario Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Usuario Inválido.'), array('class' => 'ERROR'));
         } else
         if ($this->request->is(array('post', 'put'))) {
             $this->Usuario->id = $this->request->data['Usuario']['id'];
@@ -236,7 +242,7 @@ class UsuariosController extends AppController {
                 $this->Session->setFlash(__('El cambio de estado se ha realizado con éxito'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
+                $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'));
             }
         } else {
             $this->Usuario->recursive = 0;
@@ -259,7 +265,7 @@ class UsuariosController extends AppController {
                 $this->Session->setFlash(__('El cambio de correo se ha realizado con éxito'), array('class' => 'OK'));
                 return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'config'));
             } else {
-                $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'));
+                $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'));
             }
         } else {
             $this->Usuario->recursive = 0;

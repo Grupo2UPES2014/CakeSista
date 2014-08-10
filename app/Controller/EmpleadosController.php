@@ -41,7 +41,7 @@ class EmpleadosController extends AppController {
                 $this->Session->setFlash(__('¡Se ha guardado la facultad con éxito!'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
         $this->set('title_for_layout', 'Nuevo');
@@ -56,14 +56,14 @@ class EmpleadosController extends AppController {
      */
     public function editar($id = null) {
         if (!$this->Empleado->exists($id)) {
-            $this->Session->setFlash(__('Código de Empleado Invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('Código de Empleado Inválido.'), array('class' => 'ERROR'));
         } else {
             if ($this->request->is(array('post', 'put'))) {
                 if ($this->Empleado->save($this->request->data)) {
-                    $this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
+                    $this->Session->setFlash(__('Se han guardado los cambios con éxito.'), array('class' => 'OK'));
                     return $this->redirect(array('action' => 'index'));
                 } else {
-                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
                 }
             } else {
                 $options = array('conditions' => array('Empleado.' . $this->Empleado->primaryKey => $id));
@@ -85,15 +85,15 @@ class EmpleadosController extends AppController {
     public function eliminar($id = null) {
         $this->Empleado->id = $id;
         if (!$this->Empleado->exists()) {
-            throw new NotFoundException(__('Código de Facultad Invalido.'), array('class' => 'ERROR'));
+            throw new NotFoundException(__('Código de Facultad Inválido.'), array('class' => 'ERROR'));
         }
 
         $this->request->allowMethod('post', 'delete');
         if ($this->request->is(array('post', 'delete'))) {
             if ($this->Empleado->delete()) {
-                $this->Session->setFlash(__('Se ha eliminado la facultad con exito'), array('class' => 'OK'));
+                $this->Session->setFlash(__('Se ha eliminado la facultad con éxito'), array('class' => 'OK'));
             } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al eliminar la facultad! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
             return $this->redirect(array('action' => 'index'));
         }

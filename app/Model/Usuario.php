@@ -11,7 +11,7 @@ class Usuario extends AppModel {
         'alias' => array(
             'formato' => array(
                 'rule' => '/^[a-zA-Z]{2}[0-9]{6}$/',
-                'message' => 'Formato invalido',
+                'message' => 'Formato inválido',
             //'allowEmpty' => false,
             //'required' => false,
             //'last' => false, // Stop validation after this rule

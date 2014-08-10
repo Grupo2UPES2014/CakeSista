@@ -41,7 +41,7 @@ class CatcargosController extends AppController {
 				$this->Session->setFlash(__('¡Se ha guardado el Cargo con éxito!'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		}
 	}
@@ -55,14 +55,14 @@ class CatcargosController extends AppController {
  */
 	public function editar ($id = null) {
 		if (!$this->Catcargo->exists($id)) {
-			$this->Session->setFlash(__('Código de Cargo Invalido.'), array('class' => 'ERROR'));
+			$this->Session->setFlash(__('Código de Cargo Inválido.'), array('class' => 'ERROR'));
 		} else {
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Catcargo->save($this->request->data)) {
-				$this->Session->setFlash(__('Se han guardado los cambios con exito.'), array('class' => 'OK'));
+				$this->Session->setFlash(__('Se han guardado los cambios con éxito.'), array('class' => 'OK'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+				$this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
 			}
 		} else {
 			$options = array('conditions' => array('Catcargo.' . $this->Catcargo->primaryKey => $id));
@@ -82,13 +82,13 @@ class CatcargosController extends AppController {
 	public function eliminar($id = null) {
 		$this->Catcargo->id = $id;
 		if (!$this->Catcargo->exists()) {
-			throw new NotFoundException(__('Código de Cargo Invalido.'), array('class' => 'ERROR'));
+			throw new NotFoundException(__('Código de Cargo Inválido.'), array('class' => 'ERROR'));
 		}
 		if ($this->request->is(array('post', 'delete'))) {
             if ($this->Catcargo->delete()) {
-			$this->Session->setFlash(__('Se ha eliminado el Cargo con exito'), array('class' => 'OK'));
+			$this->Session->setFlash(__('Se ha eliminado el Cargo con éxito'), array('class' => 'OK'));
 		} else {
-			$this->Session->setFlash(__('¡Ha ocurrido un error al eliminar el Cargo! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+			$this->Session->setFlash(__('¡Ha ocurrido un error al eliminar el Cargo! por favor intente de nuevo.'), array('class' => 'ERROR'));
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
