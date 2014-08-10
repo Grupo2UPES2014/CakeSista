@@ -240,6 +240,12 @@ button.del
 {
     background-color: #BFEBFF;
 }
+/*------------------------------Vinculos------------------------------------------*/
+a.vTramite
+{
+    text-decoration: none;
+    color: #000;
+}
 /*---------------------------------------BOTONES/DIV------------------------------*/
 #sistacontainer #sistacontent #sistadesktop div.btnNuevo
 {
@@ -397,6 +403,10 @@ div.icoUpdate
 div.icoDel
 {
     background: url(../img/icons/appbar.delete.blue.png) center;
+}
+div.icoView
+{
+    background: url(../img/icons/appbar.eye.png) center;
 }
 
 /*---------------------------------ANIMACIONES---------------------------------------*/

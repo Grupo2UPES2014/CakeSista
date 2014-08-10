@@ -132,6 +132,9 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Pages/display/config');
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
         $this->Acl->allow($role, 'controllers/Cattramites/tramites');
+        $this->Acl->allow($role, 'controllers/Cattramites/tramite');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -152,6 +155,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Cuentas');
         $this->Acl->allow($role, 'controllers/Pages/display/config');
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -160,6 +164,7 @@ class UsuariosController extends AppController {
         $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
         $this->Acl->allow($role, 'controllers/Pages/display/config');
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
 
         echo 'ok?';
     }

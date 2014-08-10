@@ -36,6 +36,19 @@ class CattramitesController extends AppController {
         $this->set('cattramites', $this->Paginator->paginate());
     }
 
+    public function tramite($id = null) {
+        $this->set('title_for_layout', 'Trámites Academicos');
+        if (!$this->Cattramite->exists($id)) {
+            $this->Session->setFlash(__('Código de Trámite Invalido.'), array('class' => 'ERROR'));
+        }
+        $options = array('conditions' => array('Cattramite.' . $this->Cattramite->primaryKey => $id));
+        $tramite = $this->Cattramite->find('first', $options);
+        $this->set('cattramite', $tramite);
+        
+        $options = array('conditions' => array('cattramite_id' => $tramite['Cattramite']['id']));
+        $this->set('cattareas', $this->Cattramite->Cattarea->find('list', $options));
+    }
+
     /**
      * add method
      *
