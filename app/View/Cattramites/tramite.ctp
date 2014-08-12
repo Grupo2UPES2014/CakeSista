@@ -15,4 +15,4 @@
         </tr>
     <?php endforeach; ?>
 </table>
-<a href="#"><button>Iniciar Trámite</button></a>
+<a href="<?php echo Router::url(array('controller' => 'tramites', 'action' => 'nuevo',$cattramite['Cattramite']['id'])); ?>"><button>Iniciar Trámite</button></a>

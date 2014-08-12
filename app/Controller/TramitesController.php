@@ -49,8 +49,10 @@ class TramitesController extends AppController {
      * @return void
      */
     public function nuevo($id_cattramite) {
-        if ($this->request->is('post')) {
+        $this->autoRender = FALSE;
+        if ($this->request->is('get')) {
             $this->Tramite->create();
+            return $this->redirect(array('controller'=>'cattramites','action' => 'tramites'));
             if ($this->Tramite->save($this->request->data)) {
                 $this->Session->setFlash(__('The tramite has been saved.'));
                 return $this->redirect(array('action' => 'index'));
@@ -58,9 +60,9 @@ class TramitesController extends AppController {
                 $this->Session->setFlash(__('The tramite could not be saved. Please, try again.'));
             }
         }
-        $estudiantes = $this->Tramite->Estudiante->find('list');
-        $cattramites = $this->Tramite->Cattramite->find('list');
-        $this->set(compact('estudiantes', 'cattramites'));
+//        $estudiantes = $this->Tramite->Estudiante->find('list');
+//        $cattramites = $this->Tramite->Cattramite->find('list');
+//        $this->set(compact('estudiantes', 'cattramites'));
     }
 
     /**

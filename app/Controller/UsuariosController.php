@@ -135,6 +135,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Cattramites/tramite');
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+        $this->Acl->allow($role, 'controllers/Tramites/nuevo');
         //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
