@@ -52,10 +52,14 @@ class TramitesController extends AppController {
         $this->autoRender = FALSE;
         if ($this->request->is('get')) {
             $this->Tramite->create();
-            return $this->redirect(array('controller'=>'cattramites','action' => 'tramites'));
+            $this->request->data['Tramite']['estado'] = 1;
+            $this->request->data['Tramite']['fechainicio'] = date('Y-m-d');
+            //$this->request->data['Tramite']['fechafin'] = date();
+            $this->request->data['Tramite']['estudiante_id'] = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
+            $this->request->data['Tramite']['cattramite_id'] = $id_cattramite;
             if ($this->Tramite->save($this->request->data)) {
                 $this->Session->setFlash(__('The tramite has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('controller' => 'cattramites', 'action' => 'tramites'));
             } else {
                 $this->Session->setFlash(__('The tramite could not be saved. Please, try again.'));
             }

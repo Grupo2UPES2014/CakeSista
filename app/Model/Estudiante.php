@@ -139,7 +139,6 @@ class Estudiante extends AppModel {
 //            ),
 //        ),
 //    );
-
     //The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
@@ -184,5 +183,15 @@ class Estudiante extends AppModel {
             'counterQuery' => ''
         )
     );
+
+    public function obtener_id($id) {
+        $options = array('conditions' => array('usuario_id' => $id));
+        $estudiante = $this->find('first', $options);
+        if (!empty($estudiante)) {
+            return $estudiante['Estudiante']['id'];
+        } else {
+            return false;
+        }
+    }
 
 }

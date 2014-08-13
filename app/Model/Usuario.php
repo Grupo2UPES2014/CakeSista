@@ -43,6 +43,14 @@ class Usuario extends AppModel {
             //'last' => false, // Stop validation after this rule
             //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
+            'formatoP' => array(
+                'rule' => '/^[a-zA-Z0-9!@#$%&*_\-\+]{5,20}$/',
+                'message' => 'Debe contener un mínimo de 5 caracteres validos: a-z, 0-9 y (!@#$%&*_-+)',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
         ),
         'correo' => array(
             'email' => array(
