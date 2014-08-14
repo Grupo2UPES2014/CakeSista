@@ -136,6 +136,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         $this->Acl->allow($role, 'controllers/Tramites/nuevo');
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -157,6 +158,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Pages/display/config');
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -166,6 +168,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Pages/display/config');
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
 
         echo 'ok?';
     }
@@ -202,24 +205,37 @@ class UsuariosController extends AppController {
             return $this->redirect(array('action' => 'index'));
         }
     }
-    
-       public function umd_contrasena($id = null) {
-        if ($this->_md_contrasena($id)) {
-            return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'config'));
+
+    public function umd_contrasena($id = null) {
+        if (!empty($this->request->data)) {
+            if ($this->request->data['Usuario']['contrasena'] == $this->request->data['Usuario']['n_contrasena']) {
+                if ($this->_md_contrasena($id)) {
+                    return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'config'));
+                }
+            } else {
+                $this->Session->setFlash(__('Las contraseñas no coinciden'), array('class' => 'ERROR'));
+            }
+        } else {
+            $this->Usuario->recursive = 0;
+            $options = array(
+                'conditions' => array('Usuario.' . $this->Usuario->primaryKey => $id),
+                'fields' => array('id', 'alias')
+            );
+            $this->request->data = $this->Usuario->find('first', $options);
+            $this->set('title_for_layout', 'Nueva Contraseña');
         }
-    } 
+    }
 
     private function _md_contrasena($id = null) {
         if (!$this->Usuario->exists($id)) {
             $this->Session->setFlash(__('Código de Usuario Inválido.'), array('class' => 'ERROR'));
         } else {
             if ($this->request->is(array('post', 'put'))) {
-                $this->request->data['Usuario']['contrasena'] = $this->request->data['Usuario']['n_contrasena'];
                 if ($this->Usuario->save($this->request->data)) {
                     $this->Session->setFlash(__('Se ha guardado la nueva contraseña con éxito'), array('class' => 'OK'));
                     return true;
                 } else {
-                    $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'));
+                    $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
                 }
             } else {
                 $this->Usuario->recursive = 0;
@@ -258,16 +274,16 @@ class UsuariosController extends AppController {
 
     public function md_correo($id = NULL) {
         if (!$this->Usuario->exists($id)) {
-            $this->Session->setFlash(__('Correo Inválido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('ID de usuario invalido'), array('class' => 'ERROR'));
         } else
         if ($this->request->is(array('post', 'put'))) {
             $this->Usuario->id = $this->request->data['Usuario']['id'];
-            if ($this->Usuario->saveField('correo', $this->request->data['Usuario']['n_correo'])) {
-                $this->Session->setFlash(__('El cambio de correo se ha realizado con éxito'), array('class' => 'OK'));
-                return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'config'));
-            } else {
-                $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'));
-            }
+            $this->request->data['Usuario']['correo'] = $this->request->data['Usuario']['n_correo'];
+            $this->Usuario->set($this->request->data);
+            var_dump($this->Usuario->validates($this->request->data));
+
+            $llave = substr(md5('SISTA' . $this->Session->read('Auth.User.alias')), 0, 10);
+            //$this->__cambiocorreo($this->Session->read('Auth.User.correo'), $this->Session->read('Auth.User.alias'), $llave, $this->request->data['Usuario']['n_correo']);
         } else {
             $this->Usuario->recursive = 0;
             $options = array(
@@ -277,6 +293,48 @@ class UsuariosController extends AppController {
             $this->request->data = $this->Usuario->find('first', $options);
         }
         $this->set('title_for_layout', 'Cambiar correo');
+    }
+
+    public function nuevo_correo($carnet = null, $correo = null, $llave = null) {
+        $this->autoRender = false;
+        $this->Auth->logout();
+        $this->Session->delete('menu');
+        if ($this->request->is('get')) {
+            $key = substr(md5('SISTA' . $carnet), 0, 10);
+            if ($llave == $key) {
+                $this->Usuario->id = $this->Usuario->obtener_id($carnet);
+                if ($this->Usuario->saveField('correo', $correo)) {
+                    $this->Session->setFlash(__('El cambio de correo se ha realizado con éxito'), array('class' => 'OK'));
+                    return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'inicio'));
+                } else {
+                    $this->Session->setFlash(__('Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'));
+                }
+            } else {
+                $this->Session->setFlash(__('Ocurrio un error durante la validación de datos.'), array('class' => 'ERROR'));
+                $this->redirect(array('controller' => 'pages', 'action' => 'display', 'inicio'));
+            }
+        }
+    }
+
+    private function __cambiocorreo($correo, $carnet, $llave, $ncorreo) {
+        $email = new CakeEmail('smtp');
+        $email->to($correo);
+        $email->subject('SiSTA – Verificación de correo.');
+        $email->viewVars(array(
+            'carnet' => $carnet,
+            'llave' => $llave,
+            'correo' => $ncorreo
+        ));
+        $email->helpers('Html');
+        $email->template('cambiocorreo');
+        $email->addAttachments(array(
+            'logo5.png' => array(
+                'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                'mimetype' => 'image/png',
+                'contentId' => 'logo'
+            )
+        ));
+        $email->send();
     }
 
 }

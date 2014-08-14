@@ -6,9 +6,14 @@
 <?php
 echo $this->Form->create('Usuario');
 echo $this->Form->input('id');
-echo $this->Form->input('n_contrasena', array(
+echo $this->Form->input('contrasena', array(
     'type' => 'password',
     'placeholder' => 'Nueva Contraseña',
+    'label' => false
+));
+echo $this->Form->input('n_contrasena', array(
+    'type' => 'password',
+    'placeholder' => 'Confirmar Contraseña',
     'label' => false
 ));
 echo $this->Form->button('Actualizar', array('class' => 'update'));

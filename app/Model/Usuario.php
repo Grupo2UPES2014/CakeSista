@@ -77,6 +77,25 @@ class Usuario extends AppModel {
             //'last' => false, // Stop validation after this rule
             //'on' => 'create', // Limit validation to 'create' or 'update' operations
             )
+        )
+        ,
+        'n_correo' => array(
+            'email' => array(
+                'rule' => array('email'),
+            'message' => 'Formato de correo invalido',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
         ),
         'estado' => array(
             'numeric' => array(
@@ -157,6 +176,16 @@ class Usuario extends AppModel {
             return true;
         }
         return false;
+    }
+
+    public function obtener_id($alias) {
+        $options = array('conditions' => array('alias' => $alias));
+        $usuario = $this->find('first', $options);
+        if (!empty($usuario)) {
+            return $usuario['Usuario']['id'];
+        } else {
+            return false;
+        }
     }
 
     public function actualizarEstudiante($carnet, $id) {

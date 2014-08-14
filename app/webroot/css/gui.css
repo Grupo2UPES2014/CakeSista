@@ -216,7 +216,14 @@ button.del
 #sistacontainer #sistacontent #sistadesktop .opciones div .opcion.facultad{
     background-image:url(../img/icons/appbar.grade.f.png);
 }
-
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.correo
+{
+    background-image:url(../img/icons/appbar.at.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.pass
+{
+    background-image:url(../img/icons/appbar.lock.png);
+}
 /*----------------------------TABLAS------------------------------------------*/
 #sistacontainer #sistacontent #sistadesktop table
 {

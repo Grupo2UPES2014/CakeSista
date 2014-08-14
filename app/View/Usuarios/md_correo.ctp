@@ -1,8 +1,5 @@
 <h2>Cambiar correo</h2>
-<?php if (isset($this->request->data['Usuario']['alias'])): ?>
-    <h3><?php echo strtoupper($this->request->data['Usuario']['alias']); ?></h3>
-<?php endif; ?>
-
+<h3>Correo activo: <?php echo $this->Session->read('Auth.User.correo'); ?></h3><hr>
 <?php
 echo $this->Form->create('Usuario');
 echo $this->Form->input('id');

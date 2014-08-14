@@ -33,6 +33,7 @@
         Router::connect('/login', array('controller' => 'usuarios', 'action' => 'login'));
         Router::connect('/registro', array('controller' => 'usuarios', 'action' => 'registro'));
         Router::connect('/activar/*', array('controller' => 'usuarios', 'action' => 'activar'));
+        Router::connect('/nuevo_correo/*', array('controller' => 'usuarios', 'action' => 'nuevo_correo'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
