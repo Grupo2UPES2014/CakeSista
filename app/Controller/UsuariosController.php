@@ -280,10 +280,17 @@ class UsuariosController extends AppController {
             $this->Usuario->id = $this->request->data['Usuario']['id'];
             $this->request->data['Usuario']['correo'] = $this->request->data['Usuario']['n_correo'];
             $this->Usuario->set($this->request->data);
-            var_dump($this->Usuario->validates($this->request->data));
-
-            $llave = substr(md5('SISTA' . $this->Session->read('Auth.User.alias')), 0, 10);
-            //$this->__cambiocorreo($this->Session->read('Auth.User.correo'), $this->Session->read('Auth.User.alias'), $llave, $this->request->data['Usuario']['n_correo']);
+            if ($this->Usuario->validates($this->request->data)) {
+                $llave = substr(md5('SISTA' . $this->Session->read('Auth.User.alias') . $this->request->data['Usuario']['n_correo']), 0, 10);
+                if ($this->__cambiocorreo($this->Session->read('Auth.User.correo'), $this->Session->read('Auth.User.alias'), $llave, $this->request->data['Usuario']['n_correo'])) {
+                    $this->Session->setFlash(__('Se ha enviado un correo de confirmación'), array('class' => 'OK'));
+                    $this->redirect(array('controller' => 'pages', 'action' => 'display', 'config'));
+                } else {
+                    $this->Session->setFlash(__('Ocurrio un error mientras se enviaba el correo de confirmación'), array('class' => 'ERROR'));
+                }
+            } else {
+                $this->Session->setFlash(__('El correo tiene un formato no valido o ya esta en uso.'), array('class' => 'ERROR'));
+            }
         } else {
             $this->Usuario->recursive = 0;
             $options = array(
@@ -300,7 +307,7 @@ class UsuariosController extends AppController {
         $this->Auth->logout();
         $this->Session->delete('menu');
         if ($this->request->is('get')) {
-            $key = substr(md5('SISTA' . $carnet), 0, 10);
+            $key = substr(md5('SISTA' . $carnet . $correo), 0, 10);
             if ($llave == $key) {
                 $this->Usuario->id = $this->Usuario->obtener_id($carnet);
                 if ($this->Usuario->saveField('correo', $correo)) {
@@ -317,24 +324,35 @@ class UsuariosController extends AppController {
     }
 
     private function __cambiocorreo($correo, $carnet, $llave, $ncorreo) {
-        $email = new CakeEmail('smtp');
-        $email->to($correo);
-        $email->subject('SiSTA – Verificación de correo.');
-        $email->viewVars(array(
-            'carnet' => $carnet,
-            'llave' => $llave,
-            'correo' => $ncorreo
-        ));
-        $email->helpers('Html');
-        $email->template('cambiocorreo');
-        $email->addAttachments(array(
-            'logo5.png' => array(
-                'file' => ROOT . '/app/webroot/img/logocorreo.png',
-                'mimetype' => 'image/png',
-                'contentId' => 'logo'
-            )
-        ));
-        $email->send();
+        try {
+            $email = new CakeEmail('smtp');
+            $email->to($correo);
+            $email->subject('SiSTA – Verificación de correo.');
+            $email->viewVars(array(
+                'carnet' => $carnet,
+                'llave' => $llave,
+                'correo' => $ncorreo
+            ));
+            $email->helpers('Html');
+            $email->template('cambiocorreo');
+            $email->addAttachments(array(
+                'logo5.png' => array(
+                    'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo'
+                )
+            ));
+            if ($email->send()) {
+                // Success
+                return true;
+            } else {
+                // Failure, without any exceptions
+                return false;
+            }
+        } catch (Exception $e) {
+            // Failure, with exception
+            return false;
+        }
     }
 
 }
