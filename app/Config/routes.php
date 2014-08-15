@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Routes configuration
  *
@@ -24,25 +25,26 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-	Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'inicio'));
+Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'inicio'));
 /**
  * ...and connect the rest of 'Pages' controller's URLs.
  */
-	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
-        Router::connect('/about', array('controller' => 'pages', 'action' => 'display','about'));
-        Router::connect('/login', array('controller' => 'usuarios', 'action' => 'login'));
-        Router::connect('/registro', array('controller' => 'usuarios', 'action' => 'registro'));
-        Router::connect('/activar/*', array('controller' => 'usuarios', 'action' => 'activar'));
-        Router::connect('/nuevo_correo/*', array('controller' => 'usuarios', 'action' => 'nuevo_correo'));
+Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+Router::connect('/about', array('controller' => 'pages', 'action' => 'display', 'about'));
+Router::connect('/login', array('controller' => 'usuarios', 'action' => 'login'));
+Router::connect('/registro', array('controller' => 'usuarios', 'action' => 'registro'));
+Router::connect('/activar/*', array('controller' => 'usuarios', 'action' => 'activar'));
+Router::connect('/nuevo_correo/*', array('controller' => 'usuarios', 'action' => 'nuevo_correo'));
+Router::connect('/recuperar', array('controller' => 'usuarios', 'action' => 'recuperar_contrasena'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
  * how to customize the loading of plugin routes.
  */
-	CakePlugin::routes();
+CakePlugin::routes();
 
 /**
  * Load the CakePHP default routes. Only remove this if you do not want to use
  * the built-in default routes.
  */
-	require CAKE . 'Config' . DS . 'routes.php';
+require CAKE . 'Config' . DS . 'routes.php';

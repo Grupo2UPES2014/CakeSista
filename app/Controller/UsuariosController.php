@@ -126,7 +126,7 @@ class UsuariosController extends AppController {
     public function acl() {
         $this->autoRender = false;
         $role = $this->Usuario->Role;
-        //---------------------------ESTUDIANTES------------------------
+//---------------------------ESTUDIANTES------------------------
         $role->id = 3;
         $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
         $this->Acl->allow($role, 'controllers/Pages/display/config');
@@ -137,7 +137,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         $this->Acl->allow($role, 'controllers/Tramites/nuevo');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-        //----------------------------ADMIN-------------------------
+//----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
         $this->Acl->allow($role, 'controllers/Pages/display/inicio');
@@ -159,7 +159,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-        //-------------------------OPERADORES--------------------
+//-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
         $this->Acl->allow($role, 'controllers/Pages/display/inicio');
@@ -343,16 +343,22 @@ class UsuariosController extends AppController {
                 )
             ));
             if ($email->send()) {
-                // Success
+// Success
                 return true;
             } else {
-                // Failure, without any exceptions
+// Failure, without any exceptions
                 return false;
             }
         } catch (Exception $e) {
-            // Failure, with exception
+// Failure, with exception
             return false;
         }
+    }
+
+    public function recuperar_contrasena() {
+        $this->layout = 'registro';
+        if ($this->request->is('post'))
+            $this->Usuario->set($this->request->data);
     }
 
 }

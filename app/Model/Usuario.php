@@ -82,7 +82,7 @@ class Usuario extends AppModel {
         'n_correo' => array(
             'email' => array(
                 'rule' => array('email'),
-            'message' => 'Formato de correo invalido',
+                'message' => 'Formato de correo invalido',
             //'allowEmpty' => false,
             //'required' => false,
             //'last' => false, // Stop validation after this rule
@@ -180,6 +180,16 @@ class Usuario extends AppModel {
 
     public function obtener_id($alias) {
         $options = array('conditions' => array('alias' => $alias));
+        $usuario = $this->find('first', $options);
+        if (!empty($usuario)) {
+            return $usuario['Usuario']['id'];
+        } else {
+            return false;
+        }
+    }
+
+    public function obtener_id_correo($correo) {
+        $options = array('conditions' => array('correo' => $correo));
         $usuario = $this->find('first', $options);
         if (!empty($usuario)) {
             return $usuario['Usuario']['id'];

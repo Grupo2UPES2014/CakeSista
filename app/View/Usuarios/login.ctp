@@ -14,5 +14,5 @@ echo $this->Form->button('Iniciar Sesión');
 echo $this->Form->end();
 ?>
 
-<span>¿Has olvidado tu contraseña?</span><br>
+<span><?php echo $this->Html->link('¿Has olvidado tu contraseña?',array('controller'=>'recuperar')); ?></span><br>
 <span><?php echo $this->Html->link('¿No tienes cuenta?',array('controller'=>'registro')); ?></span>
