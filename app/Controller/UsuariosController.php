@@ -123,56 +123,6 @@ class UsuariosController extends AppController {
         }
     }
 
-    public function acl() {
-        $this->autoRender = false;
-        $role = $this->Usuario->Role;
-//---------------------------ESTUDIANTES------------------------
-        $role->id = 3;
-        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
-        $this->Acl->allow($role, 'controllers/Pages/display/config');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Cattramites/tramites');
-        $this->Acl->allow($role, 'controllers/Cattramites/tramite');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
-        $this->Acl->allow($role, 'controllers/Tramites/nuevo');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-//----------------------------ADMIN-------------------------
-        $role->id = 1;
-        $this->Acl->allow($role, 'controllers/Pages/display');
-        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
-        $this->Acl->allow($role, 'controllers/Pages/display/catalogos');
-        $this->Acl->allow($role, 'controllers/Facultades');
-        $this->Acl->allow($role, 'controllers/Carreras');
-        $this->Acl->allow($role, 'controllers/Usuarios/logout');
-        $this->Acl->allow($role, 'controllers/Usuarios/index');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/amd_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
-        $this->Acl->allow($role, 'controllers/Cattramites');
-        $this->Acl->allow($role, 'controllers/Catcargos');
-        $this->Acl->allow($role, 'controllers/Asignaturas');
-        $this->Acl->allow($role, 'controllers/Empleados');
-        $this->Acl->allow($role, 'controllers/Cuentas');
-        $this->Acl->allow($role, 'controllers/Pages/display/config');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-//-------------------------OPERADORES--------------------
-        $role->id = 2;
-        $this->Acl->allow($role, 'controllers/Pages/display');
-        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
-        $this->Acl->allow($role, 'controllers/Usuarios/logout');
-        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
-        $this->Acl->allow($role, 'controllers/Pages/display/config');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-
-        echo 'ok?';
-    }
-
     public function index() {
         $this->Usuario->recursive = 0;
         $this->Paginator->settings = $this->paginate;
@@ -343,22 +293,134 @@ class UsuariosController extends AppController {
                 )
             ));
             if ($email->send()) {
-// Success
                 return true;
             } else {
-// Failure, without any exceptions
                 return false;
             }
         } catch (Exception $e) {
-// Failure, with exception
             return false;
         }
     }
 
     public function recuperar_contrasena() {
+        date_default_timezone_set('America/El_Salvador');
         $this->layout = 'registro';
-        if ($this->request->is('post'))
+        $this->set('title_for_layout', 'Recuperar Contraseña');
+        if ($this->request->is('post')) {
             $this->Usuario->set($this->request->data);
+            if ($this->Usuario->validates($this->request->data)) {
+                if ($id = $this->Usuario->obtener_id_correo($this->request->data['Usuario']['v_correo'])) {
+                    $key = substr(md5('SISTA' . $id . date('Y-m-d')), 0, 10);
+                    if ($this->__correocontrasena($this->request->data['Usuario']['v_correo'], $id, $key)) {
+                        $this->Session->setFlash(__('Se ha enviado una solicitud para cambio de contraseña a tu correo'), array('class' => 'OK'));
+                        return $this->redirect(array('controller' => 'pages', 'action' => 'display', 'inicio'));
+                    } else {
+                        $this->Session->setFlash(__('Ocurrio un error al enviar la solicitud a tu correo'), array('class' => 'ERROR'));
+                    }
+                } else {
+                    $this->Session->setFlash(__('Este correo no esta registrado en nuestra base de datos.'), array('class' => 'ALERT'));
+                }
+            }
+        }
+    }
+
+    private function __correocontrasena($correo, $id, $llave) {
+        try {
+            $email = new CakeEmail('smtp');
+            $email->to($correo);
+            $email->subject('SiSTA – Solicitud para cambio de contraseña.');
+            $email->viewVars(array(
+                'id' => $id,
+                'llave' => $llave,
+            ));
+            $email->helpers('Html');
+            $email->template('recuperar');
+            $email->addAttachments(array(
+                'logo5.png' => array(
+                    'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo'
+                )
+            ));
+            if ($email->send()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    public function cambiar_contrasena($id, $llave) {
+        date_default_timezone_set('America/El_Salvador');
+        $this->layout = 'registro';
+        $this->set('title_for_layout', 'Cambiar Contraseña');
+        $key = substr(md5('SISTA' . $id . date('Y-m-d')), 0, 10);
+        if ($key == $llave) {
+            if ($this->request->is('post')) {
+                if ($this->request->data['Usuario']['contrasena'] == $this->request->data['Usuario']['r_contrasena']) {
+                    $this->request->data['Usuario']['id'] = $id;
+                    if ($this->_md_contrasena($id)) {
+                        return $this->redirect(array('controller' => 'login'));
+                    }
+                } else {
+                    $this->Session->setFlash(__('Las contraseñas no coinciden'), array('class' => 'ERROR'));
+                }
+            }
+        } else {
+            return $this->redirect(array('controller' => 'login'));
+        }
+    }
+
+    public function acl() {
+        $this->autoRender = false;
+        $role = $this->Usuario->Role;
+//---------------------------ESTUDIANTES------------------------
+        $role->id = 3;
+        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
+        $this->Acl->allow($role, 'controllers/Pages/display/config');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Cattramites/tramites');
+        $this->Acl->allow($role, 'controllers/Cattramites/tramite');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+        $this->Acl->allow($role, 'controllers/Tramites/nuevo');
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
+//----------------------------ADMIN-------------------------
+        $role->id = 1;
+        $this->Acl->allow($role, 'controllers/Pages/display');
+        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
+        $this->Acl->allow($role, 'controllers/Pages/display/catalogos');
+        $this->Acl->allow($role, 'controllers/Facultades');
+        $this->Acl->allow($role, 'controllers/Carreras');
+        $this->Acl->allow($role, 'controllers/Usuarios/logout');
+        $this->Acl->allow($role, 'controllers/Usuarios/index');
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/amd_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
+        $this->Acl->allow($role, 'controllers/Cattramites');
+        $this->Acl->allow($role, 'controllers/Catcargos');
+        $this->Acl->allow($role, 'controllers/Asignaturas');
+        $this->Acl->allow($role, 'controllers/Empleados');
+        $this->Acl->allow($role, 'controllers/Cuentas');
+        $this->Acl->allow($role, 'controllers/Pages/display/config');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
+//-------------------------OPERADORES--------------------
+        $role->id = 2;
+        $this->Acl->allow($role, 'controllers/Pages/display');
+        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
+        $this->Acl->allow($role, 'controllers/Usuarios/logout');
+        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
+        $this->Acl->allow($role, 'controllers/Pages/display/config');
+        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
+
+        echo 'ok?';
     }
 
 }

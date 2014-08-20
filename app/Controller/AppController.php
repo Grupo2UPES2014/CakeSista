@@ -62,7 +62,7 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('registro', 'activar', 'logout', 'acl', 'nuevo_correo','recuperar_contrasena');
+        $this->Auth->allow('registro', 'activar', 'logout', 'acl', 'nuevo_correo','recuperar_contrasena','cambiar_contrasena');
         if ($this->Auth->user()) {
             if (!$this->Acl->check(array('Usuario' => $this->Auth->user()), $this->name . '/' . $this->action) && $this->name != 'CakeError') {
                 $this->redirect(array('controller' => 'pages', 'action' => 'prohibido'));

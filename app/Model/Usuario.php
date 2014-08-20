@@ -55,7 +55,7 @@ class Usuario extends AppModel {
         'correo' => array(
             'email' => array(
                 'rule' => array('email'),
-            //'message' => 'Your custom message here',
+            'message' => 'Formato de correo invalido',
             //'allowEmpty' => false,
             //'required' => false,
             //'last' => false, // Stop validation after this rule
@@ -80,6 +80,24 @@ class Usuario extends AppModel {
         )
         ,
         'n_correo' => array(
+            'email' => array(
+                'rule' => array('email'),
+                'message' => 'Formato de correo invalido',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+            //'message' => 'Your custom message here',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'v_correo' => array(
             'email' => array(
                 'rule' => array('email'),
                 'message' => 'Formato de correo invalido',

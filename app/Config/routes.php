@@ -36,6 +36,7 @@ Router::connect('/registro', array('controller' => 'usuarios', 'action' => 'regi
 Router::connect('/activar/*', array('controller' => 'usuarios', 'action' => 'activar'));
 Router::connect('/nuevo_correo/*', array('controller' => 'usuarios', 'action' => 'nuevo_correo'));
 Router::connect('/recuperar', array('controller' => 'usuarios', 'action' => 'recuperar_contrasena'));
+Router::connect('/cambiar_contrasena/*', array('controller' => 'usuarios', 'action' => 'cambiar_contrasena'));
 
 /**
  * Load all plugin routes. See the CakePlugin documentation on
