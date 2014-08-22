@@ -34,6 +34,11 @@ class Menu extends AppModel {
         ),
         2 => array(
             array(
+                'titulo' => 'Buzón',
+                'icono' => 'icoInbox',
+                'ruta' => 'tareas/index'
+            ),
+            array(
                 'titulo' => 'Configuración',
                 'icono' => 'icoCog',
                 'ruta' => 'pages/config'

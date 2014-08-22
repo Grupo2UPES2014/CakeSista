@@ -28,13 +28,6 @@ class TramitesController extends AppController {
         $this->set('tramites', $this->Paginator->paginate());
     }
 
-    /**
-     * view method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
     public function view($id = null) {
         if (!$this->Tramite->exists($id)) {
             throw new NotFoundException(__('Invalid tramite'));
@@ -58,10 +51,10 @@ class TramitesController extends AppController {
             $this->request->data['Tramite']['estudiante_id'] = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
             $this->request->data['Tramite']['cattramite_id'] = $id_cattramite;
             if ($this->Tramite->save($this->request->data)) {
-                $this->Session->setFlash(__('The tramite has been saved.'));
-                return $this->redirect(array('controller' => 'cattramites', 'action' => 'tramites'));
+                $this->Session->setFlash(__('Se ha iniciado el trámite con exito.'), array('class' => 'OK'));
+                return $this->redirect(array('controller' => 'tareas', 'action' => 'asignar', $this->Tramite->id));
             } else {
-                $this->Session->setFlash(__('The tramite could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al iniciar el trámite! , por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
 //        $estudiantes = $this->Tramite->Estudiante->find('list');
@@ -69,13 +62,6 @@ class TramitesController extends AppController {
 //        $this->set(compact('estudiantes', 'cattramites'));
     }
 
-    /**
-     * edit method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
     public function edit($id = null) {
         if (!$this->Tramite->exists($id)) {
             throw new NotFoundException(__('Invalid tramite'));
@@ -96,13 +82,6 @@ class TramitesController extends AppController {
         $this->set(compact('estudiantes', 'cattramites'));
     }
 
-    /**
-     * delete method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
     public function delete($id = null) {
         $this->Tramite->id = $id;
         if (!$this->Tramite->exists()) {

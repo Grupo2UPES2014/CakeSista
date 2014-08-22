@@ -425,3 +425,8 @@ div.icoView
         opacity:100;
     }
 }
+.imgcenter{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
