@@ -211,8 +211,9 @@ class Usuario extends AppModel {
         $usuario = $this->find('first', $options);
         if (!empty($usuario)) {
             return $usuario['Usuario']['id'];
-        } else {
+        } else { 
             return false;
+            
         }
     }
 

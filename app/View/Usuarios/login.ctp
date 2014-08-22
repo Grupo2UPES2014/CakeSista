@@ -1,4 +1,4 @@
-<h2>Iniciar Sesión</h2>
+<h2>holamundo!!!</h2>
 <?php
 echo $this->Form->create('Usuario');
 echo $this->Form->input('alias', array(
