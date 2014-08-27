@@ -131,4 +131,8 @@ class Cattarea extends AppModel {
         )
     );
 
+    public function obtenerTipo($id = null) {
+        
+    }
+
 }

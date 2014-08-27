@@ -48,8 +48,8 @@ class Tramite extends AppModel {
         'fechafin' => array(
             'date' => array(
                 'rule' => array('date'),
-            //'message' => 'Your custom message here',
-            'allowEmpty' => true,
+                //'message' => 'Your custom message here',
+                'allowEmpty' => true,
             //'required' => false,
             //'last' => false, // Stop validation after this rule
             //'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -134,5 +134,15 @@ class Tramite extends AppModel {
             'counterQuery' => ''
         )
     );
+
+    public function obtenerIdCattramite($id) {
+        $options = array('conditions' => array('tramite.id' => $id), 'fields' => array('cattramite_id'), 'recursive' => 0);
+        $tramite = $this->find('first', $options);
+        if (!empty($tramite)) {
+            return $tramite['Tramite']['cattramite_id'];
+        } else {
+            return false;
+        }
+    }
 
 }

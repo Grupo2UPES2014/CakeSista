@@ -54,14 +54,34 @@ class TareasController extends AppController {
     }
 
     public function asignar($id = null) {
-        $this->_validarTarea($id);
-    }
-
-    private function _validarTarea($id) {
         if (!$this->Tarea->Tramite->exists($id)) {
             $this->Session->setFlash(__('ID de trámite invalido.'), array('class' => 'ERROR'));
         } else {
-            
+            if ($this->Tarea->existenTareas($id)) {
+                //existen tareas  
+            } else {
+                //tramite recien iniciado 
+                var_dump($this->Tarea->obtenerPrimeraTarea($id));
+            }
+        }
+    }
+
+    private function _validarTarea($tipo = null) {
+        if ($tipo != NULL) {
+            switch ($tipo) {
+                case 1:
+                    $this->redirect(array('controller' => ''));
+                    break;
+                case 2:
+                    $this->redirect(array('controller' => ''));
+                    break;
+                case 3:
+                    $this->redirect(array('controller' => ''));
+                    break;
+                case 4:
+                    $this->redirect(array('controller' => ''));
+                    break;
+            }
         }
     }
 

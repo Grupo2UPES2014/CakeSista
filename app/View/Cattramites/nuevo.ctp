@@ -11,7 +11,7 @@ echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholde
     echo $this->Form->input('Cattarea.0.nombre', array('label' => false, 'placeholder' => 'Nombre'));
     echo $this->Form->input('Cattarea.0.descripcion', array('label' => false, 'placeholder' => 'Descripción'));
     $tipos = array(
-        '1' => 'Diligencia',
+        '1' => 'Actividad',
         '2' => 'Mandamiento',
         '3' => 'documento',
         '4' => 'formulario'

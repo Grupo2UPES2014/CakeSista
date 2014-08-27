@@ -13,8 +13,7 @@
             <td><?php echo $tramite['Cattramite']['arancel']; ?></td>
             <td>
                 <a href="<?php echo Router::url(array('controller' => 'cattramites', 'action' => 'tramite', $tramite['Cattramite']['id'])); ?>">
-                    <div class="ico medium icoView"></div>
-                </a>
+                    <div class="ico medium icoView"></div></a> Ver Trámite
             </td>
         </tr>
         <?php
