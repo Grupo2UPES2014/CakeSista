@@ -141,6 +141,25 @@ class TareasController extends AppController {
 
     public function actividad($id = null) {
         $this->set('title_for_layout', 'Actividad');
+        if (!$this->Tarea->exists($id)) {
+            $this->Session->setFlash(__('El ID de tarea es invalido.'), array('class' => 'ERROR'));
+        } else {
+            if ($this->request->is(array('post', 'put'))) {
+                $this->request->data['Tarea']['empleado_id'] = 1;
+                if ($this->Tarea->save($this->request->data)) {
+                    $this->Session->setFlash(__('The tarea has been saved.'), array('class' => 'OK'));
+                    //return $this->redirect(array('action' => 'index'));
+                } else {
+                    $this->Session->setFlash(__('The tarea could not be saved. Please, try again.'));
+                }
+            } else {
+                $options = array('conditions' => array('Tarea.' . $this->Tarea->primaryKey => $id));
+                $this->request->data = $this->Tarea->find('first', $options);
+            }
+            $options = array('conditions' => array('Cattarea.id' => $this->Tarea->obtenerCattarea($id)), 'recursive' => -1);
+            $cattareas = $this->Tarea->Cattarea->find('first', $options);
+            $this->set(compact('cattareas'));
+        }
     }
 
     public function documento($id = NULL) {

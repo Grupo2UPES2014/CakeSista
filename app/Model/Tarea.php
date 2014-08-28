@@ -184,4 +184,10 @@ class Tarea extends AppModel {
         return $this->find('count', $options);
     }
 
+    public function obtenerCattarea($id = NULL) {
+        $options = array('conditions' => array('tarea.id' => $id));
+        $tarea = $this->find('first', $options);
+        return $tarea['Tarea']['cattarea_id'];
+    }
+
 }
