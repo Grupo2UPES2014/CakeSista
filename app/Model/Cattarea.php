@@ -131,8 +131,14 @@ class Cattarea extends AppModel {
         )
     );
 
-    public function obtenerTipo($id = null) {
-        
+    public function obtenerCattarea($correlativo = null, $cattramite = NULL) {
+        $options = array('conditions' => array('correlativo' => $correlativo, 'cattramite_id' => $cattramite));
+        $cattarea = $this->find('first', $options);
+        if (!empty($cattarea)) {
+            return $cattarea;
+        } else {
+            return false;
+        }
     }
 
 }

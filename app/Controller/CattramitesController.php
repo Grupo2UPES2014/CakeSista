@@ -40,13 +40,14 @@ class CattramitesController extends AppController {
         $this->set('title_for_layout', 'Trámites Academicos');
         if (!$this->Cattramite->exists($id)) {
             $this->Session->setFlash(__('Código de Trámite Invalido.'), array('class' => 'ERROR'));
+            $this->set('cattramite', NULL);
+        } else {
+            $options = array('conditions' => array('Cattramite.' . $this->Cattramite->primaryKey => $id));
+            $tramite = $this->Cattramite->find('first', $options);
+            $this->set('cattramite', $tramite);
+            //$options = array('conditions' => array('cattramite_id' => $tramite['Cattramite']['id']));
+            //$this->set('cattareas', $this->Cattramite->Cattarea->find('list', $options));
         }
-        $options = array('conditions' => array('Cattramite.' . $this->Cattramite->primaryKey => $id));
-        $tramite = $this->Cattramite->find('first', $options);
-        $this->set('cattramite', $tramite);
-        
-        $options = array('conditions' => array('cattramite_id' => $tramite['Cattramite']['id']));
-        $this->set('cattareas', $this->Cattramite->Cattarea->find('list', $options));
     }
 
     /**

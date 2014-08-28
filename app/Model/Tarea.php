@@ -171,31 +171,17 @@ class Tarea extends AppModel {
 
     public function obtenerPrimeraTarea($id) {
         if ($cattramite = $this->Tramite->obtenerIdCattramite($id)) {
-            $options = array('conditions' => array('cattarea.cattramite_id' => $cattramite), 'fields' => array('id'), 'recursive' => 0);
+            $options = array('conditions' => array('cattarea.cattramite_id' => $cattramite), 'fields' => array('id', 'tipo'), 'recursive' => 0);
             $cattarea = $this->Cattarea->find('first', $options);
-            return $cattarea['Cattarea']['id'];
-        }
-        else{
+            return $cattarea;
+        } else {
             return false;
         }
     }
 
-    public function obtenerTipo($id) {
-        $options = array('conditions' => array('id' => $id), 'fields' => array('cattarea_id'));
-        $tarea = $this->find('first', $options);
-        if (empty($tarea)) {
-
-            //$options = array('conditions' => array('cattarea.id' => $id));
-            $cattarea = $this->Cattarea->find('first', $options);
-            var_dump($tarea);
-            if (empty($cattarea)) {
-                return $cattarea['Cattarea']['tipo'];
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+    public function contarTareas($tramite_id = NULL) {
+        $options = array('conditions' => array('tramite_id' => $tramite_id));
+        return $this->find('count', $options);
     }
 
 }

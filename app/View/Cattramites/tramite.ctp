@@ -5,14 +5,18 @@
         <th>Descripción</th>
     </tr>
     <?php
-    foreach ($cattramite['Cattarea'] as $cattarea):
-        ?>
-        <tr>
-            <td><?php echo $cattarea['correlativo']; ?></td>
-            <td>
-                <?php echo $cattarea['nombre']; ?>   
-            </td>
-        </tr>
-    <?php endforeach; ?>
+    if (!empty($cattramite)):
+        foreach ($cattramite['Cattarea'] as $cattarea):
+            ?>
+            <tr>
+                <td><?php echo $cattarea['correlativo']; ?></td>
+                <td>
+                    <?php echo $cattarea['nombre']; ?>   
+                </td>
+            </tr>
+        <?php
+        endforeach;
+    endif;
+    ?>
 </table>
-<a href="<?php echo Router::url(array('controller' => 'tramites', 'action' => 'nuevo',$cattramite['Cattramite']['id'])); ?>"><button>Iniciar Trámite</button></a>
+<a href="<?php echo Router::url(array('controller' => 'tramites', 'action' => 'nuevo', $cattramite['Cattramite']['id'])); ?>"><button>Iniciar Trámite</button></a>

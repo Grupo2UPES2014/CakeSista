@@ -388,6 +388,10 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Tramites/nuevo');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         $this->Acl->allow($role, 'controllers/Tareas/asignar');
+        $this->Acl->allow($role, 'controllers/Tareas/actividad');
+        $this->Acl->allow($role, 'controllers/Tareas/documento');
+        $this->Acl->allow($role, 'controllers/Tareas/formulario');
+        $this->Acl->allow($role, 'controllers/Tareas/mandamiento');
 //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -422,6 +426,8 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         $this->Acl->allow($role, 'controllers/Tareas/index');
+        $this->Acl->allow($role, 'controllers/Tareas/asignar');
+        $this->Acl->allow($role, 'controllers/Tareas/actividad');
 
         echo 'ok?';
     }
