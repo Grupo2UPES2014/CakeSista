@@ -32,6 +32,7 @@ Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'inic
 Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 Router::connect('/about', array('controller' => 'pages', 'action' => 'display', 'about'));
 Router::connect('/login', array('controller' => 'usuarios', 'action' => 'login'));
+Router::connect('/multimedia', array('controller' => 'pages', 'action' => 'display', 'multimedia'));
 Router::connect('/registro', array('controller' => 'usuarios', 'action' => 'registro'));
 Router::connect('/activar/*', array('controller' => 'usuarios', 'action' => 'activar'));
 Router::connect('/nuevo_correo/*', array('controller' => 'usuarios', 'action' => 'nuevo_correo'));

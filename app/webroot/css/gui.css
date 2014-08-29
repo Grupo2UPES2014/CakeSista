@@ -415,6 +415,10 @@ div.icoView
 {
     background: url(../img/icons/appbar.eye.png) center;
 }
+div.icoMediaCenter
+{
+    background: url(../img/icons/appbar.monitor.play.png) center;
+}
 
 /*---------------------------------ANIMACIONES---------------------------------------*/
 @keyframes fadein{

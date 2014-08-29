@@ -392,6 +392,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Tareas/documento');
         $this->Acl->allow($role, 'controllers/Tareas/formulario');
         $this->Acl->allow($role, 'controllers/Tareas/mandamiento');
+        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
 //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -415,6 +416,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         $this->Acl->deny($role, 'controllers/Tareas/asignar');
+        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
 //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');
@@ -428,6 +430,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Tareas/index');
         $this->Acl->allow($role, 'controllers/Tareas/asignar');
         $this->Acl->allow($role, 'controllers/Tareas/actividad');
+        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
 
         echo 'ok?';
     }

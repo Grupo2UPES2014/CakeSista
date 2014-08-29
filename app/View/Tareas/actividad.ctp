@@ -5,7 +5,7 @@
 echo $this->Form->create('Tarea');
 echo $this->Form->input('id');
 echo $this->Form->input('observaciones', array('placeholder' => 'Observaciones', 'label' => false));
-echo $this->Form->input('estado');
-echo $this->Form->button('Finalizar');
+echo $this->Form->input('estado', array('options' => array(1 => 'Activo'), 'label' => false, 'empty' => 'Seleccione Estado'));
+echo $this->Form->button('Actualizar', array('class' => 'update'));
 echo $this->Form->end();
 ?>
