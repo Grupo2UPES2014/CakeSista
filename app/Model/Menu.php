@@ -17,7 +17,7 @@ class Menu extends AppModel {
                 'ruta' => 'cattramites'
             ),
             array(
-                'titulo' => 'Catágolos',
+                'titulo' => 'Catálogos',
                 'icono' => 'icoCat',
                 'ruta' => 'pages/catalogos'
             ),

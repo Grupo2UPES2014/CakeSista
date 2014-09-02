@@ -210,12 +210,6 @@ button.del
     background-position:center;
     box-shadow:0px 0px 0px 3px #091f4e;
 }
-#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.carrera{
-    background-image:url(../img/icons/appbar.grade.c.png);
-}
-#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.facultad{
-    background-image:url(../img/icons/appbar.grade.f.png);
-}
 #sistacontainer #sistacontent #sistadesktop .opciones div .opcion.correo
 {
     background-image:url(../img/icons/appbar.at.png);
@@ -223,6 +217,30 @@ button.del
 #sistacontainer #sistacontent #sistadesktop .opciones div .opcion.pass
 {
     background-image:url(../img/icons/appbar.lock.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.empleados
+{
+    background-image:url(../img/icons/appbar.group.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.carreras
+{
+    background-image:url(../img/icons/appbar.man.suitcase.run.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.asignaturas
+{
+    background-image:url(../img/icons/appbar.book.hardcover.open.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.cargos
+{
+    background-image:url(../img/icons/appbar.suitcase.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.cuentas
+{
+    background-image:url(../img/icons/appbar.currency.dollar.png);
+}
+#sistacontainer #sistacontent #sistadesktop .opciones div .opcion.facultades
+{
+    background-image:url(../img/icons/appbar.scale.png);
 }
 /*----------------------------TABLAS------------------------------------------*/
 #sistacontainer #sistacontent #sistadesktop table
