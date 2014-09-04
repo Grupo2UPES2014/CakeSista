@@ -55,7 +55,7 @@ class Usuario extends AppModel {
         'correo' => array(
             'email' => array(
                 'rule' => array('email'),
-            'message' => 'Formato de correo invalido',
+                'message' => 'Formato de correo invalido',
             //'allowEmpty' => false,
             //'required' => false,
             //'last' => false, // Stop validation after this rule
@@ -211,9 +211,8 @@ class Usuario extends AppModel {
         $usuario = $this->find('first', $options);
         if (!empty($usuario)) {
             return $usuario['Usuario']['id'];
-        } else { 
+        } else {
             return false;
-            
         }
     }
 

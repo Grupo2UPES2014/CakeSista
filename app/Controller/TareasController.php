@@ -26,7 +26,17 @@ class TareasController extends AppController {
     public function index() {
         $this->set('title_for_layout', 'Buzón de Tareas');
         $this->Tarea->recursive = 0;
-        $this->set('tareas', $this->Paginator->paginate());
+        $catcargo_id = $this->Tarea->Empleado->obtenerCargoEmpleado($this->Session->read('Auth.User.id'));
+        $empleado_id = $this->Tarea->Empleado->obtenerEmpleado_id($this->Session->read('Auth.User.id'));
+
+        $options = array('conditions' => array(
+                'OR' => array(
+                    array('Tarea.empleado_id' => $empleado_id),
+                    array('Tarea.empleado_id' => null),
+                ),
+                'Cattarea.catcargo_id' => $catcargo_id
+        ));
+        $this->set('tareas', $this->Tarea->find('all', $options));
     }
 
     public function view($id = null) {
