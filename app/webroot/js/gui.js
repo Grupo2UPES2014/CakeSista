@@ -1,5 +1,8 @@
 $(document).ready(function(e) {
     renderMensajes();
+    $("#logo").click(function(e) {
+        home($(this).data('raiz'));
+    });
 });
 
 function Mensaje(titulo, mensaje, tipo)
@@ -37,4 +40,9 @@ function renderMensajes()
             Mensaje($('#controller').html(), $('#flashMessage').closest('div').html(), 2);
         }
     }
+}
+
+function home(ruta)
+{
+    location.href = ruta;
 }

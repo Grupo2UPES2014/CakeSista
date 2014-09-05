@@ -34,6 +34,6 @@ echo $this->Form->input('correo', array(
     ?>
 </fieldset>
 <?php
-echo $this->Form->button('Registrase', array('class' => 'save'));
+echo $this->Form->button('Registrar', array('class' => 'save'));
 echo $this->Form->end();
 ?>

@@ -35,6 +35,7 @@ body,html
     height: 113px;
     background-image: url(../img/logo5.png);
     position: relative;
+    cursor: pointer;
 }
 #sistacontainer #sistamenu #m_elementos
 {

@@ -20,7 +20,7 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
     <body>
         <div id="sistacontainer">
             <div id="sistamenu">
-                <div id="logo"></div>
+                <div id="logo" data-raiz="<?php echo $this->webroot; ?>"></div>
                 <div id="m_elementos">
                     <?php
                     $menus = $this->Session->read('menu');
