@@ -20,6 +20,7 @@
  */
 
 App::uses('Model', 'Model');
+date_default_timezone_set('America/El_Salvador');
 
 /**
  * Application model for Cake.

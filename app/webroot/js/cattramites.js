@@ -17,9 +17,9 @@ $(document).ready(function(e) {
             <select name="data[Cattarea][' + correlativo + '][tipo]" id="Cattarea' + correlativo + 'Tipo" required="required">\n\
             <option value="">Seleccione el Tipo</option>\n\
             <option value="1">Actividad</option>\n\
-            <option value="2">Mandamiento</option>\n\
-            <option value="3">documento</option>\n\
-            <option value="4">formulario</option>\n\
+            <option value="2">Mandamiento de Pago</option>\n\
+            <option value="3">Documento</option>\n\
+            <option value="4">Formulario</option>\n\
             </select>\n\
             <div class="input select required">\n\
             <select name="data[Cattarea][' + correlativo + '][catcargo_id]" id="Cattarea' + correlativo + 'CatcargoId" required="required">\n\

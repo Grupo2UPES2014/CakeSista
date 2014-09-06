@@ -388,7 +388,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Tramites/nuevo');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         $this->Acl->allow($role, 'controllers/Tareas/asignar');
-        $this->Acl->allow($role, 'controllers/Tareas/actividad');
+        $this->Acl->deny($role, 'controllers/Tareas/actividad');
         $this->Acl->allow($role, 'controllers/Tareas/documento');
         $this->Acl->allow($role, 'controllers/Tareas/formulario');
         $this->Acl->allow($role, 'controllers/Tareas/mandamiento');

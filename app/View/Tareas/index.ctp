@@ -1,7 +1,4 @@
 <h2>Buzón de Tareas</h2>
-<?php
-var_dump($tareas);
-?>
 <table>
     <tr>
         <th>ID</th>
@@ -16,11 +13,11 @@ var_dump($tareas);
         ?>
         <tr>
             <td><?php echo $tarea['Tarea']['id']; ?></td>
-            <td><?php echo $tarea['Tarea']['tramite_id']; ?></td>
+            <td>#<?php echo $tarea['Tramite']['id']; ?> <?php echo $tarea['Cattramite']['nombre']; ?></td>
             <td><?php echo $tarea['Cattarea']['nombre']; ?></td>
-            <td><?php echo $tarea['Tarea']['estado']; ?></td>
-            <td><?php echo $tarea['Tarea']['tipo']; ?></td>
-            <td></td>
+            <td><?php echo $estados[$tarea['Tarea']['estado']]; ?></td>
+            <td><?php echo $tipos[$tarea['Cattarea']['tipo']][0]; ?></td>
+            <td>Ver <a href="<?php echo Router::url(array('controller' => 'tareas', 'action' => $tipos[$tarea['Cattarea']['tipo']][1], $tarea['Tarea']['id'])); ?>">Tomar</a></td>
         </tr>  
     <?php endforeach; ?>
 </table>

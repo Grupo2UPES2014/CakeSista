@@ -145,4 +145,15 @@ class Tramite extends AppModel {
         }
     }
 
+    public function finalizar($id = NULL) {
+        $this->read(null, $id);
+        $this->set('estado', 0);
+        $this->set('fechafin', date('Y-m-d'));
+        if ($this->save()) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
 }
