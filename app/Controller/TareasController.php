@@ -223,13 +223,8 @@ class TareasController extends AppController {
             $this->Session->setFlash('no has seleccionado ningun pdf.');
             $this->redirect(array('action' => 'index'));
         }
-        // Sobrescribimos para que no aparezcan los resultados de debuggin
-        // ya que sino daria un error al generar el pdf.
-        $this->response->header(array('Content-type: application/pdf'));
-        $this->response->type('pdf');
-        Configure::write('debug', 0);
-        $this->layout = 'pdf'; //esto usara el layout pdf.ctp
-        $this->render();
+        $this->Session->write('mandamiento', 1);
+
     }
 
 }
