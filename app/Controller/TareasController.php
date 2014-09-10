@@ -109,7 +109,7 @@ class TareasController extends AppController {
         $this->autoRender = FALSE;
         if (!$this->Tarea->Tramite->exists($id)) {
             $this->Session->setFlash(__('ID de trámite invalido.'), array('class' => 'ERROR'));
-            $this->redirect(array('controller' => 'Tareas', 'action' => 'index'));
+            $this->redirect('/');
         } else {
             if ($this->Tarea->existenTareas($id)) {
                 //existen tareas  
@@ -124,7 +124,7 @@ class TareasController extends AppController {
                         )
                     );
                     if ($this->Tarea->save($data)) {
-                        $this->redirect(array('controller' => 'Tareas', 'action' => 'index'));
+                        $this->redirect('/');
                     } else {
                         $this->Session->setFlash(__('Ocurrio un error al enviar los datos.'), array('class' => 'ERROR'));
                     }
@@ -149,11 +149,11 @@ class TareasController extends AppController {
                     )
                 );
                 if ($this->Tarea->save($data)) {
-                    $tipos = array(2, 3, 4);
+                    $tipos = array(2, 4);
                     if (in_array($cattramite['Cattarea']['tipo'], $tipos)) {
                         $this->_validarTarea($cattramite['Cattarea']['tipo'], $this->Tarea->id);
                     } else {
-                        return $this->redirect(array('controller' => 'Pages', 'action' => 'display', 'inicio'));
+                        return $this->redirect('/');
                     }
                 } else {
                     $this->Session->setFlash(__('Ocurrio un error al enviar los datos.'), array('class' => 'ERROR'));
@@ -166,16 +166,16 @@ class TareasController extends AppController {
         if ($tipo != NULL) {
             switch ($tipo) {
                 case 1:
-                    $this->redirect(array('controller' => 'Tareas', 'action' => 'actividad', $tarea));
+                    $this->redirect(array('controller' => 'tareas', 'action' => 'actividad', $tarea));
                     break;
                 case 2:
-                    $this->redirect(array('controller' => 'Tareas', 'action' => 'mandamiento', $tarea));
+                    $this->redirect(array('controller' => 'tareas', 'action' => 'mandamiento', $tarea));
                     break;
                 case 3:
-                    $this->redirect(array('controller' => 'Tareas', 'action' => 'documento', $tarea));
+                    $this->redirect(array('controller' => 'tareas', 'action' => 'documento', $tarea));
                     break;
                 case 4:
-                    $this->redirect(array('controller' => 'Tareas', 'action' => 'formulario', $tarea));
+                    $this->redirect(array('controller' => 'tareas', 'action' => 'formulario', $tarea));
                     break;
             }
         }
@@ -219,12 +219,41 @@ class TareasController extends AppController {
 
     public function mandamiento($id = NULL) {
         $this->set('title_for_layout', 'Mandamiento de Pago');
-        if (!$id) {
-            $this->Session->setFlash('no has seleccionado ningun pdf.');
-            $this->redirect(array('action' => 'index'));
+        $this->autoRender = FALSE;
+        $this->loadModel('Mandamiento');
+        if (!$this->Tarea->exists($id)) {
+            $this->Session->setFlash(__('ID de tarea invalido.'), array('class' => 'ERROR'));
+            $this->redirect('/');
+        } else {
+            $this->Tarea->read(null, $id);
+            $tramite_id = $this->Tarea->data['Tarea']['tramite_id'];
+            $data = array(
+                'Mandamiento' => array(
+                    'arancel' => 5.0,
+                    'fechaemision' => date('Y-m-d'),
+                    'npe' => '055800550020140104000196320251114',
+                    'codigobarras' => '4157419700005971390200000070009620140104802000180360470114',
+                    'descripcion' => 'algo',
+                    'tramite_id' => $tramite_id,
+                    'cuenta_id' => 1
+                )
+            );
+            if (!$this->Mandamiento->existe($tramite_id)) {
+                if ($this->Mandamiento->save($data)) {
+                    $this->Session->write('mandamiento', $this->Mandamiento->id);
+                    $this->Session->setFlash(__('Se ha generado un mandamiento de pago, revisar este en tu buzón'), array('class' => 'OK'));
+                    return $this->redirect(array('controller' => 'Tareas', 'action' => 'asignar', $tramite_id));
+                } else {
+                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
+                    $this->redirect('/');
+                }
+            } else {
+                $options = array('conditions' => array('tramite_id' => $tramite_id), 'fields' => array('id'));
+                $mandamiento = $this->Mandamiento->find('first', $options);
+                $this->Session->write('mandamiento', $mandamiento['Mandamiento']['id']);
+                $this->redirect(array('controller' => 'mandamientos', 'action' => 'imprimir'));
+            }
         }
-        $this->Session->write('mandamiento', 1);
-
     }
 
 }
