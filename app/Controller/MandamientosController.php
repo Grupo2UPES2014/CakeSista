@@ -74,40 +74,6 @@ class MandamientosController extends AppController {
         }
     }
 
-    private function _generarVerificador($npe) {
-        $iImpares = 0;
-        $iPares = 0;
-        for ($i = 0; $i < strlen($npe); $i++) {
-            if ($i % 2 == 0) {
-                $impares[$iImpares] = (int) $npe[$i];
-                $iImpares++;
-            } else {
-                $pares[$iPares] = (int) $npe[$i];
-                $iPares++;
-            }
-        }
-        $tImpares = 0;
-        for ($i = 0; $i < count($impares); $i++) {
-            $tImpares+=($impares[$i] * 2);
-            if (($impares[$i] * 2) >= 10) {
-                $tImpares+=1;
-            }
-        }
-        $tPares = 0;
-        for ($i = 0; $i < count($pares); $i++) {
-            $tPares+=$pares[$i];
-        }
-        $A = (int) ($tImpares + $tPares);
-        $B = (int) ($A / 10);
-        $C = (int) ($B * 10);
-        $D = (int) ($A - $C);
-        $E = (int) (10 - $D);
-        $F = (int) ($E / 10);
-        $G = (int) ($F * 10);
-        $VR = (int) ($E - $G);
-        return $VR;
-    }
-
     /**
      * add method
      *

@@ -128,4 +128,63 @@ class Mandamiento extends AppModel {
         }
     }
 
+    public function generarCodigos($arancel, $emision, $nui, $codigo, $anio) {
+        $caracteres = '000000';
+        $numero = ((int) $arancel) . '00';
+        $caracteres = substr($caracteres, 0, strlen($caracteres) - strlen($numero)) . $numero;
+        $fechaObj = new DateTime($emision);
+        $fechaObj->add(new DateInterval('P3D'));
+        $fecha = $fechaObj->format('Y-m-d');
+        $fecha = str_replace('-', '', $fecha);
+        $npeMedio = $caracteres . $fecha . '00';
+
+        $npeFinal = $nui . $codigo . '1' . '3' . substr($anio, 2, 2);
+        $caracteres = '0000000000';
+        $numero = ((int) $arancel) . '00';
+        $caracteres = substr($caracteres, 0, strlen($caracteres) - strlen($numero)) . $numero;
+        //$caracteres=substr($caracteres,0,count($caracteres)-count($numero)).$numero;
+
+        $barrasFinal = $caracteres . '(96)' . $fecha . '(8020)0' . $npeFinal;
+        $npeTemp = "0558" . $npeMedio . $npeFinal;
+        $barras = "(415)7419700005971(3902)" . $barrasFinal;
+        $npeTemp = $npeTemp . $this->generarVerificador($npeTemp);
+        //$this->npe = $npeTemp;
+        //$this->codigobarras = $barras;
+        return array('npe' => $npeTemp, 'codigobarras' => $barras);
+    }
+
+    public function generarVerificador($npe) {
+        $iImpares = 0;
+        $iPares = 0;
+        for ($i = 0; $i < strlen($npe); $i++) {
+            if ($i % 2 == 0) {
+                $impares[$iImpares] = (int) $npe[$i];
+                $iImpares++;
+            } else {
+                $pares[$iPares] = (int) $npe[$i];
+                $iPares++;
+            }
+        }
+        $tImpares = 0;
+        for ($i = 0; $i < count($impares); $i++) {
+            $tImpares+=($impares[$i] * 2);
+            if (($impares[$i] * 2) >= 10) {
+                $tImpares+=1;
+            }
+        }
+        $tPares = 0;
+        for ($i = 0; $i < count($pares); $i++) {
+            $tPares+=$pares[$i];
+        }
+        $A = (int) ($tImpares + $tPares);
+        $B = (int) ($A / 10);
+        $C = (int) ($B * 10);
+        $D = (int) ($A - $C);
+        $E = (int) (10 - $D);
+        $F = (int) ($E / 10);
+        $G = (int) ($F * 10);
+        $VR = (int) ($E - $G);
+        return $VR;
+    }
+
 }

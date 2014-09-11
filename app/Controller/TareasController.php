@@ -227,12 +227,13 @@ class TareasController extends AppController {
         } else {
             $this->Tarea->read(null, $id);
             $tramite_id = $this->Tarea->data['Tarea']['tramite_id'];
+            $codigos = $this->Mandamiento->generarCodigos(5.0, date('Y-m-d'), '18036', '025', date('Y'));
             $data = array(
                 'Mandamiento' => array(
                     'arancel' => 5.0,
                     'fechaemision' => date('Y-m-d'),
-                    'npe' => '055800550020140104000196320251114',
-                    'codigobarras' => '4157419700005971390200000070009620140104802000180360470114',
+                    'npe' => $codigos['npe'],
+                    'codigobarras' => $codigos['codigobarras'],
                     'descripcion' => 'algo',
                     'tramite_id' => $tramite_id,
                     'cuenta_id' => 1
