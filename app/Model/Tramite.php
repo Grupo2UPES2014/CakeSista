@@ -29,20 +29,20 @@ class Tramite extends AppModel {
             'boolean' => array(
                 'rule' => array('boolean'),
             //'message' => 'Your custom message here',
-            //'allowEmpty' => false,
-            //'required' => false,
-            //'last' => false, // Stop validation after this rule
-            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+//'allowEmpty' => false,
+//'required' => false,
+//'last' => false, // Stop validation after this rule
+//'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
         'fechainicio' => array(
             'date' => array(
                 'rule' => array('date'),
             //'message' => 'Your custom message here',
-            //'allowEmpty' => false,
-            //'required' => false,
-            //'last' => false, // Stop validation after this rule
-            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+//'allowEmpty' => false,
+//'required' => false,
+//'last' => false, // Stop validation after this rule
+//'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
         'fechafin' => array(
@@ -51,33 +51,33 @@ class Tramite extends AppModel {
                 //'message' => 'Your custom message here',
                 'allowEmpty' => true,
             //'required' => false,
-            //'last' => false, // Stop validation after this rule
-            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+//'last' => false, // Stop validation after this rule
+//'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
         'estudiante_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
             //'message' => 'Your custom message here',
-            //'allowEmpty' => false,
-            //'required' => false,
-            //'last' => false, // Stop validation after this rule
-            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+//'allowEmpty' => false,
+//'required' => false,
+//'last' => false, // Stop validation after this rule
+//'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
         'cattramite_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
             //'message' => 'Your custom message here',
-            //'allowEmpty' => false,
-            //'required' => false,
-            //'last' => false, // Stop validation after this rule
-            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+//'allowEmpty' => false,
+//'required' => false,
+//'last' => false, // Stop validation after this rule
+//'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
     );
 
-    //The Associations below have been created with all possible keys, those that are not needed can be removed
+//The Associations below have been created with all possible keys, those that are not needed can be removed
 
     /**
      * belongsTo associations
@@ -154,6 +154,18 @@ class Tramite extends AppModel {
         } else {
             return FALSE;
         }
+    }
+
+    public function obtenerArancel($id = null) {
+        $options = array('conditions' => array('Tramite.id' => $id), 'fields' => array('Cattramite.arancel'));
+        $tramite = $this->find('first', $options);
+        return $tramite['Cattramite']['arancel'];
+    }
+
+    public function obtenerEstudianteNui($id = null) {
+        $options = array('conditions' => array('Tramite.id' => $id), 'fields' => array('Estudiante.nui'));
+        $tramite = $this->find('first', $options);
+        return $tramite['Estudiante']['nui'];
     }
 
 }

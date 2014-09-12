@@ -51,7 +51,7 @@ class TareasController extends AppController {
         $tipos = array(
             1 => array('Actividad', 'actividad'),
             2 => array('Mandamiento de Pago', 'mandamiento'),
-            3 => array('Documento', 'documento'),
+            3 => array('Documento', 'actividad'),
             4 => array('Formulario', 'formulario')
         );
         $estados = array(0 => 'Inactivo', 1 => 'Activo', 2 => 'Terminado');
@@ -112,7 +112,7 @@ class TareasController extends AppController {
             $this->redirect('/');
         } else {
             if ($this->Tarea->existenTareas($id)) {
-                //existen tareas  
+//existen tareas  
                 $correlativo = $this->Tarea->contarTareas($id) + 1;
                 $cattramite = $this->Tarea->Tramite->obtenerIdCattramite($id);
                 if ($cattarea = $this->Tarea->Cattarea->obtenerCattarea($correlativo, $cattramite)) {
@@ -129,7 +129,7 @@ class TareasController extends AppController {
                         $this->Session->setFlash(__('Ocurrio un error al enviar los datos.'), array('class' => 'ERROR'));
                     }
                 } else {
-                    //---------Las tareas han terminado y se procede a finalizar el tramite
+//---------Las tareas han terminado y se procede a finalizar el tramite
                     if ($this->Tarea->Tramite->finalizar($id)) {
                         $this->Session->setFlash(__('Ha finalizado el trámite'), array('class' => 'INFO'));
                         return $this->redirect(array('controller' => 'Tareas', 'action' => 'index'));
@@ -139,7 +139,7 @@ class TareasController extends AppController {
                     }
                 }
             } else {
-                //tramite recien iniciado
+//tramite recien iniciado
                 $cattramite = $this->Tarea->obtenerPrimeraTarea($id);
                 $data = array(
                     'Tarea' => array(
@@ -209,8 +209,23 @@ class TareasController extends AppController {
         }
     }
 
-    public function documento($id = NULL) {
+    public function documento($id = NULL) {//----------------------------------------------------------------------------
         $this->set('title_for_layout', 'Recepcion de Documento');
+        if (!$this->Tarea->exists($id)) {
+            $this->Session->setFlash(__('ID de tarea invalido.'), array('class' => 'ERROR'));
+            $this->redirect('/');
+        } else {
+            $this->Tarea->recursive = 0;
+            $options = array('conditions' => array('Tarea.' . $this->Tarea->primaryKey => $id), 'fields' => array('Cattarea.descripcion', 'Catcargo.nombre'));
+            $options['joins'] = array(
+                array('table' => 'catcargos',
+                    'alias' => 'Catcargo',
+                    'type' => 'INNER',
+                    'conditions' => array('Catcargo.id = Cattarea.catcargo_id')
+                )
+            );
+            $this->set('tarea', $this->Tarea->find('first', $options));
+        }
     }
 
     public function formulario($id = NULL) {
@@ -225,12 +240,17 @@ class TareasController extends AppController {
             $this->Session->setFlash(__('ID de tarea invalido.'), array('class' => 'ERROR'));
             $this->redirect('/');
         } else {
+            $this->Tarea->actualizarEstado($id, 2);
             $this->Tarea->read(null, $id);
+
             $tramite_id = $this->Tarea->data['Tarea']['tramite_id'];
-            $codigos = $this->Mandamiento->generarCodigos(5.0, date('Y-m-d'), '18036', '025', date('Y'));
+            $arancel = $this->Tarea->Tramite->obtenerArancel($tramite_id);
+            $nui = $this->Tarea->Tramite->obtenerEstudianteNui($tramite_id);
+//---------------------------------------------------------------------------falta codigo de tramite
+            $codigos = $this->Mandamiento->generarCodigos($arancel, date('Y-m-d'), $nui, '025', date('Y'));
             $data = array(
                 'Mandamiento' => array(
-                    'arancel' => 5.0,
+                    'arancel' => $arancel,
                     'fechaemision' => date('Y-m-d'),
                     'npe' => $codigos['npe'],
                     'codigobarras' => $codigos['codigobarras'],
@@ -243,6 +263,7 @@ class TareasController extends AppController {
                 if ($this->Mandamiento->save($data)) {
                     $this->Session->write('mandamiento', $this->Mandamiento->id);
                     $this->Session->setFlash(__('Se ha generado un mandamiento de pago, revisar este en tu buzón'), array('class' => 'OK'));
+
                     return $this->redirect(array('controller' => 'Tareas', 'action' => 'asignar', $tramite_id));
                 } else {
                     $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));

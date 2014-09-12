@@ -177,7 +177,7 @@ $style = array(
     'vpadding' => 'auto',
     'fgcolor' => array(0, 0, 0),
     'bgcolor' => false, //array(255,255,255),
-    'text' => true,
+    'text' => false,
     'font' => $textfont,
     'fontsize' => 8,
     'stretchtext' => 4
@@ -187,8 +187,9 @@ $tcpdf->SetX(110);
 $tcpdf->SetFont($textfont, 'B', 8);
 $tcpdf->Cell(0, 0, 'NPE ' . $mandamiento['Mandamiento']['npe'], 0, 1);
 $tcpdf->SetX(87);
-$tcpdf->write1DBarcode($mandamiento['Mandamiento']['codigobarras'], 'C128', '', '', '', 18, 0.3, $style, 'N');
-
+$tcpdf->write1DBarcode($barcode, 'C128', '', '', '', 18, 0.3, $style, 'N');
+$tcpdf->SetXY(95, $tcpdf->GetY() - 1);
+$tcpdf->Cell(0, 0, $mandamiento['Mandamiento']['codigobarras'], 0, 1);
 $tcpdf->Ln(10);
 //var_dump($estudiante);
 $tcpdf->Cell(0, 0, 'Avisos', 0, 1);

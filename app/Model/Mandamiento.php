@@ -133,11 +133,11 @@ class Mandamiento extends AppModel {
         $numero = ((int) $arancel) . '00';
         $caracteres = substr($caracteres, 0, strlen($caracteres) - strlen($numero)) . $numero;
         $fechaObj = new DateTime($emision);
-        $fechaObj->add(new DateInterval('P3D'));
+        $fechaObj->add(new DateInterval('P1D'));
         $fecha = $fechaObj->format('Y-m-d');
         $fecha = str_replace('-', '', $fecha);
         $npeMedio = $caracteres . $fecha . '00';
-
+//falta detectar el ciclo "3"
         $npeFinal = $nui . $codigo . '1' . '3' . substr($anio, 2, 2);
         $caracteres = '0000000000';
         $numero = ((int) $arancel) . '00';
@@ -185,6 +185,20 @@ class Mandamiento extends AppModel {
         $G = (int) ($F * 10);
         $VR = (int) ($E - $G);
         return $VR;
+    }
+
+    public function getNpeFormato($_npe) {
+        $npe = '';
+
+        for ($i = 0; $i < strlen($_npe); $i++) {
+
+            if ($i % 4 == 0) {
+                $npe.=' ' . $_npe[$i];
+            } else {
+                $npe.=$_npe[$i];
+            }
+        }
+        return $npe;
     }
 
 }

@@ -190,4 +190,18 @@ class Tarea extends AppModel {
         return $tarea['Tarea']['cattarea_id'];
     }
 
+    public function actualizarEstado($id = null, $estado = null) {
+        $data = array(
+            'Tarea' => array(
+                'id' => $id,
+                'estado' => 2
+            )
+        );
+        if ($this->save($data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -36,6 +36,7 @@ class MandamientosController extends AppController {
      * @return void
      */
     public function imprimir() {
+        //var_dump($this->Mandamiento->Tramite->Tarea->actualizarEstado(71, 2));
         $id = $this->Session->read('mandamiento');
         if (!$this->Mandamiento->exists($id)) {
             $this->Session->setFlash(__('El ID de mandamiento es invalido'), array('class' => 'ERROR'));
@@ -48,6 +49,11 @@ class MandamientosController extends AppController {
 
             $options = array('conditions' => array('Mandamiento.' . $this->Mandamiento->primaryKey => $id), 'recursive' => -1);
             $mandamiento = $this->Mandamiento->find('first', $options);
+            $mandamiento['Mandamiento']['npe'] = $this->Mandamiento->getNpeFormato($mandamiento['Mandamiento']['npe']);
+
+            $barcode = $mandamiento['Mandamiento']['codigobarras'];
+            $barcode = str_replace('(', '', $barcode);
+            $barcode = str_replace(')', '', $barcode);
 
             $options = array(
                 'conditions' => array('Tramite.id' => $mandamiento['Mandamiento']['tramite_id']),
@@ -69,6 +75,7 @@ class MandamientosController extends AppController {
             $this->set('mandamiento', $mandamiento);
             $this->set('estudiante', $estudiante);
             $this->set('vencimiento', $exp);
+            $this->set('barcode', $barcode);
 
             $this->render();
         }
