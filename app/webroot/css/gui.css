@@ -137,6 +137,10 @@ input,textarea,select
     margin-bottom: 5px;
     width: 350px;
 }
+input[type='checkbox']
+{
+    width: 150px;
+}
 select
 {width: 356px;}
 button
@@ -437,6 +441,10 @@ div.icoView
 div.icoMediaCenter
 {
     background: url(../img/icons/appbar.monitor.play.png) center;
+}
+div.iconRecibir
+{
+    background: url(../img/icons/appbar.new.window.png) center; 
 }
 
 /*---------------------------------ANIMACIONES---------------------------------------*/

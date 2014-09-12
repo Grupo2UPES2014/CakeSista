@@ -17,7 +17,7 @@
             <td><?php echo $tarea['Cattarea']['nombre']; ?></td>
             <td><?php echo $estados[$tarea['Tarea']['estado']]; ?></td>
             <td><?php echo $tipos[$tarea['Cattarea']['tipo']][0]; ?></td>
-            <td>Ver <a href="<?php echo Router::url(array('controller' => 'tareas', 'action' => $tipos[$tarea['Cattarea']['tipo']][1], $tarea['Tarea']['id'])); ?>">Tomar</a></td>
+            <td><a href="<?php echo Router::url(array('controller' => 'tareas', 'action' => 'ver', $tarea['Tarea']['id'])); ?>"><div class="ico medium icoView"></div></a> <a href="<?php echo Router::url(array('controller' => 'tareas', 'action' => $tipos[$tarea['Cattarea']['tipo']][1], $tarea['Tarea']['id'])); ?>"><div class="ico medium iconRecibir"></div></a></td>
         </tr>  
     <?php endforeach; ?>
 </table>

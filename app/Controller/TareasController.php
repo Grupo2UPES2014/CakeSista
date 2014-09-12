@@ -62,10 +62,30 @@ class TareasController extends AppController {
 
     public function ver($id = null) {
         if (!$this->Tarea->exists($id)) {
-            throw new NotFoundException(__('Invalid tarea'));
+            $this->Session->setFlash(__('ID de trámite invalido.'), array('class' => 'ERROR'));
+            $this->redirect('/');
         }
-        $options = array('conditions' => array('Tarea.' . $this->Tarea->primaryKey => $id));
+        $options = array('conditions' => array('Tarea.' . $this->Tarea->primaryKey => $id), 'fields' => '*');
+        $options['joins'] = array(
+            array('table' => 'cattramites',
+                'alias' => 'Cattramite',
+                'type' => 'INNER',
+                'conditions' => array('Cattramite.id = Tramite.cattramite_id')
+            ),
+            array('table' => 'estudiantes',
+                'alias' => 'Estudiante',
+                'type' => 'INNER',
+                'conditions' => array('Estudiante.id = Tramite.estudiante_id')
+        ));
+        $tipos = array(
+            1 => array('Actividad', 'actividad'),
+            2 => array('Mandamiento de Pago', 'mandamiento'),
+            3 => array('Documento', 'actividad'),
+            4 => array('Formulario', 'formulario')
+        );
+        $estados = array(0 => 'Inactivo', 1 => 'Activo', 2 => 'Terminado');
         $this->set('tarea', $this->Tarea->find('first', $options));
+        $this->set(compact('tipos', 'estados'));
     }
 
     public function add() {
@@ -216,7 +236,7 @@ class TareasController extends AppController {
             $this->redirect('/');
         } else {
             $this->Tarea->recursive = 0;
-            $options = array('conditions' => array('Tarea.' . $this->Tarea->primaryKey => $id), 'fields' => array('Cattarea.descripcion', 'Catcargo.nombre'));
+            $options = array('conditions' => array('Tarea.' . $this->Tarea->primaryKey => $id), 'fields' => array('Cattarea.descripcion', 'Catcargo.oficina'));
             $options['joins'] = array(
                 array('table' => 'catcargos',
                     'alias' => 'Catcargo',

@@ -429,6 +429,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         $this->Acl->allow($role, 'controllers/Tareas/index');
+        $this->Acl->allow($role, 'controllers/Tareas/ver');
         $this->Acl->allow($role, 'controllers/Tareas/asignar');
         $this->Acl->allow($role, 'controllers/Tareas/actividad');
         $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
