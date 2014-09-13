@@ -446,7 +446,35 @@ div.iconRecibir
 {
     background: url(../img/icons/appbar.new.window.png) center; 
 }
-
+/*----------------------------------MEDIA_CENTER-------------------------------------------*/
+#mediacenter
+{
+    width: 100%;
+    display: table;
+}
+#mediacenter div
+{
+    display: table-cell;
+    vertical-align: middle;
+    transition: 0.4s all;
+}
+#mediacenter div:first-child
+{
+    width: 25%;
+}
+#mediacenter div li{
+    transition: 0.4s all;
+}
+#mediacenter div li:hover
+{
+    background-color: #BFEBFF;
+}
+#mediacenter div video
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 /*---------------------------------ANIMACIONES---------------------------------------*/
 @keyframes fadein{
     from{
