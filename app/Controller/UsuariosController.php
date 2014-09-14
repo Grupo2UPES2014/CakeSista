@@ -394,6 +394,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Tareas/mandamiento');
         $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
         $this->Acl->allow($role, 'controllers/Mandamientos/imprimir');
+        $this->Acl->allow($role, 'controllers/Formularios');
 //----------------------------ADMIN-------------------------
         $role->id = 1;
         $this->Acl->allow($role, 'controllers/Pages/display');
