@@ -23,10 +23,19 @@ class FormulariosController extends AppController {
         $this->set('formularios', $this->Paginator->paginate());
     }
 
-    public function ver($vistaForm = null) {
-        $this->set('title_for_layout', 'Solicitud de constancia de estudios');
-        $this->autoRender = false;
-        $this->render($vistaForm);
+    public function ver($vistaForm = null, $tarea = null) {
+        if (!empty($tarea)) {
+            $this->set('title_for_layout', 'Solicitud de constancia de estudios');
+            $this->autoRender = false;
+            $options = array(
+                'conditions' => array('Tarea.id' => $tarea),
+                'fields' => array('Tarea.id','Cattarea.id'),
+            );
+            $this->set('formulario', $this->Formulario->Tarea->find('first', $options));
+            $this->render($vistaForm);
+        } else {
+            return $this->redirect('/');
+        }
     }
 
     public function view($id = null) {

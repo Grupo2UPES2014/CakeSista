@@ -115,6 +115,7 @@ class Cattarea extends AppModel {
      *
      * @var array
      */
+    //------------- AQUI
     public $hasMany = array(
         'Tarea' => array(
             'className' => 'Tarea',
