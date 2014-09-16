@@ -14,6 +14,21 @@ class CatformularioTest extends CakeTestCase {
  */
 	public $fixtures = array(
 		'app.catformulario',
+		'app.cattarea',
+		'app.catcargo',
+		'app.empleado',
+		'app.usuario',
+		'app.role',
+		'app.estudiante',
+		'app.carrera',
+		'app.facultade',
+		'app.asignatura',
+		'app.tramite',
+		'app.cattramite',
+		'app.calendario',
+		'app.mandamiento',
+		'app.cuenta',
+		'app.tarea',
 		'app.formulario'
 	);
 

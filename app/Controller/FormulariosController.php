@@ -24,12 +24,21 @@ class FormulariosController extends AppController {
     }
 
     public function ver($vistaForm = null, $tarea = null) {
-        if (!empty($tarea)) {
+        if (!empty($tarea) && $this->Formulario->Tarea->exists($tarea)) {
+            //verificar previo si ya existe un formulario lleno
             $this->set('title_for_layout', 'Solicitud de constancia de estudios');
             $this->autoRender = false;
             $options = array(
                 'conditions' => array('Tarea.id' => $tarea),
-                'fields' => array('Tarea.id','Cattarea.id'),
+                'fields' => array('Tarea.id', 'Catformulario.id'),
+                'recursive' => 0
+            );
+            $options['joins'] = array(
+                array('table' => 'catformularios',
+                    'alias' => 'Catformulario',
+                    'type' => 'INNER',
+                    'conditions' => array('Catformulario.cattarea_id = Tarea.cattarea_id')
+                )
             );
             $this->set('formulario', $this->Formulario->Tarea->find('first', $options));
             $this->render($vistaForm);
@@ -53,9 +62,17 @@ class FormulariosController extends AppController {
             $this->autoRender = false;
             var_dump($this->request->data);
             $this->Formulario->create();
-            $this->request->data['Formulario']['respuestas'] = $this->request->data['Form']['algo'];
-            $this->request->data['Formulario']['catformulario_id'] = 1;
-            $this->request->data['Formulario']['tarea_id'] = 78;
+
+            $json = '{"Respuestas":[';
+            $n = 0; //contador para las respuestas
+            foreach ($this->request->data['Form'] as $respuesta) {
+                $n++;
+                $json.='{"R' . $n . '":"' . $respuesta . '"},';
+            }
+            $json = substr($json, 0, -1);
+            $json .= ']}';
+            $this->request->data['Formulario']['respuestas'] = $json;
+
             if ($this->Formulario->save($this->request->data)) {
                 $this->Session->setFlash(__('The formulario has been saved.'));
                 return $this->redirect('/');
