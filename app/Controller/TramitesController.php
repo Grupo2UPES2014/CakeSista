@@ -63,6 +63,18 @@ class TramitesController extends AppController {
         }
     }
 
+    public function buzon() {
+        $this->set('title_for_layout', 'Buzón de Trámites');
+
+        $id = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
+        $options = array('conditions' => array('Tramite.estudiante_id' => $id));
+
+        $estados = array(0 => 'Finalizado', 1 => 'Activo');
+
+        $this->set('tramites', $this->Tramite->find('all', $options));
+        $this->set(compact('estados'));
+    }
+
     public function edit($id = null) {
         if (!$this->Tramite->exists($id)) {
             throw new NotFoundException(__('Invalid tramite'));

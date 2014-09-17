@@ -53,7 +53,7 @@ class Menu extends AppModel {
             array(
                 'titulo' => 'Buzón',
                 'icono' => 'icoInbox',
-                'ruta' => ''
+                'ruta' => 'tramites/buzon'
             )
             ,
             array(
