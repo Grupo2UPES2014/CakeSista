@@ -194,7 +194,7 @@ class Tarea extends AppModel {
         $data = array(
             'Tarea' => array(
                 'id' => $id,
-                'estado' => 2
+                'estado' => $estado
             )
         );
         if ($this->save($data)) {

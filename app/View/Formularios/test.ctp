@@ -3,6 +3,7 @@
     <div style="display:none;"><input name="_method" value="POST" type="hidden"></div>
     <input id="FormularioCatformulario_id" name="data[Formulario][catformulario_id]" value="<?php echo $formulario['Catformulario']['id'] ?>" type="hidden">
     <input id="FormularioTarea_id" name="data[Formulario][tarea_id]" value="<?php echo $formulario['Tarea']['id'] ?>" type="hidden">
+    <input id="FormularioTramite_id" name="data[Formulario][tramite_id]" value="<?php echo $formulario['Tarea']['tramite_id'] ?>" type="hidden">
     <input id="FormCampo1" name="data[Form][campo1]">
     <input id="FormCampo2" name="data[Form][campo2]">
     <input id="FormCampo3" name="data[Form][campo3]">

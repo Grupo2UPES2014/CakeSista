@@ -250,6 +250,27 @@ class TareasController extends AppController {
 
     public function formulario($id = NULL) {
         $this->set('title_for_layout', 'Formulario');
+        $this->autoRender = false;
+        if (!$this->Tarea->exists($id)) {
+            $this->Session->setFlash(__('El ID de tarea es invalido.'), array('class' => 'ERROR'));
+            $this->redirect('/');
+        } else {
+            $options = array('conditions' => array('Tarea.id' => $id), 'fields' => array('Catformulario.id', 'Catformulario.estructura'));
+            $options['joins'] = array(
+                array('table' => 'catformularios',
+                    'alias' => 'Catformulario',
+                    'type' => 'INNER',
+                    'conditions' => array('Catformulario.cattarea_id = Cattarea.id')
+                )
+            );
+            $tarea = $this->Tarea->find('first', $options);
+            if (!empty($tarea)) {
+                $this->redirect(array('controller' => 'formularios', 'action' => 'ver', $tarea['Catformulario']['estructura'], $id));
+            } else {
+                $this->Session->setFlash(__('Ocurrio un error al consultar los datos'), array('class' => 'ERROR'));
+                $this->redirect('/');
+            }
+        }
     }
 
     public function mandamiento($id = NULL) {

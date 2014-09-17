@@ -30,7 +30,7 @@ class FormulariosController extends AppController {
             $this->autoRender = false;
             $options = array(
                 'conditions' => array('Tarea.id' => $tarea),
-                'fields' => array('Tarea.id', 'Catformulario.id'),
+                'fields' => array('Tarea.id', 'Catformulario.id', 'Tarea.tramite_id'),
                 'recursive' => 0
             );
             $options['joins'] = array(
@@ -59,25 +59,31 @@ class FormulariosController extends AppController {
 
     public function add() {
         if ($this->request->is('post')) {
-            $this->autoRender = false;
-            var_dump($this->request->data);
-            $this->Formulario->create();
+            if (!$this->Formulario->existe($this->request->data['Formulario']['tarea_id'])) {
+                $this->autoRender = false;
+                var_dump($this->request->data);
+                $this->Formulario->create();
 
-            $json = '{"Respuestas":[';
-            $n = 0; //contador para las respuestas
-            foreach ($this->request->data['Form'] as $respuesta) {
-                $n++;
-                $json.='{"R' . $n . '":"' . $respuesta . '"},';
-            }
-            $json = substr($json, 0, -1);
-            $json .= ']}';
-            $this->request->data['Formulario']['respuestas'] = $json;
+                $json = '{"Respuestas":[';
+                $n = 0; //contador para las respuestas
+                foreach ($this->request->data['Form'] as $respuesta) {
+                    $n++;
+                    $json.='{"R' . $n . '":"' . $respuesta . '"},';
+                }
+                $json = substr($json, 0, -1);
+                $json .= ']}';
+                $this->request->data['Formulario']['respuestas'] = $json;
 
-            if ($this->Formulario->save($this->request->data)) {
-                $this->Session->setFlash(__('The formulario has been saved.'));
-                return $this->redirect('/');
+                if ($this->Formulario->save($this->request->data)) {
+                    $this->Formulario->Tarea->actualizarEstado($this->request->data['Formulario']['tarea_id'], 2);
+                    $this->Session->setFlash(__('El formulario a sido enviado'), array('class' => 'OK'));
+                    return $this->redirect(array('controller' => 'tareas', 'action' => 'asignar', $this->request->data['Formulario']['tramite_id']));
+                } else {
+                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'),array('class'=>'ERROR'));
+                }
             } else {
-                $this->Session->setFlash(__('The formulario could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('Ya se ha ingresado un formulario para esta tarea.'),array('class'=>'ERROR'));
+                return $this->redirect('/');
             }
         } else {
             return $this->redirect('/');
