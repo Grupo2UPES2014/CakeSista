@@ -28,12 +28,32 @@ class TramitesController extends AppController {
         $this->set('tramites', $this->Paginator->paginate());
     }
 
-    public function view($id = null) {
+    public function ver($id = null) {
+        $this->set('title_for_layout', 'Seguimiento de Trámite');
         if (!$this->Tramite->exists($id)) {
-            throw new NotFoundException(__('Invalid tramite'));
+            $this->Session->setFlash(__('ID de trámite invalido'), array('class' => 'ERROR'));
+            return $this->redirect('/');
+        } else {
+            $estudiante_id = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
+
+            if ($this->Tramite->owner($id, $estudiante_id)) {
+
+                $options = array('conditions' => array('Tramite.' . $this->Tramite->primaryKey => $id));
+                $tramite = $this->Tramite->find('first', $options);
+
+                $options = array('conditions' => array('Cattarea.cattramite_id' => $tramite['Cattramite']['id']), 'recursive' => 0, 'fields' => array('Cattarea.*', 'Catcargo.*'));
+                $cattareas = $this->Tramite->Tarea->Cattarea->find('all', $options);
+                $tipos = array(
+                    1 => 'segActividad',
+                    2 => 'segMandamiento',
+                    3 => 'segDocumento',
+                    4 => 'segFormulario'
+                );
+                $this->set(compact('tramite', 'cattareas','tipos'));
+            } else {
+                return $this->redirect('/');
+            }
         }
-        $options = array('conditions' => array('Tramite.' . $this->Tramite->primaryKey => $id));
-        $this->set('tramite', $this->Tramite->find('first', $options));
     }
 
     /**
@@ -67,7 +87,7 @@ class TramitesController extends AppController {
         $this->set('title_for_layout', 'Buzón de Trámites');
 
         $id = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
-        $options = array('conditions' => array('Tramite.estudiante_id' => $id));
+        $options = array('conditions' => array('Tramite.estudiante_id' => $id), 'fields' => array('Cattramite.nombre', 'Tramite.estado', 'Tramite.fechainicio'), 'recursive' => 0);
 
         $estados = array(0 => 'Finalizado', 1 => 'Activo');
 

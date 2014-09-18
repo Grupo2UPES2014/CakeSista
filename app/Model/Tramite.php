@@ -168,4 +168,14 @@ class Tramite extends AppModel {
         return $tramite['Estudiante']['nui'];
     }
 
+    public function owner($id = null, $estudiante = null) {
+        $options = array('conditions' => array('Tramite.id' => $id, 'Tramite.estudiante_id' => $estudiante), 'recursive' => 0);
+        $tramite = $this->find('first', $options);
+        if (!empty($tramite)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

@@ -13,12 +13,9 @@
             <td><?php echo $tramite['Cattramite']['nombre']; ?></td>
             <td><?php echo $estados[$tramite['Tramite']['estado']]; ?></td>
             <td><?php echo $tramite['Tramite']['fechainicio']; ?></td>
-            <td><div class="ico medium icoView"></div> Ver</td>
+            <td><a href="<?php echo Router::url(array('controller' => 'tramites', 'action' => 'ver', $tramite['Tramite']['id'])); ?>"><div class="ico medium icoView"></div>Ver</a></td>
         </tr>
         <?php
     endforeach;
     ?>
 </table>
-<?php
-var_dump($tramites);
-?>

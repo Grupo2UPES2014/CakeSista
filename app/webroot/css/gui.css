@@ -276,6 +276,61 @@ a.vTramite
     text-decoration: none;
     color: #000;
 }
+/*----------------------------------GUI DE SEGUIMIENTO----------------------------*/
+.SeguimientoGrid{
+    width: 100%;
+}
+.SeguimientoGrid > div{
+    position: relative;
+    width:130px;
+    height:130px;
+    display: inline-block;
+    box-shadow: 1px 1px 2px 1px #091f4e;
+    vertical-align: top;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+.SeguimientoGrid > div:hover{
+    box-shadow: 1px 1px 2px 2px #091f4e;  
+}
+.SeguimientoGrid div span{
+    width: 100%;
+    display: block;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+.SeguimientoGrid div span:first-child{
+    font-weight: bold;
+    position: absolute;
+}
+.SeguimientoGrid div.noiniciado{
+    background-color: #808080;
+}
+.SeguimientoGrid div.enproceso{
+    background-color: #ce7607;
+}
+.SeguimientoGrid div.finalizado{
+    background-color: #0c9648;
+}
+.SeguimientoGrid div div{
+    width: 58px;
+    height: 58px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+}
+div.segDocumento{
+    background: url(../img/icons/appbar.page.text.png) center;
+}
+div.segMandamiento{
+    background: url(../img/icons/appbar.printer.text.png) center;
+}
+div.segFormulario{
+    background: url(../img/icons/appbar.checkmark.pencil.top.png) center;
+}
+div.segActividad{
+    background: url(../img/icons/appbar.user.tie.png) center;
+}
 /*---------------------------------------BOTONES/DIV------------------------------*/
 #sistacontainer #sistacontent #sistadesktop div.btnNuevo
 {
