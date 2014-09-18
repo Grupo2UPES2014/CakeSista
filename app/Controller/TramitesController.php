@@ -49,7 +49,12 @@ class TramitesController extends AppController {
                     3 => 'segDocumento',
                     4 => 'segFormulario'
                 );
-                $this->set(compact('tramite', 'cattareas','tipos'));
+                $estados = array(
+                    0 => 'noiniciado',
+                    1 => 'enproceso',
+                    2 => 'finalizado'
+                );
+                $this->set(compact('tramite', 'cattareas', 'tipos', 'estados'));
             } else {
                 return $this->redirect('/');
             }
