@@ -22,8 +22,3 @@
     endforeach;
     ?>
 </div>
-<?php
-var_dump($tramite);
-echo '--------------------------------';
-var_dump($cattareas);
-?>
