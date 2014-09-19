@@ -62,7 +62,7 @@ class TareasController extends AppController {
 
     public function ver($id = null) {
         if (!$this->Tarea->exists($id)) {
-            $this->Session->setFlash(__('ID de trámite invalido.'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('ID de trámite invalido.-'), array('class' => 'ERROR'));
             $this->redirect('/');
         }
         $options = array('conditions' => array('Tarea.' . $this->Tarea->primaryKey => $id), 'fields' => '*');

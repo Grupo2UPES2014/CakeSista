@@ -17,6 +17,7 @@ class TramitesController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Session');
+    public $helpers = array('Html');
 
     /**
      * index method
@@ -31,7 +32,7 @@ class TramitesController extends AppController {
     public function ver($id = null) {
         $this->set('title_for_layout', 'Seguimiento de Trámite');
         if (!$this->Tramite->exists($id)) {
-            $this->Session->setFlash(__('ID de trámite invalido'), array('class' => 'ERROR'));
+            $this->Session->setFlash(__('ID de trámite invalido-'), array('class' => 'ERROR'));
             return $this->redirect('/');
         } else {
             $estudiante_id = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
