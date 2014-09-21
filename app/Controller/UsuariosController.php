@@ -9,7 +9,7 @@ class UsuariosController extends AppController {
     public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
     public $paginate = array(
-        'limit' => 10,
+        'limit' => 50,
         'order' => array(
             'alias' => 'asc'
         ),
@@ -135,7 +135,7 @@ class UsuariosController extends AppController {
             $this->Usuario->create();
             $validador = $this->Usuario->validator();
             $validador['alias']['formato'] = array(
-                'rule' => 'alphaNumeric',
+                'rule' => '/^[a-zA-Z0-9_.\-]+$/',
             );
             $this->request->data['Usuario']['role_id'] = 2;
             $this->request->data['Usuario']['estado'] = 1;

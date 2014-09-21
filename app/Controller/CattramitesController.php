@@ -60,37 +60,37 @@ class CattramitesController extends AppController {
         if ($this->request->is('post')) {
             $this->Cattramite->create();
             if ($this->Cattramite->saveAssociated($this->request->data)) {
-                $this->Session->setFlash(__('The cattramite has been saved.'), array('class' => 'OK'));
+                $this->Session->setFlash(__('El trámite ha sido guardado con éxito.'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The cattramite could not be saved. Please, try again.'), array('class' => 'ERROR'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         }
         $catcargos = $this->Cattramite->Cattarea->Catcargo->find('list');
         $this->set(compact('catcargos'));
     }
 
-    /**
-     * edit method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
-    public function edit($id = null) {
+    public function editar($id = null) {
         if (!$this->Cattramite->exists($id)) {
             throw new NotFoundException(__('Invalid cattramite'));
         }
         if ($this->request->is(array('post', 'put'))) {
-            if ($this->Cattramite->save($this->request->data)) {
-                $this->Session->setFlash(__('The cattramite has been saved.'));
+            if ($this->Cattramite->saveAssociated($this->request->data)) {
+                $this->Session->setFlash(__('El trámite ha sido guardado con éxito.'), array('class' => 'OK'));
                 return $this->redirect(array('action' => 'index'));
             } else {
-                $this->Session->setFlash(__('The cattramite could not be saved. Please, try again.'));
+                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
             }
         } else {
-            $options = array('conditions' => array('Cattramite.' . $this->Cattramite->primaryKey => $id));
+            $options = array(
+                'conditions' => array('Cattramite.id' => $id, 'Cattarea.cattramite_id'),
+                'fields' => array('Cattramite.*'),
+                'recursive' => 0
+            );
             $this->request->data = $this->Cattramite->find('first', $options);
+
+            $catcargos = $this->Cattramite->Cattarea->Catcargo->find('list');
+            $this->set(compact('catcargos'));
         }
     }
 

@@ -190,6 +190,12 @@ class Tarea extends AppModel {
         return $tarea['Tarea']['cattarea_id'];
     }
 
+    public function obtenerCattareaDescripcion($id = NULL) {
+        $options = array('conditions' => array('Tarea.id' => $id), 'fields' => array('Cattarea.descripcion'));
+        $tarea = $this->find('first', $options);
+        return $tarea['Cattarea']['descripcion'];
+    }
+
     public function actualizarEstado($id = null, $estado = null) {
         $data = array(
             'Tarea' => array(

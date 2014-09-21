@@ -14,7 +14,7 @@
             <td><?php echo $tramite['Cattramite']['id']; ?></td>
             <td><?php echo $tramite['Cattramite']['nombre']; ?></td>
             <td><?php echo $tramite['Cattramite']['arancel']; ?></td>
-            <td></td>
+            <td><?php echo $this->Html->link('Editar', array('action' => 'editar',$tramite['Cattramite']['id'])); ?></td>
         </tr>
         <?php
     endforeach;

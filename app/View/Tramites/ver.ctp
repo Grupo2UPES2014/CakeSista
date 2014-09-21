@@ -1,6 +1,6 @@
 <h2><?php echo $tramite['Cattramite']['nombre']; ?></h2>
 <br>
-<div class="SeguimientoGrid">
+<div class="SeguimientoGrid" data-appname="<?php echo $this->webroot; ?>">
     <?php
     $n = 0;
     foreach ($cattareas as $cattarea):
@@ -24,7 +24,6 @@
         <?php
         $n++;
     endforeach;
-    echo $this->Html->link('<strong>test</strong>', array('controller' => 'tareas', 'action' => 'mandamiento', 107), array('target' => '_blank'));
     ?>
 </div>
 <?php

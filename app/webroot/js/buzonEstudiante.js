@@ -4,8 +4,7 @@
  */
 $(document).ready(function () {
     $('.finalizado').click(function () {
-        alert('localhost/CakeSista/tareas/mandamiento/' + $(this).data('id'));
-        window.open('localhost/CakeSista/tareas/mandamiento/' + $(this).data('id'),"Homepage","resizable=no,status=yes,scrollbars=yes,height=970,width=945,menubar=yes,addressbar=no");
+        window.open($('.SeguimientoGrid').data('appname') + 'tareas/mandamiento/' + $(this).data('id'), 'Mandamiento', 'menubar = no, toolbar = no, scrollbars = yes, width = 600, height = 800,addressbar=no');
     }).mouseover(function () {
         $(this).css('cursor', 'pointer');
     });

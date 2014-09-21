@@ -295,7 +295,7 @@ class TareasController extends AppController {
                     'fechaemision' => date('Y-m-d'),
                     'npe' => $codigos['npe'],
                     'codigobarras' => $codigos['codigobarras'],
-                    'descripcion' => 'algo',
+                    'descripcion' => $this->Tarea->obtenerCattareaDescripcion($id),
                     'tramite_id' => $tramite_id,
                     'cuenta_id' => 1
                 )
