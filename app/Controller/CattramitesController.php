@@ -72,7 +72,8 @@ class CattramitesController extends AppController {
 
     public function editar($id = null) {
         if (!$this->Cattramite->exists($id)) {
-            throw new NotFoundException(__('Invalid cattramite'));
+            $this->Session->setFlash(__('Trámite Invalido'), array('class' => 'ERROR'));
+            $this->redirect('/');
         }
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Cattramite->saveAssociated($this->request->data)) {
@@ -83,14 +84,19 @@ class CattramitesController extends AppController {
             }
         } else {
             $options = array(
-                'conditions' => array('Cattramite.id' => $id, 'Cattarea.cattramite_id'),
-                'fields' => array('Cattramite.*'),
-                'recursive' => 0
+                'conditions' => array('Cattramite.id' => $id),
+                'recursive' => -1
             );
             $this->request->data = $this->Cattramite->find('first', $options);
 
+            $options = array(
+                'conditions' => array('Cattarea.cattramite_id' => $id),
+                'recursive' => -1
+            );
+            $cattareas = $this->Cattramite->Cattarea->find('all', $options);
+
             $catcargos = $this->Cattramite->Cattarea->Catcargo->find('list');
-            $this->set(compact('catcargos'));
+            $this->set(compact('catcargos','cattareas'));
         }
     }
 

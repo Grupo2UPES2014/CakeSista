@@ -14,7 +14,7 @@
             <td><?php echo $tramite['Cattramite']['id']; ?></td>
             <td><?php echo $tramite['Cattramite']['nombre']; ?></td>
             <td><?php echo $tramite['Cattramite']['arancel']; ?></td>
-            <td><?php echo $this->Html->link('Editar', array('action' => 'editar',$tramite['Cattramite']['id'])); ?></td>
+            <td><a href="<?php echo Router::url(array('action' => 'editar',$tramite['Cattramite']['id'])); ?>"><div class="ico medium icoUpdate"></div></a></td>
         </tr>
         <?php
     endforeach;

@@ -19,7 +19,7 @@ class CatcargosController extends AppController {
     public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
     public $paginate = array(
-        'limit' => 25,
+        'limit' => 10,
     );
 
     /**
@@ -29,10 +29,8 @@ class CatcargosController extends AppController {
      */
     public function index() {
         $this->Catcargo->recursive = 0;
-        $this->Paginator->settings = array(
-            'limit' => 50
-        );
-        $this->set('catcargos', $this->Paginator->paginate('Catcargo'));
+        $this->Paginator->settings = $this->paginate;
+        $this->set('catcargos', $this->Paginator->paginate());
         $this->set('title_for_layout', 'Índice');
     }
 

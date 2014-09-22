@@ -9,7 +9,7 @@ class UsuariosController extends AppController {
     public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
     public $paginate = array(
-        'limit' => 50,
+        'limit' => 10,
         'order' => array(
             'alias' => 'asc'
         ),

@@ -9,20 +9,20 @@ echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholde
 <fieldset><legend>Tareas:</legend>
     <?php
     $n = 0;
-    foreach ($this->request->data['Cattarea'] as $tarea) {
+    foreach ($cattareas as $tarea) {
         if ($n > 0)
             echo '<hr>';
-        echo $this->Form->hidden('Cattarea.' . $n . '.id');
-        echo $this->Form->input('Cattarea.' . $n . '.nombre', array('label' => false, 'placeholder' => 'Nombre'));
-        echo $this->Form->input('Cattarea.' . $n . '.descripcion', array('label' => false, 'placeholder' => 'Descripción'));
+        echo $this->Form->hidden('Cattarea.' . $n . '.id', array('value' => $tarea['Cattarea']['id']));
+        echo $this->Form->input('Cattarea.' . $n . '.nombre', array('label' => false, 'placeholder' => 'Nombre','value'=>$tarea['Cattarea']['nombre']));
+        echo $this->Form->input('Cattarea.' . $n . '.descripcion', array('label' => false, 'placeholder' => 'Descripción','value'=>$tarea['Cattarea']['descripcion']));
         $tipos = array(
             '1' => 'Actividad',
             '2' => 'Mandamiento de Pago',
             '3' => 'Documento',
             '4' => 'Formulario'
         );
-        echo $this->Form->select('Cattarea.' . $n . '.tipo', $tipos, array('empty' => 'Seleccione el Tipo'));
-        echo $this->Form->input('Cattarea.' . $n . '.catcargo_id', array('empty' => 'Seleccione el cargo', 'label' => false));
+        echo $this->Form->select('Cattarea.' . $n . '.tipo', $tipos, array('empty' => 'Seleccione el Tipo','value'=>$tarea['Cattarea']['tipo']));
+        echo $this->Form->input('Cattarea.' . $n . '.catcargo_id', array('empty' => 'Seleccione el cargo', 'label' => false,'value'=>$tarea['Cattarea']['catcargo_id']));
         $n++;
     }
     ?>
@@ -31,4 +31,3 @@ echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholde
 echo $this->Form->button('Guardar', array('class' => 'save'));
 echo $this->Form->end();
 ?>
-<?php var_dump($this->request->data); ?>
