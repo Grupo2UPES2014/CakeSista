@@ -196,6 +196,11 @@ class Usuario extends AppModel {
         return false;
     }
 
+    public function obtenerAlumnos_id() {
+        $options = array('conditions' => array('Estudiante.usuario_id' => $this->Session->read('Auth.User.id')));
+        $estudiante = $this->Estudiante->find('first', $options);
+    }
+
     public function obtener_id($alias) {
         $options = array('conditions' => array('alias' => $alias));
         $usuario = $this->find('first', $options);

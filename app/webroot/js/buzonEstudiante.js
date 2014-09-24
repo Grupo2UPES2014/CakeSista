@@ -3,8 +3,15 @@
  * [Iddo José Claros - José Carlos Escobar - Carlos Amaury Tejada]
  */
 $(document).ready(function () {
-    $('.finalizado').click(function () {
+    $('.segMandamiento').closest('.finalizado').click(function () {
         window.open($('.SeguimientoGrid').data('appname') + 'tareas/mandamiento/' + $(this).data('id'), 'Mandamiento', 'menubar = no, toolbar = no, scrollbars = yes, width = 600, height = 800,addressbar=no');
+    }).mouseover(function () {
+        $(this).css('cursor', 'pointer');
+    });
+
+    $('.segDocumento').closest('.enproceso').click(function () {
+        location.href = $('.SeguimientoGrid').data('appname') + 'tareas/documento/' + $(this).data('id');
+        //window.open($('.SeguimientoGrid').data('appname') + 'tareas/documento/' + $(this).data('id'), 'Mandamiento', 'menubar = no, toolbar = no, scrollbars = yes, width = 600, height = 800,addressbar=no');
     }).mouseover(function () {
         $(this).css('cursor', 'pointer');
     });

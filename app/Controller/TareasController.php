@@ -229,7 +229,7 @@ class TareasController extends AppController {
         }
     }
 
-    public function documento($id = NULL) {//----------------------------------------------------------------------------
+    public function documento($id = NULL) {
         $this->set('title_for_layout', 'Recepcion de Documento');
         if (!$this->Tarea->exists($id)) {
             $this->Session->setFlash(__('ID de tarea invalido.'), array('class' => 'ERROR'));
@@ -255,7 +255,7 @@ class TareasController extends AppController {
             $this->Session->setFlash(__('El ID de tarea es invalido.'), array('class' => 'ERROR'));
             $this->redirect('/');
         } else {
-            $options = array('conditions' => array('Tarea.id' => $id), 'fields' => array('Catformulario.id', 'Catformulario.estructura'));
+            $options = array('conditions' => array('Tarea.id' => $id), 'fields' => array( 'Catformulario.estructura'));
             $options['joins'] = array(
                 array('table' => 'catformularios',
                     'alias' => 'Catformulario',
@@ -264,6 +264,7 @@ class TareasController extends AppController {
                 )
             );
             $tarea = $this->Tarea->find('first', $options);
+            var_dump($tarea);
             if (!empty($tarea)) {
                 $this->redirect(array('controller' => 'formularios', 'action' => 'ver', $tarea['Catformulario']['estructura'], $id));
             } else {
@@ -283,24 +284,23 @@ class TareasController extends AppController {
         } else {
             $this->Tarea->actualizarEstado($id, 2);
             $this->Tarea->read(null, $id);
-
             $tramite_id = $this->Tarea->data['Tarea']['tramite_id'];
-            $arancel = $this->Tarea->Tramite->obtenerArancel($tramite_id);
-            $nui = $this->Tarea->Tramite->obtenerEstudianteNui($tramite_id);
-//---------------------------------------------------------------------------falta codigo de tramite
-            $codigos = $this->Mandamiento->generarCodigos($arancel, date('Y-m-d'), $nui, '025', date('Y'));
-            $data = array(
-                'Mandamiento' => array(
-                    'arancel' => $arancel,
-                    'fechaemision' => date('Y-m-d'),
-                    'npe' => $codigos['npe'],
-                    'codigobarras' => $codigos['codigobarras'],
-                    'descripcion' => $this->Tarea->obtenerCattareaDescripcion($id),
-                    'tramite_id' => $tramite_id,
-                    'cuenta_id' => 1
-                )
-            );
             if (!$this->Mandamiento->existe($tramite_id)) {
+                $arancel = $this->Tarea->Tramite->obtenerArancel($tramite_id);
+                $nui = $this->Tarea->Tramite->obtenerEstudianteNui($tramite_id);
+//---------------------------------------------------------------------------falta codigo de tramite
+                $codigos = $this->Mandamiento->generarCodigos($arancel, date('Y-m-d'), $nui, '025', date('Y'));
+                $data = array(
+                    'Mandamiento' => array(
+                        'arancel' => $arancel,
+                        'fechaemision' => date('Y-m-d'),
+                        'npe' => $codigos['npe'],
+                        'codigobarras' => $codigos['codigobarras'],
+                        'descripcion' => $this->Tarea->obtenerCattareaDescripcion($id),
+                        'tramite_id' => $tramite_id,
+                        'cuenta_id' => 1
+                    )
+                );
                 if ($this->Mandamiento->save($data)) {
                     $this->Session->write('mandamiento', $this->Mandamiento->id);
                     $this->Session->setFlash(__('Se ha generado un mandamiento de pago, revisar este en tu buzón'), array('class' => 'OK'));

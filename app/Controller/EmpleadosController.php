@@ -18,6 +18,12 @@ class EmpleadosController extends AppController {
      */
     public $helpers = array('Html', 'Form', 'Paginator');
     public $components = array('Paginator', 'Session');
+    public $paginate = array(
+        'limit' => 12,
+        'order' => array(
+            'nombres' => 'asc'
+        ),
+    );
 
     /**
      * index method
@@ -26,6 +32,7 @@ class EmpleadosController extends AppController {
      */
     public function index() {
         $this->Empleado->recursive = 0;
+        $this->Paginator->settings = $this->paginate;
         $this->set('empleados', $this->Paginator->paginate());
     }
 

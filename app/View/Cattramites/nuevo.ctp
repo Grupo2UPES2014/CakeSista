@@ -3,7 +3,7 @@
 echo $this->Form->create('Cattramite');
 echo $this->Form->input('nombre', array('label' => false, 'placeholder' => 'Nombre'));
 echo $this->Form->input('arancel', array('label' => false, 'placeholder' => 'Arancel', 'step' => '0.5'));
-echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholder' => 'Porcentaje de racargo', 'step' => '0.5'));
+echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholder' => 'Porcentaje de racargo', 'step' => '0.5', 'value' => 10));
 ?>
 <fieldset><legend>Tareas:</legend>
     <?php
@@ -20,7 +20,7 @@ echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholde
     echo $this->Form->input('Cattarea.0.catcargo_id', array('empty' => 'Seleccione el cargo', 'label' => false));
     ?>
     <div id="tareas">
-        
+
     </div>
     <button class="plus" id="mas">+</button>
 </fieldset>

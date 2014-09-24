@@ -178,4 +178,8 @@ class Tramite extends AppModel {
         }
     }
 
+    public function activos() {
+        
+    }
+
 }

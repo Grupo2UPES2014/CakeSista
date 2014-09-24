@@ -90,7 +90,7 @@ $tcpdf->Cell(20, 5, 'Total a Pagar:', 0, 0, 'L');
 $tcpdf->SetFont($textfont, '', 9);
 $tcpdf->SetX(60);
 
-$tcpdf->Cell(20, 5, $mandamiento['Mandamiento']['arancel'], 0, 0, 'L');
+$tcpdf->Cell(20, 5, '$'.$mandamiento['Mandamiento']['arancel'], 0, 0, 'L');
 //--------------------------------------------- OTRA MITAD
 $tcpdf->SetXY(85, 20);
 
@@ -157,7 +157,7 @@ $tcpdf->Cell(20, 5, 'Total a Pagar:', 0, 0, 'L');
 $tcpdf->SetFont($textfont, '', 9);
 $tcpdf->SetX(193);
 
-$tcpdf->Cell(20, 5, $mandamiento['Mandamiento']['arancel'], 0, 0, 'L');
+$tcpdf->Cell(20, 5, '$'.$mandamiento['Mandamiento']['arancel'], 0, 0, 'L');
 
 $tcpdf->SetFont($textfont, '', 7);
 $tcpdf->SetXY(85, $tcpdf->GetY() - 2);

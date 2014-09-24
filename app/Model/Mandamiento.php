@@ -137,16 +137,15 @@ class Mandamiento extends AppModel {
         $fecha = $fechaObj->format('Y-m-d');
         $fecha = str_replace('-', '', $fecha);
         $npeMedio = $caracteres . $fecha . '00';
-//falta detectar el ciclo "3"
-        $npeFinal = $nui . $codigo . '1' . '3' . substr($anio, 2, 2);
+        $npeFinal = $nui . $codigo . '1' . $this->getCiclo() . substr($anio, 2, 2);
         $caracteres = '0000000000';
         $numero = ((int) $arancel) . '00';
         $caracteres = substr($caracteres, 0, strlen($caracteres) - strlen($numero)) . $numero;
         //$caracteres=substr($caracteres,0,count($caracteres)-count($numero)).$numero;
-
+        $cuenta = $this->getCuenta();
         $barrasFinal = $caracteres . '(96)' . $fecha . '(8020)0' . $npeFinal;
-        $npeTemp = "0558" . $npeMedio . $npeFinal;
-        $barras = "(415)7419700005971(3902)" . $barrasFinal;
+        $npeTemp = $cuenta . $npeMedio . $npeFinal;
+        $barras = "(415)74197000" . $cuenta . "1(3902)" . $barrasFinal;
         $npeTemp = $npeTemp . $this->generarVerificador($npeTemp);
         //$this->npe = $npeTemp;
         //$this->codigobarras = $barras;
@@ -199,6 +198,30 @@ class Mandamiento extends AppModel {
             }
         }
         return $npe;
+    }
+
+    public function getCuenta() {
+        $options = array('conditions' => array('Cuenta.activo' => 1));
+        $cuenta = $this->Cuenta->find('first', $options);
+        if (!empty($cuenta)) {
+            return $cuenta['Cuenta']['numero'];
+        } else {
+            return false;
+        }
+    }
+
+    public function getCiclo() {
+        $mes = date('m');
+        $ciclo1 = array(1, 2, 3, 4, 5, 6);
+        $ciclo2 = array(7);
+        $ciclo3 = array(8, 9, 10, 11, 12);
+        if (in_array($mes, $ciclo1)) {
+            return 1;
+        } else if (in_array($mes, $ciclo2)) {
+            return 2;
+        } else if (in_array($mes, $ciclo3)) {
+            return 3;
+        }
     }
 
 }

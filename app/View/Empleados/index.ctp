@@ -15,3 +15,8 @@
         </tr>
     <?php endforeach; ?>
 </table>
+<?php echo $this->Paginator->first('<< Primero ') ?>&nbsp;
+<?php echo $this->Paginator->prev('<< Anterior ') ?>&nbsp;
+<?php echo $this->Paginator->numbers(); ?>&nbsp;
+<?php echo $this->Paginator->next(' Siguiente >>') ?>&nbsp;
+<?php echo $this->Paginator->last('Ultimo >>') ?>
