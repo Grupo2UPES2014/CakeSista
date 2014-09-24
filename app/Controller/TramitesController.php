@@ -73,18 +73,23 @@ class TramitesController extends AppController {
             $this->Session->setFlash(__('ID de trámite invalido'), array('class' => 'ERROR'));
             return $this->redirect(array('controller' => 'cattramites', 'action' => 'tramites'));
         } else {
-            if ($this->request->is('get')) {
-                $this->Tramite->create();
-                $this->request->data['Tramite']['estado'] = 1;
-                $this->request->data['Tramite']['fechainicio'] = date('Y-m-d');
-                $this->request->data['Tramite']['estudiante_id'] = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
-                $this->request->data['Tramite']['cattramite_id'] = $id_cattramite;
-                if ($this->Tramite->save($this->request->data)) {
-                    $this->Session->setFlash(__('Se ha iniciado el trámite con exito.'), array('class' => 'OK'));
-                    return $this->redirect(array('controller' => 'tareas', 'action' => 'asignar', $this->Tramite->id));
-                } else {
-                    $this->Session->setFlash(__('¡Ha ocurrido un error al iniciar el trámite! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+            if (!$this->Tramite->activos($this->Session->read('Auth.User.id'))) {
+                if ($this->request->is('get')) {
+                    $this->Tramite->create();
+                    $this->request->data['Tramite']['estado'] = 1;
+                    $this->request->data['Tramite']['fechainicio'] = date('Y-m-d');
+                    $this->request->data['Tramite']['estudiante_id'] = $this->Tramite->Estudiante->obtener_id($this->Session->read('Auth.User.id'));
+                    $this->request->data['Tramite']['cattramite_id'] = $id_cattramite;
+                    if ($this->Tramite->save($this->request->data)) {
+                        $this->Session->setFlash(__('Se ha iniciado el trámite con exito.'), array('class' => 'OK'));
+                        return $this->redirect(array('controller' => 'tareas', 'action' => 'asignar', $this->Tramite->id));
+                    } else {
+                        $this->Session->setFlash(__('¡Ha ocurrido un error al iniciar el trámite! , por favor intente de nuevo.'), array('class' => 'ERROR'));
+                    }
                 }
+            } else {
+                $this->Session->setFlash(__('Ya tienes un trámite activo.'), array('class' => 'ALERT'));
+                return $this->redirect('/');
             }
         }
     }

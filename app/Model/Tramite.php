@@ -178,8 +178,15 @@ class Tramite extends AppModel {
         }
     }
 
-    public function activos() {
-        
+    public function activos($id = null) {
+        $estudiante_id = $this->Estudiante->obtener_id($id);
+        $options = array('conditions' => array('estudiante_id' => $estudiante_id, 'estado' => 1));
+        $tramites = $this->find('first', $options);
+        if (!empty($tramites)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
