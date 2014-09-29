@@ -192,5 +192,6 @@ $tcpdf->SetXY(95, $tcpdf->GetY() - 1);
 $tcpdf->Cell(0, 0, $mandamiento['Mandamiento']['codigobarras'], 0, 1);
 $tcpdf->Ln(10);
 //var_dump($estudiante);
-$tcpdf->Cell(0, 0, 'Avisos', 0, 1);
+$tcpdf->Cell(0, 0, 'Avisos:', 0, 1);
+$tcpdf->Cell(0, 0, '-   Se recomienda el uso de una impresora láser o inkject en alta calidad. ', 0, 1);
 echo $tcpdf->Output('MandamientoSiSTA.pdf', 'I');

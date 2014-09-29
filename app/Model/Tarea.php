@@ -171,7 +171,7 @@ class Tarea extends AppModel {
 
     public function obtenerPrimeraTarea($id) {
         if ($cattramite = $this->Tramite->obtenerIdCattramite($id)) {
-            $options = array('conditions' => array('cattarea.cattramite_id' => $cattramite), 'fields' => array('id', 'tipo'), 'recursive' => 0);
+            $options = array('conditions' => array('cattarea.cattramite_id' => $cattramite), 'fields' => array('id', 'tipo', 'catcargo_id'), 'recursive' => 0);
             $cattarea = $this->Cattarea->find('first', $options);
             return $cattarea;
         } else {

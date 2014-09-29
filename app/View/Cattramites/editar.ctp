@@ -3,6 +3,7 @@
 echo $this->Form->create('Cattramite');
 echo $this->Form->input('id');
 echo $this->Form->input('nombre', array('label' => false, 'placeholder' => 'Nombre'));
+echo $this->Form->input('codigo', array('label' => false, 'placeholder' => 'Código'));
 echo $this->Form->input('arancel', array('label' => false, 'placeholder' => 'Arancel', 'step' => '0.5'));
 echo $this->Form->input('porcentajerecargo', array('label' => false, 'placeholder' => 'Porcentaje de racargo', 'step' => '0.5'));
 ?>

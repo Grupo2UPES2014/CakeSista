@@ -67,7 +67,7 @@ class EmailConfig {
         'port' => 49,
         'timeout' => 30,
         'username' => 'sista@politecnica.edu.sv',
-        'password' => 'Fsis2014',
+        'password' => 'Fsis201',//Fsis2014
         'client' => null,
         'log' => false,
         'charset' => 'utf-8',

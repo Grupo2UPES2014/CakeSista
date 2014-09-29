@@ -131,4 +131,18 @@ class Empleado extends AppModel {
         }
     }
 
+    public function obtenerEmpleados($cargo) {
+        $options = array(
+            'conditions' => array('catcargo_id' => $cargo),
+            'field' => array('Usuario.correo'),
+            'recursive' => 0
+        );
+        $empleados = $this->find('all', $options);
+        if (!empty($empleados)) {
+            return $empleados;
+        } else {
+            return false;
+        }
+    }
+
 }

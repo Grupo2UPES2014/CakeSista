@@ -421,6 +421,7 @@ class UsuariosController extends AppController {
         $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
         $this->Acl->deny($role, 'controllers/Tareas/asignar');
         $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
+        $this->Acl->allow($role, 'controllers/Reportes');
 //-------------------------OPERADORES--------------------
         $role->id = 2;
         $this->Acl->allow($role, 'controllers/Pages/display');

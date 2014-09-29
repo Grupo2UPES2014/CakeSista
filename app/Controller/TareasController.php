@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+APP::uses('CakeEmail', 'Network/Email');
 
 /**
  * Tareas Controller
@@ -37,7 +38,8 @@ class TareasController extends AppController {
                 'Cattarea.catcargo_id' => $catcargo_id,
                 'Tarea.estado !=' => 2
             ),
-            'fields' => array('Tarea.id', 'Tramite.id', 'Cattarea.nombre', 'Cattramite.nombre', 'Tarea.estado', 'Cattarea.tipo')
+            'fields' => array('Tarea.id', 'Tramite.id', 'Cattarea.nombre', 'Cattramite.nombre', 'Tarea.estado', 'Cattarea.tipo', 'Estudiante.nombres', 'Estudiante.apellido1', 'Estudiante.apellido2', 'Estudiante.carnet'),
+            'order' => array('Tarea.id' => 'asc')
         );
 
         $options['joins'] = array(
@@ -45,6 +47,11 @@ class TareasController extends AppController {
                 'alias' => 'Cattramite',
                 'type' => 'INNER',
                 'conditions' => array('Cattramite.id = Tramite.cattramite_id')
+            ),
+            array('table' => 'estudiantes',
+                'alias' => 'Estudiante',
+                'type' => 'INNER',
+                'conditions' => array('Estudiante.id = Tramite.estudiante_id')
             )
         );
 
@@ -144,6 +151,14 @@ class TareasController extends AppController {
                         )
                     );
                     if ($this->Tarea->save($data)) {
+                        //---Correo de documentos
+                        if ($cattarea['Cattarea']['tipo'] == 3) {
+                            $tramite = $this->Tarea->Tramite->obtenerCorreoyTramite($id);
+                            $this->_ctDocumento($tramite['Usuario']['correo'], $cattarea['Cattarea']['descripcion']);
+                        }
+                        if ($cattarea['Cattarea']['tipo'] == 1) {
+                            $this->_ctActividad($cattarea['Cattarea']['catcargo_id']);
+                        }
                         $this->redirect('/');
                     } else {
                         $this->Session->setFlash(__('Ocurrio un error al enviar los datos.'), array('class' => 'ERROR'));
@@ -152,6 +167,9 @@ class TareasController extends AppController {
 //---------Las tareas han terminado y se procede a finalizar el tramite
                     if ($this->Tarea->Tramite->finalizar($id)) {
                         $this->Session->setFlash(__('Ha finalizado el trámite'), array('class' => 'INFO'));
+                        //-----------------------------ENVIAR CORREO
+                        $tramite = $this->Tarea->Tramite->obtenerCorreoyTramite($id);
+                        $this->_ctFinalizado($tramite['Usuario']['correo'], $tramite['Cattramite']['nombre']);
                         return $this->redirect(array('controller' => 'Tareas', 'action' => 'index'));
                     } else {
                         $this->Session->setFlash(__('Ocurrio un error al finalizar el trámite'), array('class' => 'ERROR'));
@@ -169,7 +187,11 @@ class TareasController extends AppController {
                     )
                 );
                 if ($this->Tarea->save($data)) {
-                    $tipos = array(2, 4);
+                    $tipos = array(2, 3, 4);
+                    if ($cattramite['Cattarea']['tipo'] == 1) {
+                        //------------------------COMENTARIAR LA SIGUIENTE LINEA PARA EVITAR EL ENVIO DE CORREOS A ADMINISTRATIVOS
+                        $this->_ctActividad($cattramite['Cattarea']['catcargo_id']);
+                    }
                     if (in_array($cattramite['Cattarea']['tipo'], $tipos)) {
                         $this->_validarTarea($cattramite['Cattarea']['tipo'], $this->Tarea->id);
                     } else {
@@ -179,6 +201,91 @@ class TareasController extends AppController {
                     $this->Session->setFlash(__('Ocurrio un error al enviar los datos.'), array('class' => 'ERROR'));
                 }
             }
+        }
+    }
+
+    //-------------------------------------CT -> Correo Tramite---------------------------------------------------
+    private function _ctFinalizado($correo, $tramite) {
+        try {
+            $email = new CakeEmail('smtp');
+            $email->to($correo);
+            $email->subject('SiSTA – Trámite Finalizado');
+            $email->viewVars(array(
+                'tramite' => $tramite
+            ));
+            $email->helpers('Html');
+            $email->template('tramiteFinalizado');
+            $email->addAttachments(array(
+                'logo5.png' => array(
+                    'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo'
+                )
+            ));
+            if ($email->send()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    private function _ctDocumento($correo, $documento) {
+        try {
+            $email = new CakeEmail('smtp');
+            $email->to($correo);
+            $email->subject('SiSTA – Solicitud de Documento(s)');
+            $email->viewVars(array(
+                'documento' => $documento
+            ));
+            $email->helpers('Html');
+            $email->template('tramiteDocumento');
+            $email->addAttachments(array(
+                'logo5.png' => array(
+                    'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo'
+                )
+            ));
+            if ($email->send()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
+    private function _ctActividad($cargo) {
+        try {
+            $email = new CakeEmail('smtp');
+
+            $email->subject('SiSTA – Nueva Tarea');
+//            $email->viewVars(array(
+//                'documento' => $documento
+//            ));
+            $email->helpers('Html');
+            $email->template('tramiteActividad');
+            $email->addAttachments(array(
+                'logo5.png' => array(
+                    'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo'
+                )
+            ));
+
+
+            $empleados = $this->Tarea->Empleado->obtenerEmpleados($cargo);
+
+            foreach ($empleados as $empledo) {
+                $email->to($empledo['Usuario']['correo']);
+                $email->send();
+            }
+        } catch (Exception $e) {
+            return false;
         }
     }
 
@@ -255,7 +362,7 @@ class TareasController extends AppController {
             $this->Session->setFlash(__('El ID de tarea es invalido.'), array('class' => 'ERROR'));
             $this->redirect('/');
         } else {
-            $options = array('conditions' => array('Tarea.id' => $id), 'fields' => array( 'Catformulario.estructura'));
+            $options = array('conditions' => array('Tarea.id' => $id), 'fields' => array('Catformulario.estructura'));
             $options['joins'] = array(
                 array('table' => 'catformularios',
                     'alias' => 'Catformulario',
@@ -288,8 +395,9 @@ class TareasController extends AppController {
             if (!$this->Mandamiento->existe($tramite_id)) {
                 $arancel = $this->Tarea->Tramite->obtenerArancel($tramite_id);
                 $nui = $this->Tarea->Tramite->obtenerEstudianteNui($tramite_id);
+                $codigo = $this->Tarea->Tramite->obtenerCodigo($tramite_id);
 //---------------------------------------------------------------------------falta codigo de tramite
-                $codigos = $this->Mandamiento->generarCodigos($arancel, date('Y-m-d'), $nui, '025', date('Y'));
+                $codigos = $this->Mandamiento->generarCodigos($arancel, date('Y-m-d'), $nui, $codigo, date('Y'));
                 $data = array(
                     'Mandamiento' => array(
                         'arancel' => $arancel,

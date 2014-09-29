@@ -34,6 +34,16 @@ class Cattramite extends AppModel {
             //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
+        'codigo' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                'message' => 'Requerido para generar mandamientos',
+            //'allowEmpty' => false,
+            //'required' => false,
+            //'last' => false, // Stop validation after this rule
+            //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
         'arancel' => array(
             'formato' => array(
                 'rule' => '/^[0-9]+(\.[0-9]{1,2})?$/',

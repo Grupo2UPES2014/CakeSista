@@ -168,6 +168,12 @@ class Tramite extends AppModel {
         return $tramite['Estudiante']['nui'];
     }
 
+    public function obtenerCodigo($id = null) {
+        $options = array('conditions' => array('Tramite.id' => $id), 'fields' => array('Cattramite.codigo'));
+        $tramite = $this->find('first', $options);
+        return $tramite['Cattramite']['codigo'];
+    }
+
     public function owner($id = null, $estudiante = null) {
         $options = array('conditions' => array('Tramite.id' => $id, 'Tramite.estudiante_id' => $estudiante), 'recursive' => 0);
         $tramite = $this->find('first', $options);
@@ -178,12 +184,34 @@ class Tramite extends AppModel {
         }
     }
 
-    public function activos($id = null) {
+    public function activos($id = null, $cattramite_id = null) {
         $estudiante_id = $this->Estudiante->obtener_id($id);
-        $options = array('conditions' => array('estudiante_id' => $estudiante_id, 'estado' => 1));
+        $options = array('conditions' => array('estudiante_id' => $estudiante_id, 'estado' => 1, 'cattramite_id' => $cattramite_id));
         $tramites = $this->find('first', $options);
         if (!empty($tramites)) {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function obtenerCorreoyTramite($id) {
+        $options = array(
+            'conditions' => array('Tramite.id' => $id),
+            'fields' => array('Cattramite.nombre', 'Usuario.correo'),
+            'recursive' => 0
+        );
+        $options['joins'] = array(
+            array('table' => 'usuarios',
+                'alias' => 'Usuario',
+                'type' => 'INNER',
+                'conditions' => array('Usuario.id = Estudiante.usuario_id')
+            )
+        );
+
+        $tramite = $this->find('first', $options);
+        if (!empty($tramite)) {
+            return $tramite;
         } else {
             return false;
         }

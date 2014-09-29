@@ -33,7 +33,7 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
                     <a href="<?php echo $this->webroot . 'multimedia'; ?>"><div class="m_elemento"><div class="ico icoMediaCenter"></div><span>Centro Multimedia</span></div></a>
                     <a href="<?php echo $this->webroot . 'about'; ?>"><div class="m_elemento"><div class="ico icoInfo"></div><span>Acerca de SiSTA</span></div></a>
                 </div>
-                <div id="usuario"><?php echo $this->Html->image('ajax-loader.gif', array('id' => 'loading', 'alt' => 'Cargando...')); ?><span><?php echo $this->Session->read('Auth.User.alias'); ?></span><a href="<?php echo $this->webroot . 'usuarios/logout'; ?>"><div class="ico mini icoLogout"></div></a></div>
+                <div id="usuario"><span><?php echo $this->Session->read('Auth.User.alias'); ?></span><a href="<?php echo $this->webroot . 'usuarios/logout'; ?>"><div class="ico mini icoLogout"></div></a></div>
             </div>
             <div id="sistacontent">
                 <div id="sistaroute">SiSTA >> <span id="controller"><?php echo $this->name; ?></span> >> <?php echo $title_for_layout; ?></div>

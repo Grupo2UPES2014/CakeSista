@@ -73,7 +73,7 @@ class TramitesController extends AppController {
             $this->Session->setFlash(__('ID de trámite invalido'), array('class' => 'ERROR'));
             return $this->redirect(array('controller' => 'cattramites', 'action' => 'tramites'));
         } else {
-            if (!$this->Tramite->activos($this->Session->read('Auth.User.id'))) {
+            if (!$this->Tramite->activos($this->Session->read('Auth.User.id'), $id_cattramite)) {
                 if ($this->request->is('get')) {
                     $this->Tramite->create();
                     $this->request->data['Tramite']['estado'] = 1;
