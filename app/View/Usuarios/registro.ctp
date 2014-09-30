@@ -8,3 +8,4 @@ echo $this->Form->input('correo', array('label' => false, 'placeholder' => 'Corr
 echo $this->Form->button('Registrar Cuenta');
 echo $this->Form->end();
 ?>
+<span id="tut" data-fuente="nc" data-titulo="Nueva Cuenta">¿Como crear una nueva cuenta?</span>

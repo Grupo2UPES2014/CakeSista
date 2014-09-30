@@ -16,7 +16,7 @@ Copyright 2014 UPES Grupo#2 Ingenieria en Ciencias de la Computación.
         ?>
     </head>
     <body>
-        <?php echo $this->Html->image('logo5.png', array('id' => 'logo', 'alt' => 'Logo SiSTA')); ?>
+        <?php echo $this->Html->image('logo5.png', array('id' => 'logo', 'alt' => 'Logo SiSTA', 'data-raiz' => $this->webroot)); ?>
         <div id="franja"><span>Sistema de Seguimiento de Trámites Académicos</span></div>
         <div id="login"><div id="icon"><?php echo $this->Html->image('door.png', array('alt' => 'LOGIN')); ?><div></div></div><div id="form">
                 <div>

@@ -5,3 +5,4 @@ echo $this->Form->input('v_correo', array('label' => false, 'placeholder' => 'Co
 echo $this->Form->button('Recuperar');
 echo $this->Form->end();
 ?>
+<span id="tut" data-fuente="rc" data-titulo="Recuperar Contraseña">¿Como recuperar la contraseña?</span>
