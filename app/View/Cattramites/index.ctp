@@ -14,7 +14,7 @@
             <td><?php echo $tramite['Cattramite']['id']; ?></td>
             <td><?php echo $tramite['Cattramite']['nombre']; ?></td>
             <td><?php echo $tramite['Cattramite']['arancel']; ?></td>
-            <td><a href="<?php echo Router::url(array('action' => 'editar',$tramite['Cattramite']['id'])); ?>"><div class="ico medium icoUpdate"></div></a></td>
+            <td><a href="<?php echo Router::url(array('action' => 'editar',$tramite['Cattramite']['id'])); ?>"><div class="ico medium icoUpdate"></div></a><a href="<?php echo Router::url(array('controller'=>'calendarios','action' => 'index',$tramite['Cattramite']['id'])); ?>"><div class="ico medium icoCalendario"></div></a></td>
         </tr>
         <?php
     endforeach;

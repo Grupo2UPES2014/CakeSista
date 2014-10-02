@@ -23,24 +23,17 @@ class CalendariosController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index($cattramite_id = NULL) {
         $this->Calendario->recursive = 0;
-        $this->set('calendarios', $this->Paginator->paginate());
-    }
-
-    /**
-     * view method
-     *
-     * @throws NotFoundException
-     * @param string $id
-     * @return void
-     */
-    public function view($id = null) {
-        if (!$this->Calendario->exists($id)) {
-            throw new NotFoundException(__('Invalid calendario'));
+        if ($this->Calendario->Cattramite->exists($cattramite_id)) {
+            $options = array('conditions' => array('cattramite_id' => $cattramite_id), 'recursive' => -1);
+            $this->set('calendarios', $this->Calendario->find('all', $options));
+            $this->set('cattramite_id', $cattramite_id);
+        } else {
+            $this->Session->setFlash(__('¡ID de Trámite invalido!'), array('class' => 'ERROR'));
+            return $this->redirect('/');
         }
-        $options = array('conditions' => array('Calendario.' . $this->Calendario->primaryKey => $id));
-        $this->set('calendario', $this->Calendario->find('first', $options));
+        $this->set('title_for_layout', 'índice');
     }
 
     /**
@@ -48,20 +41,23 @@ class CalendariosController extends AppController {
      *
      * @return void
      */
-    public function nuevo() {
-        if ($this->request->is('post')) {
-            $this->Calendario->create();
-            if ($this->Calendario->save($this->request->data)) {
-                $this->Session->setFlash(__('¡Se ha guardado el Calendario con éxito!'));
-                return $this->redirect(array('action' => 'index'));
-            } else {
-                $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
+    public function nuevo($cattramite_id = NULL) {
+        if (!empty($cattramite_id)) {
+            if ($this->request->is('post')) {
+                $this->Calendario->create();
+                if ($this->Calendario->save($this->request->data)) {
+                    $this->Session->setFlash(__('¡Se ha guardado el Calendario con éxito!'), array('class' => 'OK'));
+                    return $this->redirect(array('action' => 'index', $cattramite_id));
+                } else {
+                    $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
+                }
             }
+            $this->set('cattramite_id', $cattramite_id);
+            $this->set('title_for_layout', 'Nuevo Calendario');
+        } else {
+            $this->Session->setFlash(__('¡ID de Trámite invalido!'), array('class' => 'ERROR'));
+            return $this->redirect('/');
         }
-        $cattramites = $this->Calendario->Cattramite->find('list');
-        $this->set(compact('cattramites'));
-
-        $this->set('title_for_layout', 'Nuevo');
     }
 
     /**
@@ -73,24 +69,21 @@ class CalendariosController extends AppController {
      */
     public function editar($id = null) {
         if (!$this->Calendario->exists($id)) {
-//throw new NotFoundException(__('Invalid calendario'));
             $this->Session->setFlash(__('Código de Calendario Inválido.'), array('class' => 'ERROR'));
         } else
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Calendario->save($this->request->data)) {
                 $this->Session->setFlash(__('Se han guardado los cambios con éxito.'), array('class' => 'OK'));
-//				$this->Session->setFlash(__('The calendario has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('controller'=>'cattramites','action' => 'index'));
             } else {
                 $this->Session->setFlash(__('¡Ha ocurrido un error al guardar los datos! por favor intente de nuevo.'), array('class' => 'ERROR'));
+                return $this->redirect('/');
             }
         } else {
             $options = array('conditions' => array('Calendario.' . $this->Calendario->primaryKey => $id));
             $this->request->data = $this->Calendario->find('first', $options);
         }
         $this->set('title_for_layout', 'Editar');
-        $cattramites = $this->Calendario->Cattramite->find('list');
-        $this->set(compact('cattramites'));
     }
 
     /**

@@ -501,6 +501,10 @@ div.iconRecibir
 {
     background: url(../img/icons/appbar.new.window.png) center; 
 }
+div.icoCalendario
+{
+    background: url(../img/icons/appbar.calendar.dollar.png) center; 
+}
 /*----------------------------------MEDIA_CENTER-------------------------------------------*/
 #mediacenter
 {
