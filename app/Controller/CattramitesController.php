@@ -18,6 +18,11 @@ class CattramitesController extends AppController {
      */
     public $components = array('Paginator', 'Session');
     public $helpers = array('Form', 'Paginator');
+    public $paginate = array(
+        'order' => array(
+            'nombre' => 'asc'
+        )
+    );
 
     /**
      * index method
@@ -27,12 +32,14 @@ class CattramitesController extends AppController {
     public function index() {
         $this->set('title_for_layout', 'Catálogo de Trámites');
         $this->Cattramite->recursive = 0;
+        $this->Paginator->settings = $this->paginate;
         $this->set('cattramites', $this->Paginator->paginate());
     }
 
     public function tramites() {
         $this->set('title_for_layout', 'Trámites Academicos');
         $this->Cattramite->recursive = 0;
+        $this->Paginator->settings = $this->paginate;
         $this->set('cattramites', $this->Paginator->paginate());
     }
 
@@ -96,7 +103,7 @@ class CattramitesController extends AppController {
             $cattareas = $this->Cattramite->Cattarea->find('all', $options);
 
             $catcargos = $this->Cattramite->Cattarea->Catcargo->find('list');
-            $this->set(compact('catcargos','cattareas'));
+            $this->set(compact('catcargos', 'cattareas'));
         }
     }
 

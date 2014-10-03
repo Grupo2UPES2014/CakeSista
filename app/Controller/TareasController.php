@@ -393,7 +393,21 @@ class TareasController extends AppController {
             $this->Tarea->read(null, $id);
             $tramite_id = $this->Tarea->data['Tarea']['tramite_id'];
             if (!$this->Mandamiento->existe($tramite_id)) {
-                $arancel = $this->Tarea->Tramite->obtenerArancel($tramite_id);
+                $cattramite_id = $this->Tarea->Tramite->obtenerIdCattramite($tramite_id);
+
+                if ($this->Tarea->Tramite->Cattramite->Calendario->existe($cattramite_id)) {
+                    if ($calendario = $this->Tarea->Tramite->Cattramite->Calendario->obtenerPorPeriodo($cattramite_id)) {
+                        $arancel = $calendario['Calendario']['arancel'];
+                        $descripcion = $calendario['Calendario']['nombre'];
+                    } else {
+                        $arancel = $this->Tarea->Tramite->obtenerArancel($tramite_id);
+                        $descripcion = $this->Tarea->obtenerCattareaDescripcion($id);
+                    }
+                } else {
+                    $arancel = $this->Tarea->Tramite->obtenerArancel($tramite_id);
+                    $descripcion = $this->Tarea->obtenerCattareaDescripcion($id);
+                }
+
                 $nui = $this->Tarea->Tramite->obtenerEstudianteNui($tramite_id);
                 $codigo = $this->Tarea->Tramite->obtenerCodigo($tramite_id);
 //---------------------------------------------------------------------------falta codigo de tramite
@@ -404,11 +418,12 @@ class TareasController extends AppController {
                         'fechaemision' => date('Y-m-d'),
                         'npe' => $codigos['npe'],
                         'codigobarras' => $codigos['codigobarras'],
-                        'descripcion' => $this->Tarea->obtenerCattareaDescripcion($id),
+                        'descripcion' => $descripcion,
                         'tramite_id' => $tramite_id,
                         'cuenta_id' => 1
                     )
                 );
+
                 if ($this->Mandamiento->save($data)) {
                     $this->Session->write('mandamiento', $this->Mandamiento->id);
                     $this->Session->setFlash(__('Se ha generado un mandamiento de pago, revisar este en tu buzón'), array('class' => 'OK'));

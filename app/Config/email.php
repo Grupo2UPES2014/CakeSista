@@ -45,35 +45,20 @@ class EmailConfig {
             //'charset' => 'utf-8',
             //'headerCharset' => 'utf-8',
     );
-//    public $smtp = array(
-//        'transport' => 'Smtp',
-//        'from' => array('dev@yumenotsubasa.org' => 'SiSTA'),
-//        'host' => 'ssl://host174.hostmonster.com',
-//        'port' => 465,
-//        'timeout' => 30,
-//        'username' => 'dev@yumenotsubasa.org',
-//        'password' => 'Tt200601$%&',
-//        'client' => null,
-//        'log' => false,
-//        'charset' => 'utf-8',
-//        'headerCharset' => 'utf-8',
-//        'emailFormat' => 'both',
-//        'layout'=>'correo',
-//    );
-        public $smtp = array(
+    public $smtp = array(
         'transport' => 'Smtp',
         'from' => array('sista@politecnica.edu.sv' => 'SiSTA'),
         'host' => '74.86.130.93',
         'port' => 49,
         'timeout' => 30,
         'username' => 'sista@politecnica.edu.sv',
-        'password' => 'Fsis201',//Fsis2014
+        'password' => 'Fsis2014', //Fsis2014
         'client' => null,
         'log' => false,
         'charset' => 'utf-8',
         'headerCharset' => 'utf-8',
         'emailFormat' => 'both',
-        'layout'=>'correo',
+        'layout' => 'correo',
     );
     public $fast = array(
         'from' => 'you@localhost',

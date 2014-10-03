@@ -63,7 +63,7 @@ class AppController extends Controller {
     public function beforeFilter() {
         parent::beforeFilter();
         date_default_timezone_set('America/El_Salvador');
-        $this->Auth->allow('registro', 'activar', 'logout', 'acl', 'nuevo_correo', 'recuperar_contrasena', 'cambiar_contrasena');
+        $this->Auth->allow('registro', 'activar', 'logout', 'nuevo_correo', 'recuperar_contrasena', 'cambiar_contrasena');
         if ($this->Auth->user()) {
             if (!($this->Acl->check(array('Usuario' => $this->Auth->user()), $this->name . '/' . $this->action) || $this->Acl->check(array('Usuario' => $this->Auth->user()), $this->name)) && $this->name != 'CakeError') {
                 $this->redirect(array('controller' => 'pages', 'action' => 'prohibido'));

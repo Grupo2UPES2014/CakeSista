@@ -373,73 +373,73 @@ class UsuariosController extends AppController {
         }
     }
 
-    public function acl() {
-        $this->autoRender = false;
-        $role = $this->Usuario->Role;
-//---------------------------ESTUDIANTES------------------------
-        $role->id = 3;
-        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
-        $this->Acl->allow($role, 'controllers/Pages/display/config');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Cattramites/tramites');
-        $this->Acl->allow($role, 'controllers/Cattramites/tramite');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
-        $this->Acl->allow($role, 'controllers/Tramites/nuevo');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-        $this->Acl->allow($role, 'controllers/Tareas/asignar');
-        $this->Acl->deny($role, 'controllers/Tareas/actividad');
-        $this->Acl->allow($role, 'controllers/Tareas/documento');
-        $this->Acl->allow($role, 'controllers/Tareas/formulario');
-        $this->Acl->allow($role, 'controllers/Tareas/mandamiento');
-        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
-        $this->Acl->allow($role, 'controllers/Mandamientos/imprimir');
-        $this->Acl->allow($role, 'controllers/Formularios');
-        $this->Acl->allow($role, 'controllers/Tramites/buzon');
-        $this->Acl->allow($role, 'controllers/Tramites/ver');
-//----------------------------ADMIN-------------------------
-        $role->id = 1;
-        $this->Acl->allow($role, 'controllers/Pages/display');
-        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
-        $this->Acl->allow($role, 'controllers/Pages/display/catalogos');
-        $this->Acl->allow($role, 'controllers/Facultades');
-        $this->Acl->allow($role, 'controllers/Carreras');
-        $this->Acl->allow($role, 'controllers/Usuarios/logout');
-        $this->Acl->allow($role, 'controllers/Usuarios/index');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/amd_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
-        $this->Acl->allow($role, 'controllers/Cattramites');
-        $this->Acl->allow($role, 'controllers/Catcargos');
-        $this->Acl->allow($role, 'controllers/Asignaturas');
-        $this->Acl->allow($role, 'controllers/Empleados');
-        $this->Acl->allow($role, 'controllers/Cuentas');
-        $this->Acl->allow($role, 'controllers/Pages/display/config');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-        $this->Acl->deny($role, 'controllers/Tareas/asignar');
-        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
-        $this->Acl->allow($role, 'controllers/Reportes');
-        $this->Acl->allow($role, 'controllers/Calendarios');
-//-------------------------OPERADORES--------------------
-        $role->id = 2;
-        $this->Acl->allow($role, 'controllers/Pages/display');
-        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
-        $this->Acl->allow($role, 'controllers/Usuarios/logout');
-        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
-        $this->Acl->allow($role, 'controllers/Pages/display/config');
-        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
-        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
-        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
-        $this->Acl->allow($role, 'controllers/Tareas/index');
-        $this->Acl->allow($role, 'controllers/Tareas/ver');
-        $this->Acl->allow($role, 'controllers/Tareas/asignar');
-        $this->Acl->allow($role, 'controllers/Tareas/actividad');
-        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
-
-        echo 'ok?';
-    }
+//    public function acl() {
+//        $this->autoRender = false;
+//        $role = $this->Usuario->Role;
+////---------------------------ESTUDIANTES------------------------
+//        $role->id = 3;
+//        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
+//        $this->Acl->allow($role, 'controllers/Pages/display/config');
+//        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+//        $this->Acl->allow($role, 'controllers/Cattramites/tramites');
+//        $this->Acl->allow($role, 'controllers/Cattramites/tramite');
+//        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+//        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+//        $this->Acl->allow($role, 'controllers/Tramites/nuevo');
+//        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
+//        $this->Acl->allow($role, 'controllers/Tareas/asignar');
+//        $this->Acl->deny($role, 'controllers/Tareas/actividad');
+//        $this->Acl->allow($role, 'controllers/Tareas/documento');
+//        $this->Acl->allow($role, 'controllers/Tareas/formulario');
+//        $this->Acl->allow($role, 'controllers/Tareas/mandamiento');
+//        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
+//        $this->Acl->allow($role, 'controllers/Mandamientos/imprimir');
+//        $this->Acl->allow($role, 'controllers/Formularios');
+//        $this->Acl->allow($role, 'controllers/Tramites/buzon');
+//        $this->Acl->allow($role, 'controllers/Tramites/ver');
+////----------------------------ADMIN-------------------------
+//        $role->id = 1;
+//        $this->Acl->allow($role, 'controllers/Pages/display');
+//        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
+//        $this->Acl->allow($role, 'controllers/Pages/display/catalogos');
+//        $this->Acl->allow($role, 'controllers/Facultades');
+//        $this->Acl->allow($role, 'controllers/Carreras');
+//        $this->Acl->allow($role, 'controllers/Usuarios/logout');
+//        $this->Acl->allow($role, 'controllers/Usuarios/index');
+//        $this->Acl->allow($role, 'controllers/Usuarios/nuevo');
+//        $this->Acl->allow($role, 'controllers/Usuarios/md_contrasena');
+//        $this->Acl->allow($role, 'controllers/Usuarios/amd_contrasena');
+//        $this->Acl->allow($role, 'controllers/Usuarios/md_estado');
+//        $this->Acl->allow($role, 'controllers/Cattramites');
+//        $this->Acl->allow($role, 'controllers/Catcargos');
+//        $this->Acl->allow($role, 'controllers/Asignaturas');
+//        $this->Acl->allow($role, 'controllers/Empleados');
+//        $this->Acl->allow($role, 'controllers/Cuentas');
+//        $this->Acl->allow($role, 'controllers/Pages/display/config');
+//        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+//        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+//        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
+//        $this->Acl->deny($role, 'controllers/Tareas/asignar');
+//        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
+//        $this->Acl->allow($role, 'controllers/Reportes');
+//        $this->Acl->allow($role, 'controllers/Calendarios');
+////-------------------------OPERADORES--------------------
+//        $role->id = 2;
+//        $this->Acl->allow($role, 'controllers/Pages/display');
+//        $this->Acl->allow($role, 'controllers/Pages/display/inicio');
+//        $this->Acl->allow($role, 'controllers/Usuarios/logout');
+//        $this->Acl->deny($role, 'controllers/Pages/display/catalogos');
+//        $this->Acl->allow($role, 'controllers/Pages/display/config');
+//        $this->Acl->allow($role, 'controllers/Usuarios/md_correo');
+//        $this->Acl->allow($role, 'controllers/Usuarios/umd_contrasena');
+//        $this->Acl->allow($role, 'controllers/Usuarios/nuevo_correo');
+//        $this->Acl->allow($role, 'controllers/Tareas/index');
+//        $this->Acl->allow($role, 'controllers/Tareas/ver');
+//        $this->Acl->allow($role, 'controllers/Tareas/asignar');
+//        $this->Acl->allow($role, 'controllers/Tareas/actividad');
+//        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
+//
+//        echo 'ok?';
+//    }
 
 }
