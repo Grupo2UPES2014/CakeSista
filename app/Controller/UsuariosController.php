@@ -30,9 +30,13 @@ class UsuariosController extends AppController {
                     if ($this->Usuario->save($this->request->data)) {
                         if ($this->Usuario->actualizarEstudiante($this->request->data['Usuario']['alias'], $this->Usuario->id)) {
                             $llave = substr(md5('SISTA' . $this->request->data['Usuario']['alias']), 0, 10);
-                            $this->__enviar($this->request->data['Usuario']['correo'], $this->request->data['Usuario']['alias'], $llave);
-                            $this->Session->setFlash(__('Se ha enviado una verificación a su correo, para continuar revisar el mismo.'), array('class' => 'OK'));
-                            return $this->redirect('/');
+                            if ($this->__enviar($this->request->data['Usuario']['correo'], $this->request->data['Usuario']['alias'], $llave)) {
+                                $this->Session->setFlash(__('Se ha enviado una verificación a su correo, para continuar revisar el mismo.'), array('class' => 'OK'));
+                                return $this->redirect('/');
+                            } else {
+                                $this->Session->setFlash(__('Ocurrio un error durante el envio del correo de confirmacion. Por favor contactar con el administrador.'), array('class' => 'ERROR'));
+                                return $this->redirect('/');
+                            }
                         } else {
                             $this->Session->setFlash(__('¡Ha ocurrido un error al registrar el usuario! , por favor intente de nuevo.'), array('class' => 'ERROR'));
                         }
@@ -77,23 +81,31 @@ class UsuariosController extends AppController {
     }
 
     private function __enviar($correo, $carnet, $llave) {
-        $email = new CakeEmail('smtp');
-        $email->to($correo);
-        $email->subject('Registro de cuenta SiSTA – Verificación de correo.');
-        $email->viewVars(array(
-            'carnet' => $carnet,
-            'llave' => $llave
-        ));
-        $email->helpers('Html');
-        $email->template('activacion');
-        $email->addAttachments(array(
-            'logo5.png' => array(
-                'file' => ROOT . '/app/webroot/img/logocorreo.png',
-                'mimetype' => 'image/png',
-                'contentId' => 'logo'
-            )
-        ));
-        $email->send();
+        try {
+            $email = new CakeEmail('smtp');
+            $email->to($correo);
+            $email->subject('Registro de cuenta SiSTA – Verificación de correo.');
+            $email->viewVars(array(
+                'carnet' => $carnet,
+                'llave' => $llave
+            ));
+            $email->helpers('Html');
+            $email->template('activacion');
+            $email->addAttachments(array(
+                'logo5.png' => array(
+                    'file' => ROOT . '/app/webroot/img/logocorreo.png',
+                    'mimetype' => 'image/png',
+                    'contentId' => 'logo'
+                )
+            ));
+            if ($email->send()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception $ex) {
+            return FALSE;
+        }
     }
 
     public function activar($carnet = null, $llave = NULL) {
@@ -441,5 +453,4 @@ class UsuariosController extends AppController {
 //
 //        echo 'ok?';
 //    }
-
 }
