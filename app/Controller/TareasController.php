@@ -143,6 +143,7 @@ class TareasController extends AppController {
                 $correlativo = $this->Tarea->contarTareas($id) + 1;
                 $cattramite = $this->Tarea->Tramite->obtenerIdCattramite($id);
                 if ($cattarea = $this->Tarea->Cattarea->obtenerCattarea($correlativo, $cattramite)) {
+ 
                     $data = array(
                         'Tarea' => array(
                             'estado' => 1,
@@ -151,7 +152,7 @@ class TareasController extends AppController {
                         )
                     );
                     if ($this->Tarea->save($data)) {
-                        //---Correo de documentos
+//---Correo de documentos
                         if ($cattarea['Cattarea']['tipo'] == 3) {
                             $tramite = $this->Tarea->Tramite->obtenerCorreoyTramite($id);
                             $this->_ctDocumento($tramite['Usuario']['correo'], $cattarea['Cattarea']['descripcion']);
@@ -159,7 +160,11 @@ class TareasController extends AppController {
                         if ($cattarea['Cattarea']['tipo'] == 1) {
                             $this->_ctActividad($cattarea['Cattarea']['catcargo_id']);
                         }
-                        $this->redirect('/');
+                        if ($cattarea['Cattarea']['tipo'] == 2) {
+                            $this->_validarTarea($cattarea['Cattarea']['tipo'], $this->Tarea->id);
+                        } else {
+                            $this->redirect('/');
+                        }
                     } else {
                         $this->Session->setFlash(__('Ocurrio un error al enviar los datos.'), array('class' => 'ERROR'));
                     }
@@ -167,7 +172,7 @@ class TareasController extends AppController {
 //---------Las tareas han terminado y se procede a finalizar el tramite
                     if ($this->Tarea->Tramite->finalizar($id)) {
                         $this->Session->setFlash(__('Ha finalizado el trámite'), array('class' => 'INFO'));
-                        //-----------------------------ENVIAR CORREO
+//-----------------------------ENVIAR CORREO
                         $tramite = $this->Tarea->Tramite->obtenerCorreoyTramite($id);
                         $this->_ctFinalizado($tramite['Usuario']['correo'], $tramite['Cattramite']['nombre']);
                         return $this->redirect(array('controller' => 'Tareas', 'action' => 'index'));
@@ -189,7 +194,7 @@ class TareasController extends AppController {
                 if ($this->Tarea->save($data)) {
                     $tipos = array(2, 3, 4);
                     if ($cattramite['Cattarea']['tipo'] == 1) {
-                        //------------------------COMENTARIAR LA SIGUIENTE LINEA PARA EVITAR EL ENVIO DE CORREOS A ADMINISTRATIVOS
+//------------------------COMENTARIAR LA SIGUIENTE LINEA PARA EVITAR EL ENVIO DE CORREOS A ADMINISTRATIVOS
                         $this->_ctActividad($cattramite['Cattarea']['catcargo_id']);
                     }
                     if (in_array($cattramite['Cattarea']['tipo'], $tipos)) {
@@ -204,7 +209,7 @@ class TareasController extends AppController {
         }
     }
 
-    //-------------------------------------CT -> Correo Tramite---------------------------------------------------
+//-------------------------------------CT -> Correo Tramite---------------------------------------------------
     private function _ctFinalizado($correo, $tramite) {
         try {
             $email = new CakeEmail('smtp');

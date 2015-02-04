@@ -451,6 +451,8 @@ class UsuariosController extends AppController {
 //        $this->Acl->allow($role, 'controllers/Tareas/actividad');
 //        $this->Acl->allow($role, 'controllers/Pages/display/multimedia');
 //
+//       $this->Acl->allow($role, 'controllers/Tareas/mandamiento');
 //        echo 'ok?';
 //    }
+
 }
